@@ -1,0 +1,17 @@
+{
+ "value": 22.904,
+ "metric": "PSNR",
+ "source": {
+  "arxiv": "2502.20272",
+  "title": "HVI: A New Color Space for Low-light Image Enhancement",
+  "authors": "Yan, Feng, Zhang, Pang, Shi, Wu, Dong, Sun, Zhang",
+  "year": 2025,
+  "pdf": "refs/arxiv_2502.20272.pdf",
+  "pdf_sha256": "dfe3720770e75fad2987d061b55cb89a198dad386425ddab80729ae088eef2ce",
+  "pdf_bytes": 33873242
+ },
+ "location": "quantitative table, column 'Sony-Total-Dark', row 'CIDNet (Ours)': PSNR 22.904, SSIM 0.676",
+ "dataset_description_verbatim": "Sony-Total-Dark. This dataset is a conversion of a SID subset. To make this dataset more challenging we convert the raw format images to sRGB with gamma correction, resulting in images with low brightness.",
+ "why_it_matters": "Our claim that the Sony extreme-dark set is distributed in at least two renditions with different pixel conventions rests on this: the 22.904 is reported on the authors' own sRGB conversion, not on the rendition we evaluate.",
+ "verified_local": "2026-09-09"
+}

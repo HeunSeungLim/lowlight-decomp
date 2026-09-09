@@ -1,0 +1,38 @@
+\section{Introduction}
+\label{sec:intro}
+
+Extreme-dark image enhancement is evaluated by scoring a network's output for a
+short-exposure frame against a long-exposure reference with a distortion metric. Method papers report that a new architecture raises that score, often by a fraction of
+a decibel, and the score does not say which part of the residual the new component removed, nor
+whether the rest is a modelling failure or a property of the measurement; both are
+measurable, and the answers change where effort goes.
+
+This paper takes reproduced models on an extreme-dark and a standard low-light benchmark,
+\nCMPnAll{} method--benchmark pairs in all, separates the residual into a global gain, a per-channel gain, a spatially varying
+low-frequency term and radial bands, and reports for each an oracle ceiling, control-corrected where spatial.
+
+Ceilings say what a part is worth, not whether it is reachable, so we add a band-wise
+identifiability test that compares, per radial band, the model output's correlation with
+the reference against the input's own after a scalar brightness match. If the input's own correlation is below a fixed floor, the band is not identifiable by
+the test; otherwise a model correlation below the input's by more than a fixed margin
+marks information the model discards, and anything else is exhausted in the single-frame
+sense. Because the benchmark has several short
+frames per scene, the same test on $k$-frame averages separates absent information from
+information buried in noise.
+
+Related work has shown that low-light enhancement can harm downstream
+consumers~\cite{empirical2024} and that judging it through detectors retrained on enhanced
+images is unreliable~\cite{limeeval2024}, that recent architectures add Retinex decompositions and unfoldings~\cite{kind2019,uretinex2022},
+zero-reference curves~\cite{zerodcepp2022}, normalising flows~\cite{llflow2022}, colour
+spaces, Fourier branches, signal-to-noise gating and
+transformers~\cite{cidnet,cidnetplus,fecnet2022,fourllie2023,snrnet2022,llformer2023}, and
+diffusion priors~\cite{gsad2023,lightendiff2024},
+that the brightness mismatch between output and reference has been addressed by a
+mean-matching loss~\cite{gtmean2025}, that burst pipelines merge frames by noise variance
+in the frequency domain~\cite{hdrplus2016} or learn from dark bursts~\cite{karadeniz2021},
+and that diverse and challenging conditions remain the subject of a dedicated
+challenge~\cite{ntire2026}. Oracle ceilings have a long history in denoising~\cite{chatterjee2010,levin2011}, and
+error diagnosis by decomposition in detection~\cite{hoiem2012}. Closest to our analysis, a photometric alignment loss has been derived from a split of the residual into a
+global photometric part and a structural part~\cite{pal2026}; what we add is an oracle ceiling per component, control-corrected for the spatially
+varying ones, and the band-wise identifiability test. We propose that decomposition and that test as
+a method for locating an enhancement model's remaining error, and report what they find.

@@ -1,0 +1,19 @@
+{
+ "frame_weighted": 0.20566700245130692,
+ "scene_weighted": 0.211014824157362,
+ "unchanged_scenes": 33,
+ "n_acting": 17,
+ "best_share_acting": 34.77232500918785,
+ "top3_share_acting": 64.88440024704968,
+ "best_share_pooled": 48.31843845460897,
+ "exp_scenes": {
+  "0.033s": 14,
+  "0.04s": 29,
+  "0.1s": 50
+ },
+ "exp_frames": {
+  "0.033s": 28,
+  "0.04s": 180,
+  "0.1s": 390
+ }
+}

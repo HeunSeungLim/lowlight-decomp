@@ -1,0 +1,23 @@
+{
+ "q": 99.9,
+ "split_rule": "SID loader convention: leading digit 0 or 2 = train, 1 = test",
+ "gt_per_scene": "one long-exposure reference per scene directory (first .npy)",
+ "train": {
+  "scenes": 181,
+  "references": 181,
+  "saturated_pct": 100.0,
+  "min_q": 1.0,
+  "n_below": 0
+ },
+ "test": {
+  "scenes": 50,
+  "references": 50,
+  "saturated_pct": 100.0,
+  "min_q": 1.0,
+  "n_below": 0
+ },
+ "previous_scope_prefix0_only": {
+  "scenes": 161,
+  "note": "Earlier measurement used train_feats.npz whose 644 rows are frames from these scenes, not scenes; the field name train_scenes was wrong."
+ }
+}

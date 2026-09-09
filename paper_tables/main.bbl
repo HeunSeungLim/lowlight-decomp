@@ -1,0 +1,175 @@
+\begin{thebibliography}{10}
+
+\bibitem{empirical2024}
+Xu~Wu, Zhihui Lai, Jie Zhou, Can Gao, Xianxu Hou, Ya-nan Zhang, and Linlin
+  Shen,
+\newblock ``Low-light enhancement effect on classification and detection: An
+  empirical study,''
+\newblock {\em arXiv preprint arXiv:2409.14461}, 2024.
+
+\bibitem{limeeval2024}
+Mingjia Li, Hao Zhao, and Xiaojie Guo,
+\newblock ``{LIME-Eval}: Rethinking low-light image enhancement evaluation via
+  object detection,''
+\newblock {\em arXiv preprint arXiv:2410.08810}, 2024.
+
+\bibitem{kind2019}
+Yonghua Zhang, Jiawan Zhang, and Xiaojie Guo,
+\newblock ``Kindling the darkness: A practical low-light image enhancer,''
+\newblock in {\em ACM Multimedia}, 2019, pp. 1632--1640.
+
+\bibitem{uretinex2022}
+Wenhui Wu, Jian Weng, Pingping Zhang, Xu~Wang, Wenhan Yang, and Jianmin Jiang,
+\newblock ``{URetinex-Net}: Retinex-based deep unfolding network for low-light
+  image enhancement,''
+\newblock in {\em CVPR}, 2022, pp. 5891--5900.
+
+\bibitem{zerodcepp2022}
+Chongyi Li, Chunle Guo, and Chen~Change Loy,
+\newblock ``Learning to enhance low-light image via zero-reference deep curve
+  estimation,''
+\newblock {\em IEEE TPAMI}, vol. 44, no. 8, pp. 4225--4238, 2022.
+
+\bibitem{llflow2022}
+Yufei Wang, Renjie Wan, Wenhan Yang, Haoliang Li, Lap-Pui Chau, and Alex~C.
+  Kot,
+\newblock ``Low-light image enhancement with normalizing flow,''
+\newblock in {\em AAAI}, 2022, vol.~36, pp. 2604--2612.
+
+\bibitem{cidnet}
+Qingsen Yan, Yixu Feng, Cheng Zhang, Guansong Pang, Kangbiao Shi, Peng Wu, Wei
+  Dong, Jinqiu Sun, and Yanning Zhang,
+\newblock ``{HVI}: A new color space for low-light image enhancement,''
+\newblock in {\em CVPR}, 2025, pp. 5678--5687.
+
+\bibitem{cidnetplus}
+Qingsen Yan, Kangbiao Shi, Yixu Feng, Tao Hu, Peng Wu, Guansong Pang, and
+  Yanning Zhang,
+\newblock ``{HVI-CIDNet+}: Beyond extreme darkness for low-light image
+  enhancement,''
+\newblock {\em arXiv preprint arXiv:2507.06814}, 2025.
+
+\bibitem{fecnet2022}
+Jie Huang, Yajing Liu, Feng Zhao, Keyu Yan, Jinghao Zhang, Yukun Huang, Man
+  Zhou, and Zhiwei Xiong,
+\newblock ``Deep {Fourier}-based exposure correction network with
+  spatial-frequency interaction,''
+\newblock in {\em ECCV}, 2022, pp. 163--180.
+
+\bibitem{fourllie2023}
+Chenxi Wang, Hongjun Wu, and Zhi Jin,
+\newblock ``{FourLLIE}: Boosting low-light image enhancement by {Fourier}
+  frequency information,''
+\newblock in {\em ACM Multimedia}, 2023, pp. 7459--7469.
+
+\bibitem{snrnet2022}
+Xiaogang Xu, Ruixing Wang, Chi-Wing Fu, and Jiaya Jia,
+\newblock ``{SNR}-aware low-light image enhancement,''
+\newblock in {\em CVPR}, 2022, pp. 17714--17724.
+
+\bibitem{llformer2023}
+Tao Wang, Kaihao Zhang, Tianrun Shen, Wenhan Luo, Bjorn Stenger, and Tong Lu,
+\newblock ``Ultra-high-definition low-light image enhancement: A benchmark and
+  transformer-based method,''
+\newblock in {\em AAAI}, 2023, vol.~37, pp. 2654--2662.
+
+\bibitem{gsad2023}
+Jinhui Hou, Zhiyu Zhu, Junhui Hou, Hui Liu, Huanqiang Zeng, and Hui Yuan,
+\newblock ``Global structure-aware diffusion process for low-light image
+  enhancement,''
+\newblock in {\em NeurIPS}, 2023.
+
+\bibitem{lightendiff2024}
+Hai Jiang, Ao~Luo, Xiaohong Liu, Songchen Han, and Shuaicheng Liu,
+\newblock ``{LightenDiffusion}: Unsupervised low-light image enhancement with
+  latent-{Retinex} diffusion models,''
+\newblock in {\em ECCV}, 2024.
+
+\bibitem{gtmean2025}
+Jingxi Liao, Shijie Hao, Richang Hong, and Meng Wang,
+\newblock ``{GT-Mean} loss: A simple yet effective solution for brightness
+  mismatch in low-light image enhancement,''
+\newblock in {\em ICCV}, 2025.
+
+\bibitem{hdrplus2016}
+Samuel~W. Hasinoff, Dillon Sharlet, Ryan Geiss, Andrew Adams, Jonathan~T.
+  Barron, Florian Kainz, Jiawen Chen, and Marc Levoy,
+\newblock ``Burst photography for high dynamic range and low-light imaging on
+  mobile cameras,''
+\newblock {\em ACM TOG}, vol. 35, no. 6, pp. 192:1--192:12, 2016.
+
+\bibitem{karadeniz2021}
+Ahmet~Serdar Karadeniz, Erkut Erdem, and Aykut Erdem,
+\newblock ``Burst photography for learning to enhance extremely dark images,''
+\newblock {\em IEEE TIP}, vol. 30, pp. 9372--9385, 2021.
+
+\bibitem{ntire2026}
+George Ciubotariu, S~M~A Sharif, Abdur Rehman, Fayaz~Ali Dharejo, Rizwan~Ali
+  Naqvi, Marcos~V. Conde, Radu Timofte, et~al.,
+\newblock ``Low light image enhancement challenge at {NTIRE} 2026,''
+\newblock in {\em CVPR Workshops}, 2026.
+
+\bibitem{chatterjee2010}
+Priyam Chatterjee and Peyman Milanfar,
+\newblock ``Is denoising dead?,''
+\newblock {\em IEEE TIP}, vol. 19, no. 4, pp. 895--911, 2010.
+
+\bibitem{levin2011}
+Anat Levin and Boaz Nadler,
+\newblock ``Natural image denoising: Optimality and inherent bounds,''
+\newblock in {\em CVPR}, 2011, pp. 2833--2840.
+
+\bibitem{hoiem2012}
+Derek Hoiem, Yodsawalai Chodpathumwan, and Qieyun Dai,
+\newblock ``Diagnosing error in object detectors,''
+\newblock in {\em ECCV}, 2012, pp. 340--353.
+
+\bibitem{pal2026}
+Mingjia Li, Tianle Du, Hainuo Wang, Qiming Hu, and Xiaojie Guo,
+\newblock ``On the global photometric alignment for low-level vision,''
+\newblock {\em arXiv preprint arXiv:2604.08172}, 2026.
+
+\bibitem{sid2018}
+Chen Chen, Qifeng Chen, Jia Xu, and Vladlen Koltun,
+\newblock ``Learning to see in the dark,''
+\newblock in {\em CVPR}, 2018, pp. 3291--3300.
+
+\bibitem{retinexformer}
+Yuanhao Cai, Hao Bian, Jing Lin, Haoqian Wang, Radu Timofte, and Yulun Zhang,
+\newblock ``Retinexformer: One-stage {R}etinex-based transformer for low-light
+  image enhancement,''
+\newblock in {\em ICCV}, 2023.
+
+\bibitem{lol2018}
+Chen Wei, Wenjing Wang, Wenhan Yang, and Jiaying Liu,
+\newblock ``Deep {R}etinex decomposition for low-light enhancement,''
+\newblock in {\em BMVC}, 2018.
+
+\bibitem{lolv2_2021}
+Wenhan Yang, Wenjing Wang, Haofeng Huang, Shiqi Wang, and Jiaying Liu,
+\newblock ``Sparse gradient regularized deep {R}etinex network for robust
+  low-light image enhancement,''
+\newblock {\em IEEE TIP}, vol. 30, pp. 2072--2086, 2021.
+
+\bibitem{clahe1994}
+Karel Zuiderveld,
+\newblock ``Contrast limited adaptive histogram equalization,''
+\newblock in {\em Graphics Gems IV}, pp. 474--485. Academic Press, 1994.
+
+\bibitem{sci2022}
+Long Ma, Tengyu Ma, Risheng Liu, Xin Fan, and Zhongxuan Luo,
+\newblock ``Toward fast, flexible, and robust low-light image enhancement,''
+\newblock in {\em CVPR}, 2022.
+
+\bibitem{blau2018}
+Yochai Blau and Tomer Michaeli,
+\newblock ``The perception-distortion tradeoff,''
+\newblock in {\em CVPR}, 2018, pp. 6228--6237.
+
+\bibitem{eld2020}
+Kaixuan Wei, Ying Fu, Jiaolong Yang, and Hua Huang,
+\newblock ``A physics-based noise formation model for extreme low-light raw
+  denoising,''
+\newblock in {\em CVPR}, 2020, pp. 2758--2767.
+
+\end{thebibliography}

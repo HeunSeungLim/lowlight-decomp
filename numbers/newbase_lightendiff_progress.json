@@ -1,0 +1,18 @@
+{
+ "LOL": {
+  "total": 15,
+  "done": 15,
+  "state": "done",
+  "stamp": "2026-09-05 22:15:39",
+  "psnr_running": 20.115796175871633,
+  "elapsed_s": 3.0
+ },
+ "Sony": {
+  "total": 598,
+  "done": 598,
+  "state": "done",
+  "stamp": "2026-09-05 22:17:57",
+  "psnr_running": 17.092581454813406,
+  "elapsed_s": 117.2
+ }
+}

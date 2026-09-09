@@ -1,0 +1,24 @@
+{
+ "frame_pooled": 0.20566700245130692,
+ "scene_pooled": 0.211014824157362,
+ "scenes": 50,
+ "drop_top1": {
+  "scene_mean": 0.11128138389467929,
+  "frame_mean": 0.12246485288366221,
+  "share_of_scene_pooled_pct": 47.26371270878467,
+  "share_of_frame_pooled_pct": 40.454787873588714
+ },
+ "drop_top3": {
+  "scene_mean": 0.0596542301456969,
+  "frame_mean": 0.06681621071446521,
+  "share_of_scene_pooled_pct": 71.72983917887665,
+  "share_of_frame_pooled_pct": 67.51243032761933
+ },
+ "drop_top5": {
+  "scene_mean": 0.02873070160630391,
+  "frame_mean": 0.03178557285541208,
+  "share_of_scene_pooled_pct": 86.38451032005301,
+  "share_of_frame_pooled_pct": 84.5451275719655
+ },
+ "top5_share_of_scene_pooled_pct": 87.7460592880477
+}

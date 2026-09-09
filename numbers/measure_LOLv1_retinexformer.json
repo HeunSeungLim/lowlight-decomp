@@ -1,0 +1,179 @@
+{
+  "avg": {
+    "psnr_round": 25.152287539161637,
+    "ssim_round": 0.8454439454785111,
+    "psnr_round_gtmean": 27.16933233223806,
+    "ssim_round_gtmean": 0.8500144112553597,
+    "psnr_trunc": 25.07045775145383,
+    "ssim_trunc": 0.8455733454101849,
+    "psnr_trunc_gtmean": 27.160480502012284,
+    "ssim_trunc_gtmean": 0.8502539198736653
+  },
+  "per_image": [
+    {
+      "name": "1.png",
+      "psnr_round": 19.536388874404636,
+      "ssim_round": 0.8467521095472913,
+      "psnr_round_gtmean": 25.893836472766235,
+      "ssim_round_gtmean": 0.8754026350104613,
+      "psnr_trunc": 19.40568526774149,
+      "ssim_trunc": 0.8452789074310337,
+      "psnr_trunc_gtmean": 25.827418848560903,
+      "ssim_trunc_gtmean": 0.8755205521322083
+    },
+    {
+      "name": "111.png",
+      "psnr_round": 23.324530541733687,
+      "ssim_round": 0.9088817501927778,
+      "psnr_round_gtmean": 27.618919455761826,
+      "ssim_round_gtmean": 0.9105362619082461,
+      "psnr_trunc": 23.1062966792165,
+      "ssim_trunc": 0.9082731751714883,
+      "psnr_trunc_gtmean": 27.527267035066348,
+      "ssim_trunc_gtmean": 0.9101338308802299
+    },
+    {
+      "name": "146.png",
+      "psnr_round": 25.29315852302561,
+      "ssim_round": 0.8780344442325189,
+      "psnr_round_gtmean": 25.438683050564155,
+      "ssim_round_gtmean": 0.8782771846254569,
+      "psnr_trunc": 25.146375603301824,
+      "ssim_trunc": 0.8772007124624586,
+      "psnr_trunc_gtmean": 25.362829656231085,
+      "ssim_trunc_gtmean": 0.8775515211065964
+    },
+    {
+      "name": "179.png",
+      "psnr_round": 28.914794235258277,
+      "ssim_round": 0.861938406949375,
+      "psnr_round_gtmean": 28.84840115749581,
+      "ssim_round_gtmean": 0.8620242350866588,
+      "psnr_trunc": 28.918568810990855,
+      "ssim_trunc": 0.8625235385974291,
+      "psnr_trunc_gtmean": 28.963914329247334,
+      "ssim_trunc_gtmean": 0.862476350594243
+    },
+    {
+      "name": "22.png",
+      "psnr_round": 26.2603667799484,
+      "ssim_round": 0.8778531977771968,
+      "psnr_round_gtmean": 27.122158903954855,
+      "ssim_round_gtmean": 0.879248866725435,
+      "psnr_trunc": 26.067477032722554,
+      "ssim_trunc": 0.8774479906378008,
+      "psnr_trunc_gtmean": 27.041894173621216,
+      "ssim_trunc_gtmean": 0.8790801083294945
+    },
+    {
+      "name": "23.png",
+      "psnr_round": 25.451636644412325,
+      "ssim_round": 0.837566369264022,
+      "psnr_round_gtmean": 26.506458699849873,
+      "ssim_round_gtmean": 0.837369590616223,
+      "psnr_trunc": 25.33483733054659,
+      "ssim_trunc": 0.8376732627250437,
+      "psnr_trunc_gtmean": 26.54458158701091,
+      "ssim_trunc_gtmean": 0.8375049863481019
+    },
+    {
+      "name": "493.png",
+      "psnr_round": 22.57774285624114,
+      "ssim_round": 0.6912267738161525,
+      "psnr_round_gtmean": 23.651455105001574,
+      "ssim_round_gtmean": 0.6981837728715442,
+      "psnr_trunc": 22.674738799741622,
+      "ssim_trunc": 0.6953592980682411,
+      "psnr_trunc_gtmean": 23.666143312915953,
+      "ssim_trunc_gtmean": 0.701590573839658
+    },
+    {
+      "name": "547.png",
+      "psnr_round": 23.032629339012246,
+      "ssim_round": 0.8625704646761396,
+      "psnr_round_gtmean": 28.3197133242223,
+      "ssim_round_gtmean": 0.8758234367486081,
+      "psnr_trunc": 23.24334576842769,
+      "ssim_trunc": 0.8633482341185542,
+      "psnr_trunc_gtmean": 28.37706542064322,
+      "ssim_trunc_gtmean": 0.8759345429549134
+    },
+    {
+      "name": "55.png",
+      "psnr_round": 21.394605719697427,
+      "ssim_round": 0.8678347033416663,
+      "psnr_round_gtmean": 26.21618656234598,
+      "ssim_round_gtmean": 0.8711485602387429,
+      "psnr_trunc": 21.23266633169324,
+      "ssim_trunc": 0.8672655648842875,
+      "psnr_trunc_gtmean": 26.160562773568337,
+      "ssim_trunc_gtmean": 0.8709168657456264
+    },
+    {
+      "name": "665.png",
+      "psnr_round": 27.261060063609428,
+      "ssim_round": 0.7991929331904138,
+      "psnr_round_gtmean": 27.461974269517633,
+      "ssim_round_gtmean": 0.799159737287796,
+      "psnr_trunc": 27.195088971807255,
+      "ssim_trunc": 0.7992101187786513,
+      "psnr_trunc_gtmean": 27.487984030327027,
+      "ssim_trunc_gtmean": 0.7992016781700909
+    },
+    {
+      "name": "669.png",
+      "psnr_round": 26.72723463803081,
+      "ssim_round": 0.8787801277933417,
+      "psnr_round_gtmean": 27.17705995111475,
+      "ssim_round_gtmean": 0.8799183612460756,
+      "psnr_trunc": 26.8120703837955,
+      "ssim_trunc": 0.8788226851139599,
+      "psnr_trunc_gtmean": 27.145743543676716,
+      "ssim_trunc_gtmean": 0.8797140537602846
+    },
+    {
+      "name": "748.png",
+      "psnr_round": 28.365499601295674,
+      "ssim_round": 0.8937909552631779,
+      "psnr_round_gtmean": 28.693744236368627,
+      "ssim_round_gtmean": 0.8929827297106164,
+      "psnr_trunc": 28.217585613665324,
+      "ssim_trunc": 0.8935867740546222,
+      "psnr_trunc_gtmean": 28.682512721853666,
+      "ssim_trunc_gtmean": 0.8928001880843057
+    },
+    {
+      "name": "778.png",
+      "psnr_round": 23.09087243326251,
+      "ssim_round": 0.7751420418862054,
+      "psnr_round_gtmean": 24.62387711780383,
+      "ssim_round_gtmean": 0.7860827071645752,
+      "psnr_trunc": 22.97417367399796,
+      "ssim_trunc": 0.7744733785766956,
+      "psnr_trunc_gtmean": 24.614744068621167,
+      "ssim_trunc_gtmean": 0.7863011371791048
+    },
+    {
+      "name": "780.png",
+      "psnr_round": 28.977184262017325,
+      "ssim_round": 0.7955068061077659,
+      "psnr_round_gtmean": 28.57755586240451,
+      "ssim_round_gtmean": 0.7959314333510394,
+      "psnr_trunc": 28.97436387928093,
+      "ssim_trunc": 0.7968365758682731,
+      "psnr_trunc_gtmean": 28.714128299194094,
+      "ssim_trunc_gtmean": 0.7970863608016749
+    },
+    {
+      "name": "79.png",
+      "psnr_round": 27.07660857547509,
+      "ssim_round": 0.9065880981396237,
+      "psnr_round_gtmean": 31.389960814399018,
+      "ssim_round_gtmean": 0.9081266562389171,
+      "psnr_trunc": 26.75359212487814,
+      "ssim_trunc": 0.9062999646642345,
+      "psnr_trunc_gtmean": 31.29041772964637,
+      "ssim_trunc_gtmean": 0.9079960481784443
+    }
+  ]
+}

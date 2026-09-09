@@ -1,0 +1,57 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\noindent\textbf{Reproduction.} Every baseline we quote was rerun by us and scored with our own metric implementation;
+independent PSNR and SSIM implementations agree with the released ones to machine precision. For CIDNet and Retinexformer the reproduced scores agree with the published
+ones to \(0.021\) dB except one cell at \(0.081\), a gap we could not attribute
+(published/here: CIDNet LOL 23.50/23.498, with perceptual loss 23.8091/23.808, LOL-v2 real 28.1387/28.140 and synthetic 29.5663/29.647 rectified; Retinexformer LOL 27.18/27.169 rectified, Sony 24.44/24.438, LOL-v2 real 27.71/27.689 and synthetic 29.04/29.022 rectified); SNR-Net, LLFormer and URetinex-Net in its
+reference-ratio setting reproduce their published LOL scores to \(0.003\) dB, the two diffusion models to \(0.13\) dB (GSAD, under rectification, beyond its single-run
+spread) and \(0.34\) dB (LightenDiffusion, within its seed spread), and
+Zero-DCE++ has no published LOL score; this is what licenses reading the decomposition as a
+property of the method.
+
+
+
+\noindent\textbf{Three protocol choices move the score by as much as the margins do.} First,
+reference-mean rectification sets the output's brightness from the reference. On the Sony benchmark it is worth \(1.16\) dB, the whole-frame special case of the
+spatially varying term priced in Sec.~\ref{sec:results}, and for GSAD on LOL \nGSADrectGain{} dB; a related setting, URetinex-Net's
+reference-derived ratio, is worth
+\nURratioGain{} dB (\nURpub{} published against \nURfixed{} at its fixed ratio, Table~\ref{tab:decomp}). Retinexformer's documentation recommends against the setting while CIDNet reports its
+headline number with it, so the two are not comparable; the latter's script further scales LOL-v2 outputs by a per-checkpoint constant chosen
+against the reference (about three decibels unrectified). All three are reasons to rerun baselines, not criticisms of a method. Second, the 8-bit conversion rule: one pipeline saves outputs by truncation and the other by rounding, confirmed at the pixel
+level on saved files. Switching the rule alone is worth between \nBITlo{} and \nBIThi{} dB on the three LOL
+checkpoints. Third, the dataset variant: the Sony extreme-dark set is distributed in at least two renditions whose pixel conventions
+differ~\cite{retinexformer,cidnet,cidnetplus},
+and the checkpoint of~\cite{cidnet} scores \nCROSSpsnr{} dB on the other ($598$ frames, rounding) against the \(22.904\)
+reported for it on its own.
+
+\noindent\textbf{What the decomposition implies for method design.} The headroom on Sony is \nHRglob{} dB for a global gain and \nHRchan{} dB
+more for a per-channel gain, \nHRblk{} dB for a per-block gain and \nHRaff{} dB for a
+per-block affine map at $16$ pixels over the whole-frame fit (both control-corrected),
+\nHRbandls{} dB for per-band amplitude, and about \nHRnoise{} dB for the noise share estimated under independence. The rule that follows is to spend effort on the component with the largest
+headroom, testing its predictors before building on it: on Sony the spatially varying low-frequency term, on LOL, by share of squared error, the global term for every method but Retinexformer
+(Table~\ref{tab:decomp}).
+Single-frame high-frequency restoration is worth a few percent under the noise-corrected
+ceiling, and forcing amplitude up makes it worse. The low-frequency term resists the predictors we tried; the multi-frame margin exists in the input but this single-frame model cannot take it,
+so taking it would require training on burst statistics. A testable prescription: train on $k$-frame means and test whether the $k=8$ low-frequency energy drops below the single-frame value.
+
+\noindent\textbf{Limitations.} All quantities are measured on the 8-bit sRGB rendition the benchmarks distribute, so every recoverability statement is about that rendition, not sensor data. Quantisation to 8 bits, and sensor noise that is not additive~\cite{eld2020}, depart from
+the additive uncorrelated-noise model behind the noise correction; the check of Sec.~\ref{sec:results} fails in the lowest band at $0.04$ and $0.1$\,s, and
+cells with $N_j/P_j>0.9$ are reported as unstable. The identifiability test is a
+distortion-axis statement about conditional-mean regressors~\cite{blau2018}, so a perceptually
+optimised method can fall below the input on $\rho_j$ without being wrong.
+The reference's noise floor was not measured and is treated as zero.
+The band-wise test covers Retinexformer on Sony and CIDNet and Retinexformer on LOL,
+while Table~\ref{tab:decomp} decomposes every method; CIDNet's Sony residual was not decomposed because the variant it was trained on, in a
+different pixel convention, is not the one we could download. The noise-corrected ceiling exists only on Sony, which has repeated captures; band
+correlations are global per frame, so a band can be labelled exhausted while local
+disagreement remains; the multi-frame result uses static scenes only.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We decomposed the residual of reproduced enhancement models into components with oracle
+ceilings, control-corrected where spatial, and tested band by band whether the error is
+discarded information or information the rendition never carried. On both benchmarks the residual after the global gain sits at low frequency, a spatially varying correction of it is worth more than a decibel, and the output is closer to a blurred reference than to the reference. That term resists the
+predictors we tried, this single-frame checkpoint cannot consume a burst, and code and
+numbers are released.

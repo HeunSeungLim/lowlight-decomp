@@ -1,0 +1,30 @@
+{
+ "retinexformer": {
+  "act_frames": 24.74916387959866,
+  "act_scenes": 11.0,
+  "gain_acting": 0.830941038683392,
+  "gain_all": 0.20566700245130692,
+  "n_act": 148
+ },
+ "snrnet": {
+  "act_frames": 21.40468227424749,
+  "act_scenes": 10.0,
+  "gain_acting": 0.24995698848142273,
+  "gain_all": 0.05350276783005994,
+  "n_act": 128
+ },
+ "lightendiff": {
+  "act_frames": 24.414715719063544,
+  "act_scenes": 10.0,
+  "gain_acting": 0.20595783068477458,
+  "gain_all": 0.05028405126043847,
+  "n_act": 146
+ },
+ "zerodcepp": {
+  "act_frames": 53.67892976588629,
+  "act_scenes": 24.0,
+  "gain_acting": -0.03420041333728869,
+  "gain_all": -0.018358415854966007,
+  "n_act": 321
+ }
+}

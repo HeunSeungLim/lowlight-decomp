@@ -1,0 +1,10 @@
+{
+ "n": 17,
+ "mean": -0.05012057129047725,
+ "se": 0.4405355147133274,
+ "t_crit": 1.7458836762762495,
+ "tost_margin": 0.8192443352484311,
+ "effect_under_test": 0.8624088596626583,
+ "margin_as_pct_of_effect": 94.99488856931369,
+ "note": "TOST: the narrowest symmetric equivalence margin the paired scene differences reject at one-sided 0.05."
+}

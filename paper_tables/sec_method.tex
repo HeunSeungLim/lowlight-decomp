@@ -1,0 +1,47 @@
+\section{Proposed method}
+\label{sec:method}
+
+We propose a measurement procedure with two parts: a decomposition of a model's residual
+into named components, each priced by an oracle ceiling, and a band-wise identifiability test that says whether the
+residual in a band is information the model discards or information the rendition never carried. Let $y$ be the model output and $g$ the reference, both in $[0,255]$ per
+channel. Scores and correlations are computed per test frame and averaged; error shares are
+pooled over frames; block ceilings are PSNR without clipping so that a control can be subtracted; the gain
+terms are scored like the model.
+
+\noindent\textbf{Gain terms.} The global term is the least-squares scalar
+$a^{\star}=\langle y,g\rangle/\langle y,y\rangle$ applied to the whole frame and the
+per-channel term repeats it per colour channel; their ceilings are the scores of
+$a^{\star}y$ and of the per-channel fit, and the share of squared error each removes is
+the tone and colour part of the residual.
+
+\noindent\textbf{Spatially varying low-frequency term.} We partition the frame into
+square blocks of side $b$ and fit one scalar per block, $y\mapsto a_{\mathrm{blk}}y$, and
+separately an affine map $y\mapsto a_{\mathrm{blk}}y+b_{\mathrm{blk}}$. Decreasing $b$
+adds parameters and improves the fit even when there is nothing to fit, so for each $b$ we repeat the procedure against a structureless-noise target of the same
+variance and report the gain over the $b=\text{frame}$ anchor of the
+same family after subtracting that control.
+
+\noindent\textbf{Band terms.} We take the two-dimensional spectrum of the luminance and
+group frequencies into radial bands. For band $j$ we report the output-to-reference power ratio
+and the correlation $\rho_j$ restricted to that band; under an optimal per-band amplitude
+rescaling the surviving fraction of band energy is $1-\rho_j^{2}$, so $\rho_j$, not the
+power ratio, bounds any amplitude correction.
+
+\noindent\textbf{Identifiability.} Relative to the estimator class of a scalar brightness match followed by
+per-band rescaling, we compute the same $\rho_j$ between the reference and the input itself, after matching brightness with a single scalar so that no structure is
+altered, and call it $\rho^{\mathrm{in}}_j$. With the two thresholds fixed in the measurement code
+released with the paper, a band is \emph{unidentifiable} when $\rho^{\mathrm{in}}_j<0.20$, so the test cannot certify structure recovered there even where the model's
+correlation exceeds the floor (Table~\ref{tab:rho}); \emph{recoverable} when
+$\rho^{\mathrm{in}}_j-\rho_j>0.05$, so the band carries agreement the model discards;
+and \emph{exhausted} otherwise. This raw-input check is necessary but easy to pass, so we also report a noise-corrected
+ceiling: the input's noise power $N_j$ per band is measured from
+frame-to-frame differences and $\rho^{\mathrm{in}}_j$ is corrected to
+$\rho^{\mathrm{in}}_j/\sqrt{1-N_j/P_j}$, $P_j$ the input band power, which assumes
+additive noise uncorrelated with the reference; cells with $N_j/P_j>0.9$ are unstable
+under this correction and are reported as such.
+
+\noindent\textbf{Predictability of the local term.} A ceiling obtained with the reference in hand is not a method, so for the block term we
+ask whether the oracle coefficients can be predicted at inference: we regress the
+within-frame centred block coefficients on the input block mean, the input block variance
+and the output block mean, cross-fitting by scene so that no frame of a scene is used to fit its own prediction, and
+as a reference point repeat the fit with the reference block mean included, which bounds what a block-level summary can explain.
