@@ -5,7 +5,7 @@ OUT=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
 CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; SHD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/short_sid2"
 QL=[50,75,90,95,98,99,99.5,99.9]
-rows=json.load(open(f"{R}/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 z=np.load(f"{OUT}/calib2_cache.npz",allow_pickle=True); QY,QG,A,S,BASE=z["QY"],z["QG"],z["A"],z["S"],z["BASE"]
 def linfit(x,y):
     x=np.asarray(x,float);y=np.asarray(y,float);v=x.var(); b=0.0 if v<1e-18 else float(((x-x.mean())*(y-y.mean())).mean()/v); return b,float(y.mean()-b*x.mean())

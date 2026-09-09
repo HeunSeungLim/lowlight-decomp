@@ -1,0 +1,22 @@
+{
+ "note": "Unresolved reproduction cells. Both are the GT-mean-rectified wo_perc cell of CIDNet.",
+ "cells": [
+  {
+   "benchmark": "LOL-v2 synthetic",
+   "setting": "CIDNet wo_perc, GT-mean applied",
+   "reported": 29.5663,
+   "ours": 29.6469,
+   "delta": 0.0806
+  },
+  {
+   "benchmark": "LOL-v1",
+   "setting": "CIDNet wo_perc, GT-mean applied",
+   "reported": 28.1405,
+   "ours": 28.2008,
+   "delta": 0.0603
+  }
+ ],
+ "evidence": "repro/AUDIT_LOLv2_260905.md section 'the one cell that deviates'; rectification variants ruled out there",
+ "reading": "The unrectified cell of the same weights matches to 0.0003, so the outputs agree; the gap is in the rectification step or the source of the published table. Two cells, not one.",
+ "correction": "The manuscript said 'one unexplained cell'. That was wrong: the same position deviates on LOL-v1 too, by 0.060, and our own audit document recorded it."
+}

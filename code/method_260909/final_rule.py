@@ -5,7 +5,7 @@ from repro_measure import ssim_indep
 import diag_lolv1 as DL
 CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
-Q=99.9; rows=json.load(open(f"{R}/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+Q=99.9; rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.5,99.9]
 Ksony=float(tz["QG"][:,QLt.index(99.9)].mean()); satS=float((tz["QG"][:,QLt.index(99.9)]>=0.999).mean())*100
 print(f"Sony 학습기준 q99.9 평균 K={Ksony:.4f}, 포화율 {satS:.1f}%")
@@ -17,7 +17,7 @@ def gt_of(s,_c={}):
     return _c[s]
 def load(m,i,r):
     if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
-    a=np.load(f"{R}/repro/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
+    a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 rng=np.random.RandomState(20260909); RES={"K":1.0,"q":Q,"sat_train_sony":satS,"sony":{},"lol":{}}
 grp=collections.defaultdict(list)
 for i,r in enumerate(rows): grp[(r["scene"],r["exp"])].append(i)
@@ -53,12 +53,12 @@ print(f"버스트: 출력평균 {sb.mean():.4f} → 앵커 {sa.mean():.4f} ({(sa
 pairs=list(DL.build_pairs()); ids=[p[0] for p in pairs]; GT={p[0]:p[2] for p in pairs}
 import glob, cv2
 hi_dir=os.environ.get("LLDATA", "data") + "/lowlight_model/data/LOLv1/our485/high"
-fs=sorted(glob.glob(f"{hi_dir}/*"))[:120]
+fs=sorted(glob.glob(f"{hi_dir}/*"))
 Klol=float(np.mean([np.percentile(cv2.imread(f)[:,:,::-1].astype(np.float32)/255.,Q) for f in fs]))
 satL=float(np.mean([np.percentile(cv2.imread(f)[:,:,::-1].astype(np.float32)/255.,Q)>=0.999 for f in fs]))*100
 RES["K_lol"]=Klol; RES["sat_train_lol"]=satL; print(f"LOL 학습기준 q99.9 K={Klol:.4f}, 포화율 {satL:.1f}%")
 for m in ("retinexformer","snrnet","llformer","gsad","lightendiff","uretinex","zerodcepp","cidnet_woperc"):
-    d0=f"{R}/repro/cache_{m}/LOL"
+    d0=f"{R}/numbers/cache_{m}/LOL"
     if not os.path.isdir(d0): continue
     b=[];g=[];ok=True
     for f in ids:

@@ -16,7 +16,7 @@ else:
 print(f"K={K:.4f}  출처: {src}")
 rng=np.random.RandomState(20260909); RES={}
 for m in ("retinexformer","snrnet","llformer","gsad","lightendiff","uretinex","zerodcepp","cidnet_woperc"):
-    d=f"{R}/repro/cache_{m}/LOL"
+    d=f"{R}/numbers/cache_{m}/LOL"
     if not os.path.isdir(d): continue
     b=[];g=[]
     ok=True

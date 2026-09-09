@@ -4,7 +4,7 @@ M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", "."
 CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
 Q = 99.9
-rows = json.load(open(f"{R}/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8 = lambda a, b: 10 * np.log10(255.0 ** 2 / np.mean((a.astype(np.float64) - b.astype(np.float64)) ** 2))
 g8 = lambda x: np.rint(np.clip(x, 0, 1) * 255).astype(np.uint8)
 def gt_of(s, _c={}):
@@ -37,5 +37,6 @@ for k in (1, 3, 5):
           f"프레임평균 {out[f'drop_top{k}']['frame_mean']:+.3f} "
           f"({out[f'drop_top{k}']['share_of_frame_pooled_pct']:.0f}% 감소)")
 out["top5_share_of_scene_pooled_pct"] = float(sc[order[:5]].sum() / sc.sum() * 100)
+np.savez(f"{M}/concentration_frames.npz", gain=gain, base=None if False else np.array([]), S=S)
 json.dump(out, open(f"{M}/concentration.json", "w"), indent=1)
 print("상위5가 장면 풀드에서 차지하는 몫", round(out["top5_share_of_scene_pooled_pct"], 1), "%")

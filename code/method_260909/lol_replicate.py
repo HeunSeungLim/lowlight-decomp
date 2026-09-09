@@ -11,7 +11,7 @@ pairs=list(DL.build_pairs()); ids=[p[0] for p in pairs]; GT={p[0]: p[2] for p in
 print(f"LOL 프레임 {len(pairs)}개")
 RES={}
 for model in ("retinexformer","snrnet","llformer","gsad","lightendiff","uretinex","zerodcepp"):
-    d=f"{R}/repro/cache_{model}/LOL"
+    d=f"{R}/numbers/cache_{model}/LOL"
     if not os.path.isdir(d): continue
     Y={}
     for f in ids:

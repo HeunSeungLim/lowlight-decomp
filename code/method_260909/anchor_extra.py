@@ -4,7 +4,7 @@ import os, json, os, collections, numpy as np
 M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
 CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
-rows=json.load(open(f"{R}/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QL=[50,75,90,95,98,99,99.5,99.9]
 K=float(tz["QG"][:,QL.index(99.5)].mean()); KSAT=float((tz["QG"][:,QL.index(99.5)]>=0.999).mean())
 print(f"K={K:.4f}, 학습 기준영상 중 99.5백분위 포화 비율 {KSAT*100:.1f}%")
@@ -16,7 +16,7 @@ def gt_of(s,_c={}):
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(m,i,r):
     if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
-    a=np.load(f"{R}/repro/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
+    a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 rng=np.random.RandomState(20260909); OUT={}
 grp=collections.defaultdict(list)
 for i,r in enumerate(rows): grp[(r["scene"],r["exp"])].append(i)

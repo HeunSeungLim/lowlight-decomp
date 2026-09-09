@@ -1,0 +1,26 @@
+{
+ "n": 598,
+ "raw": {
+  "share_global_pct": 27.0372858307012,
+  "share_channel_pct": 8.759131155681285,
+  "share_residual_pct": 64.2035830136175,
+  "d16_raw": 1.199312946877754,
+  "white16": 0.005685859850480313,
+  "d16": 1.1936270870272736
+ },
+ "anchored": {
+  "share_global_pct": 22.78772279812031,
+  "share_channel_pct": 9.27030605715534,
+  "share_residual_pct": 67.94197114472435,
+  "d16_raw": 1.198566799286489,
+  "white16": 0.005669550169198345,
+  "d16": 1.1928972491172907
+ },
+ "table_reference": {
+  "gl": 27.0,
+  "ch": 8.8,
+  "res": 64.2,
+  "d16": 1.19,
+  "note": "Table 1 Sony Retinexformer row; the raw block must reproduce it"
+ }
+}

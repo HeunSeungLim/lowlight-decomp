@@ -4,7 +4,7 @@
 import os, json, os, numpy as np
 CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 QL = [90, 95, 98, 99, 99.5, 99.9]
 def gt_of(s, _c={}):
     if s not in _c:

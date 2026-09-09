@@ -3,7 +3,7 @@ import os, json, os, numpy as np
 OUT = os.path.dirname(os.path.abspath(__file__)); D = np.load(f"{OUT}/feat_cache.npz", allow_pickle=True) if os.path.exists(f"{OUT}/feat_cache.npz") else None
 CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; SHD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/short_sid2"
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 if D is None:
     def gt_of(s, _c={}):
         if s not in _c:

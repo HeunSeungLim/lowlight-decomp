@@ -1,0 +1,35 @@
+{
+ "raw": {
+  "n": 15,
+  "psnr": 25.152286748364354,
+  "psnr_sd": 2.8716407162155706,
+  "ssim": 0.8454439363671487,
+  "share_global_pct": 41.394336501776564,
+  "share_channel_pct": 4.111119431600077,
+  "share_residual_pct": 54.49454406662336,
+  "d16": 1.171200131337656,
+  "psnr_sd_ddof0": 2.774268499891807
+ },
+ "anchored": {
+  "n": 15,
+  "psnr": 22.46573534348447,
+  "psnr_sd": 4.730617840575376,
+  "ssim": 0.8305164251586429,
+  "share_global_pct": 77.69519447568831,
+  "share_channel_pct": 1.5638818967555597,
+  "share_residual_pct": 20.74092362755613,
+  "d16": 1.1720858207711409,
+  "psnr_sd_ddof0": 4.570211024668193
+ },
+ "gain_db": -2.686551404879882,
+ "table_reference": {
+  "psnr": 25.15,
+  "sd": 2.87,
+  "ssim": 0.845,
+  "gl": 41.4,
+  "ch": 4.1,
+  "res": 54.5,
+  "d16": 1.17
+ },
+ "sd_convention": "sample standard deviation with ddof=1, matching Table 1; ddof=0 values kept as psnr_sd_ddof0 (factor sqrt(15/14))"
+}

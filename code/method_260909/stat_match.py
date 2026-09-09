@@ -3,7 +3,7 @@ gain = (학습 GT 통계 평균) / (이 출력의 같은 통계). 장면 5겹 �
 import os, json, os, numpy as np
 CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 QS = [("mean", None), ("p50", 50), ("p75", 75), ("p90", 90), ("p95", 95), ("p99", 99)]
 def stat(x, q): return float(x.mean()) if q is None else float(np.percentile(x, q))
 def gt_of(s, _c={}):

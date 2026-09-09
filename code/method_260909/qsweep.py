@@ -4,7 +4,7 @@ M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", "."); s
 from repro_measure import ssim_indep
 CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
-rows=json.load(open(f"{R}/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.5,99.9]
 QS=[95,98,99,99.5,99.9]
 KTR={q: float(np.percentile(tz["QG"][:,QLt.index(q)],50)) if False else None for q in QS}
@@ -16,7 +16,7 @@ def gt_of(s,_c={}):
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(m,i,r):
     if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
-    a=np.load(f"{R}/repro/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
+    a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 # 학습 분할 기준영상에서 q별 K (테스트 라벨 미사용)
 K={q: float(tz["QG"][:,QLt.index(q)].mean()) for q in QS}
 SAT={q: float((tz["QG"][:,QLt.index(q)]>=0.999).mean())*100 for q in QS}

@@ -1,0 +1,43 @@
+{
+ "note": "The three protocol choices the title prices, each with the dump it is computed from.",
+ "rectification": {
+  "what": "reference-mean rectification: the output's brightness is set from the reference before scoring",
+  "sony_retinexformer": {
+   "psnr": 24.438298441252588,
+   "psnr_rectified": 25.60206275552153,
+   "gain_db": 1.163764314268942,
+   "source": "repro/compare_methods.json agg['Sony/retinexformer'] psnr_gtmean minus psnr"
+  },
+  "lol_gsad": {
+   "gain_db": null,
+   "source": "evidence.json gsad_rect_gain"
+  },
+  "uretinex_ratio": {
+   "gain_db": null,
+   "source": "evidence.json ur_ratio_gain"
+  }
+ },
+ "eight_bit_rule": {
+  "what": "rounding versus truncation when saving 8-bit output",
+  "delta_db": {
+   "woperc": 0.11029087851632724,
+   "wperc": 0.0314874052077343,
+   "retinexformer": 0.08182978770780736
+  },
+  "source": "evidence.json bit_rule_delta; three LOL checkpoints",
+  "range_db": [
+   0.0314874052077343,
+   0.11029087851632724
+  ]
+ },
+ "dataset_rendition": {
+  "what": "the Sony extreme-dark set is distributed in at least two renditions with different pixel conventions",
+  "cross_variant_psnr_round": 5.291012626876942,
+  "cross_variant_psnr_trunc": 5.314988027120861,
+  "frames": 598,
+  "reported_on_its_own": 22.904,
+  "reported_source": "method_260909/cross_rendition_source.json (arXiv:2502.20272, table column 'Sony-Total-Dark')",
+  "source": "evidence.json cross_variant"
+ },
+ "caveat": "The three are priced on different sample sizes: rectification on 598 Sony frames and two LOL checkpoints, the 8-bit rule on three LOL checkpoints, the rendition on one checkpoint over 598 frames. They are not a single 18-pair sweep."
+}

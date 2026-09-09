@@ -3,7 +3,7 @@ import os, json, os, numpy as np
 CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; SHD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/short_sid2"
 OUT = os.path.dirname(os.path.abspath(__file__))
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 def gt_of(s, _c={}):
     if s not in _c:
         f = [x for x in sorted(os.listdir(f"{GTD}/{s}")) if x.endswith(".npy")][0]

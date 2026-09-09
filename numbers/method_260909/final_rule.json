@@ -151,7 +151,7 @@
   "n": 93
  },
  "K_lol": 0.9033334255218506,
- "sat_train_lol": 35.0,
+ "sat_train_lol": 25.15,
  "holm": {
   "m": 10,
   "table": [
@@ -225,5 +225,7 @@
    "LOL/snrnet"
   ],
   "method": "Holm step-down with running maximum (monotone)"
- }
+ },
+ "sat_train_lol_truncated120": 35.0,
+ "sat_train_lol_note": "The previous value came from the first 120 filenames of 485 (final_rule.py line reading sorted(glob)[:120]); the manuscript prints the full-sample 25 percent. Truncated value kept for traceability."
 }

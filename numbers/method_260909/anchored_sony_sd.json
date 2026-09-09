@@ -1,0 +1,9 @@
+{
+ "n": 598,
+ "base_mean": 24.438298441252588,
+ "base_sd": 3.512596728161536,
+ "anchored_mean": 24.643965443703895,
+ "anchored_sd": 3.425921990114164,
+ "sd_convention": "ddof=1, matching Table 1",
+ "source": "per-frame PSNR from repro/compare_methods.json plus per-frame anchored gain from concentration_frames.npz"
+}

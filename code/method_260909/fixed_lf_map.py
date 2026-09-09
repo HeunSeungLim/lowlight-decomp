@@ -7,7 +7,7 @@ GT = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_s
 OUT = os.path.dirname(os.path.abspath(__file__))
 B = int(sys.argv[1]) if len(sys.argv) > 1 else 16
 
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 def gt_of(scene, _c={}):
     if scene not in _c:
         f = [x for x in sorted(os.listdir(f"{GT}/{scene}")) if x.endswith(".npy")][0]

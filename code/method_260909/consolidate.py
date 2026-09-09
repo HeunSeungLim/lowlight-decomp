@@ -4,7 +4,7 @@ OUT = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", "
 CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; QL = [50,75,90,95,98,99,99.5,99.9]
 import sys; sys.path.insert(0, f"{R}/code"); from repro_measure import ssim_indep
-rows = json.load(open(f"{R}/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 def linfit(x, y):
     x=np.asarray(x,float); y=np.asarray(y,float); v=x.var()
     b = 0.0 if v<1e-18 else float(((x-x.mean())*(y-y.mean())).mean()/v); return b, float(y.mean()-b*x.mean())
@@ -16,7 +16,7 @@ def gt_of(s, _c={}):
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(model,i,r):
     if model=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
-    a=np.load(f"{R}/repro/cache_{model}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
+    a=np.load(f"{R}/numbers/cache_{model}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 def feats(model):
     f=f"{OUT}/tr_{model}.npz"
     if os.path.exists(f):

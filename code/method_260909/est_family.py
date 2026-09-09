@@ -4,7 +4,7 @@ import os, json, os, numpy as np
 OUT=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
 CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]; LAMS=[0.0,0.25,0.5,0.75,1.0]
-rows=json.load(open(f"{R}/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 def gt_of(s,_c={}):
     if s not in _c:
         f=[x for x in sorted(os.listdir(f"{GTD}/{s}")) if x.endswith(".npy")][0]
@@ -13,7 +13,7 @@ def gt_of(s,_c={}):
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(model,i,r):
     if model=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
-    a=np.load(f"{R}/repro/cache_{model}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
+    a=np.load(f"{R}/numbers/cache_{model}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 def feats(model):
     f=f"{OUT}/tr_{model}.npz"; z=np.load(f if os.path.exists(f) else f"{OUT}/calib2_cache.npz",allow_pickle=True)
     return z["QY"],z["QG"],z["A"],z["S"],z["BASE"]

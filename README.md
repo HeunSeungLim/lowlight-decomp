@@ -41,3 +41,13 @@ Audit. `paper_tables/audit_paper_numbers.py` extracts every number printed in th
 matches it against these dumps. It separates values matched against measurement dumps from values that
 match only a generated LaTeX file, and reports the second count, because a printed value cross-checked
 against its own generated copy is not independently verified.
+
+## Environment variables
+
+    LLDATA   benchmark root (Sony SID and LOL live under it)
+    LLCACHE  cached model outputs; default numbers/cache_retinexformer_sony
+    LLROOT   this repository root, for scripts that read numbers/ by absolute path
+
+Scripts under `code/method_260909/` read the per-frame dumps in `numbers/` and the caches under
+`$LLCACHE`. Set `LLROOT` to this directory before running them; the dumps a script expects are
+named in its docstring.
