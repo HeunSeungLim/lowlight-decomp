@@ -92,6 +92,13 @@ mac["nCONone"]=f"{CN['drop_top1']['scene_mean']:+.3f}"; mac["nCONfive"]=f"{CN['d
 mac["nCONtopfive"]=f"{CN['top5_share_of_scene_pooled_pct']:.0f}"
 TO=json.load(open(f"{M}/tost_equivalence.json"))
 mac["nCTOST"]=f"{TO['tost_margin']:.2f}"
+mac["nFZdcegain"]=f"{F['sony']['zerodcepp']['gain']:+.3f}"
+mac["nFZdcep"]=f"{F['sony']['zerodcepp']['p_raw']:.2f}"
+LOLRF=json.load(open(f"{M}/anchor_lol_retinexformer.json"))
+mac["nLOLRFloss"]=f"{LOLRF['raw']['psnr']-LOLRF['anchored']['psnr']:.2f}"
+QS181=json.load(open(f"{M}/qsat_train181.json"))
+for _q,_t in ((95,"a"),(98,"b"),(99,"c"),(99.5,"d")):
+    mac[f"nFq{_t}sat"]=f"{QS181['saturated_pct'][str(_q)]:.0f}"
 for _e,_t in (("0.033s","s"),("0.04s","m"),("0.1s","l")):
     mac[f"nFext{_t}"]=f"{RA[f'exp_{_e}']['t']:.3f}"
 

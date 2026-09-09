@@ -1,0 +1,30 @@
+{
+ "note": "Table 3's +anc. column, written as the sum it is: base PSNR plus the measured gain.",
+ "models": {
+  "retinexformer": {
+   "base": 24.438178689541054,
+   "gain": 0.20566700245130692,
+   "anchored": 24.64384569199236,
+   "printed": 24.64
+  },
+  "snrnet": {
+   "base": 22.86723401699718,
+   "gain": 0.05350276783005994,
+   "anchored": 22.92073678482724,
+   "printed": 22.92
+  },
+  "lightendiff": {
+   "base": 17.092581454813406,
+   "gain": 0.05028405126043847,
+   "anchored": 17.142865506073843,
+   "printed": 17.14
+  },
+  "zerodcepp": {
+   "base": 12.736862482463975,
+   "gain": -0.018358415854966007,
+   "anchored": 12.71850406660901,
+   "printed": 12.72
+  }
+ },
+ "source": "final_rule.json sony[model] base and gain; the column is their sum, not a separate measurement"
+}

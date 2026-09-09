@@ -463,10 +463,10 @@ def report():
     A("노출시간별 출력/GT 파워비:")
     A("")
     A("```")
-    A("주파수구간   " + "".join(f"{e:>12s}" for e in exps))
+    A("주파수구간   ".join(f"{e:>12s}" for e in exps))
     A("-" * (13 + 12 * len(exps)))
     for b in range(nr):
-        A(f"{names[b]:>12s} " + "".join(
+        A(f"{names[b]:>12s} ".join(
             f"{d['by_exposure'][e]['spec']['ratio_energy'][b]:12.4f}" for e in exps))
     A("```")
     A("")
@@ -497,8 +497,8 @@ def report():
     A("장별 최적 sigma 분포 (이득보정 출력 기준):")
     A("")
     A("```")
-    A("sigma  " + "".join(f"{k:>7s}" for k in o["argmax_hist_gainfix"]))
-    A("장수   " + "".join(f"{v:7d}" for v in o["argmax_hist_gainfix"].values()))
+    A("sigma  ".join(f"{k:>7s}" for k in o["argmax_hist_gainfix"]))
+    A("장수   ".join(f"{v:7d}" for v in o["argmax_hist_gainfix"].values()))
     A("```")
     A("")
     A("노출시간별:")
@@ -530,10 +530,10 @@ def report():
     A("노출시간별 비율:")
     A("")
     A("```")
-    A("입력휘도  " + "".join(f"{e:>12s}" for e in exps))
+    A("입력휘도  ".join(f"{e:>12s}" for e in exps))
     A("-" * (10 + 12 * len(exps)))
     for b, nm in enumerate(d["bin_names"]):
-        A(f"{nm:>8s}  " + "".join(
+        A(f"{nm:>8s}  ".join(
             f"{d['by_exposure'][e]['spec']['grad_ratio'][b]:12.4f}" for e in exps))
     A("```")
     A("")
@@ -557,10 +557,10 @@ def report():
     A("노출시간별 잔차 수평 자기상관:")
     A("")
     A("```")
-    A("lag    " + "".join(f"{e:>12s}" for e in exps))
+    A("lag    ".join(f"{e:>12s}" for e in exps))
     A("-" * (7 + 12 * len(exps)))
     for i, k in enumerate(d["lags"]):
-        A(f"{k:3d}    " + "".join(
+        A(f"{k:3d}    ".join(
             f"{d['by_exposure'][e]['spec']['autocorr']['res_h'][i]:12.4f}" for e in exps))
     A("```")
     A("")

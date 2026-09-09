@@ -1,21 +1,35 @@
 {
- "note": "The three protocol choices the title prices, each with the dump it is computed from.",
+ "note": "The three protocol choices the title prices, each with the dump it is computed from and the A/B it is a difference of.",
+ "verified_local": "2026-09-09 23:01 KST",
  "rectification": {
   "what": "reference-mean rectification: the output's brightness is set from the reference before scoring",
-  "sony_retinexformer": {
-   "psnr": 24.438298441252588,
-   "psnr_rectified": 25.60206275552153,
-   "gain_db": 1.163764314268942,
-   "source": "repro/compare_methods.json agg['Sony/retinexformer'] psnr_gtmean minus psnr"
-  },
-  "lol_gsad": {
-   "gain_db": null,
-   "source": "evidence.json gsad_rect_gain"
-  },
-  "uretinex_ratio": {
-   "gain_db": null,
-   "source": "evidence.json ur_ratio_gain"
-  }
+  "pairs": [
+   {
+    "model": "Retinexformer",
+    "benchmark": "Sony",
+    "plain": 24.438298441252588,
+    "rectified": 25.60206275552153,
+    "gain_db": 1.163764314268942,
+    "source": "repro/compare_methods.json agg['Sony/retinexformer'] psnr_gtmean minus psnr"
+   },
+   {
+    "model": "GSAD",
+    "benchmark": "LOL",
+    "plain": 22.808251613413724,
+    "rectified": 27.70647535807122,
+    "gain_db": 4.898223744657496,
+    "source": "evidence.json gsad round_gtmean minus round"
+   },
+   {
+    "model": "URetinex-Net",
+    "benchmark": "LOL",
+    "plain": 19.860033468893555,
+    "rectified": 21.329,
+    "gain_db": 1.468966531106446,
+    "source": "evidence.json uretinex gtratio minus fixed; the reference-derived ratio against the fixed ratio"
+   }
+  ],
+  "largest_gain_db": 4.898223744657496
  },
  "eight_bit_rule": {
   "what": "rounding versus truncation when saving 8-bit output",
@@ -36,8 +50,9 @@
   "cross_variant_psnr_trunc": 5.314988027120861,
   "frames": 598,
   "reported_on_its_own": 22.904,
-  "reported_source": "method_260909/cross_rendition_source.json (arXiv:2502.20272, table column 'Sony-Total-Dark')",
-  "source": "evidence.json cross_variant"
+  "is_a_difference": false,
+  "caveat": "5.29 is an absolute PSNR of one checkpoint on the other rendition, not a difference; the comparison is against the 22.904 that checkpoint reports on its own rendition. The other rendition is built with no gamma correction, so this is a cross-domain application, not a subtle convention difference.",
+  "source": "evidence.json cross_variant; the reported value in cross_rendition_source.json"
  },
- "caveat": "The three are priced on different sample sizes: rectification on 598 Sony frames and two LOL checkpoints, the 8-bit rule on three LOL checkpoints, the rendition on one checkpoint over 598 frames. They are not a single 18-pair sweep."
+ "sample_caveat": "Rectification is priced on one Sony model over 598 frames and two LOL checkpoints; the 8-bit rule on three LOL checkpoints; the rendition on one checkpoint over 598 frames. Not a single eighteen-pair sweep."
 }

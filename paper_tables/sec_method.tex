@@ -1,47 +1,65 @@
 \section{Proposed method}
 \label{sec:method}
 
-We propose a measurement procedure with two parts: a decomposition of a model's residual
-into named components, each priced by an oracle ceiling, and a band-wise identifiability test that says whether the
-residual in a band is information the model discards or information the rendition never carried. Let $y$ be the model output and $g$ the reference, both in $[0,255]$ per
-channel. Scores and correlations are computed per test frame and averaged; error shares are
-pooled over frames; block ceilings are PSNR without clipping so that a control can be subtracted; the gain
-terms are scored like the model.
+The procedure combines component-specific least-squares (LS) oracles with
+input--output reference-correlation diagnostics. Let $y$ be the model output and $g$
+the reference, in $[0,255]$. PSNR is computed per frame and averaged; squared-error
+shares are pooled over frames. Shares use \emph{unclipped} LS residuals. Reported
+global and channel-gain PSNR applies clipping and rounding \emph{after} the LS fit;
+it is not an optimum over clipped estimators. Spatial oracle gains use unclipped
+PSNR so their matched controls can be subtracted.
 
-\noindent\textbf{Gain terms.} The global term is the least-squares scalar
-$a^{\star}=\langle y,g\rangle/\langle y,y\rangle$ applied to the whole frame and the
-per-channel term repeats it per colour channel; their ceilings are the scores of
-$a^{\star}y$ and of the per-channel fit, and the share of squared error each removes is
-the tone and colour part of the residual.
+\noindent\textbf{Gain terms.} The global fit is
+$a^{\star}=\langle y,g\rangle/\langle y,y\rangle$; fitting it separately per channel
+adds the colour term. The respective reductions in unclipped squared error define
+the global and additional channel shares. We fit a scalar per square block of side
+$b$, and separately an offset or affine map. Extra parameters can improve even a
+noise fit, so each spatial gain over its whole-frame anchor is corrected by the
+gain of the same family against a structureless target of matched variance.
 
-\noindent\textbf{Spatially varying low-frequency term.} We partition the frame into
-square blocks of side $b$ and fit one scalar per block, $y\mapsto a_{\mathrm{blk}}y$, and
-separately an affine map $y\mapsto a_{\mathrm{blk}}y+b_{\mathrm{blk}}$. Decreasing $b$
-adds parameters and improves the fit even when there is nothing to fit, so for each $b$ we repeat the procedure against a structureless-noise target of the same
-variance and report the gain over the $b=\text{frame}$ anchor of the
-same family after subtracting that control.
+\noindent\textbf{Band terms and aggregation.} We Fourier-transform luminance and
+group frequencies into radial bands. After separately fitting each input or output
+frame's global brightness gain, let $P_{ij}$ and $G_{ij}$ be its and the reference's
+band powers, and $C_{ij}$ their real cross term. We report the pooled statistic
+\begin{equation}
+\rho_j=\frac{\sum_i C_{ij}}{\sqrt{(\sum_i P_{ij})(\sum_i G_{ij})}}.
+\label{eq:pooled}
+\end{equation}
+Each frame contributes once, so scenes with more captures contribute more terms and this is not the mean of per-frame correlations. For a single frame, a real scalar band fit leaves
+$G_{ij}(1-\rho_{ij}^{2})$; the same identity holds for concatenated bands with one
+common scalar. Per-frame oracle PSNR is evaluated separately, not inferred from
+pooled $\rho_j$. 
 
-\noindent\textbf{Band terms.} We take the two-dimensional spectrum of the luminance and
-group frequencies into radial bands. For band $j$ we report the output-to-reference power ratio
-and the correlation $\rho_j$ restricted to that band; under an optimal per-band amplitude
-rescaling the surviving fraction of band energy is $1-\rho_j^{2}$, so $\rho_j$, not the
-power ratio, bounds any amplitude correction.
+\noindent\textbf{Correlation labels and noise correction.} Compute
+$\rho_j^{\mathrm{in}}$ from the scalar-matched input by Eq.~\eqref{eq:pooled}.
+Using fixed diagnostic thresholds, label a band \emph{below floor} if
+$\rho_j^{\mathrm{in}}<0.20$; otherwise label it \emph{input advantage} if
+$\rho_j^{\mathrm{in}}-\rho_j>0.05$, and \emph{no advantage} otherwise.
+ Labelled energy shares sum the
+model's pooled RGB residual energy in the corresponding bands.
+For repeated captures, estimate input noise power $N_j$ from half the power of
+the difference between the first two captures of each scene--exposure group,
+scale by each frame's squared brightness gain and
+pool with the same frame weights as $P_j$, the mean input band power.
+The corrected input statistic is
+$\rho_j^{\mathrm{in}}/\sqrt{1-N_j/P_j}$.
+It assumes additive noise uncorrelated with the reference; $N_j/P_j>0.9$ cells are
+unstable. Nonpositive signal power or a corrected magnitude above one makes the
+correction invalid; such cells are not clipped into a label. Scene bootstrap draws \nBootN{} resamples of scenes with equal probability and retains
+all frames of each, so scenes weigh equally and frames within a scene do not; the frame-weighted and scene-weighted gains are \nFfrW{} and \nFscW{}\,dB.
+The correction is a sensitivity analysis under this noise model.
 
-\noindent\textbf{Identifiability.} Relative to the estimator class of a scalar brightness match followed by
-per-band rescaling, we compute the same $\rho_j$ between the reference and the input itself, after matching brightness with a single scalar so that no structure is
-altered, and call it $\rho^{\mathrm{in}}_j$. With the two thresholds fixed in the measurement code
-released with the paper, a band is \emph{unidentifiable} when $\rho^{\mathrm{in}}_j<0.20$, so the test cannot certify structure recovered there even where the model's
-correlation exceeds the floor (Table~\ref{tab:rho}); \emph{recoverable} when
-$\rho^{\mathrm{in}}_j-\rho_j>0.05$, so the band carries agreement the model discards;
-and \emph{exhausted} otherwise. This raw-input check is necessary but easy to pass, so we also report a noise-corrected
-ceiling: the input's noise power $N_j$ per band is measured from
-frame-to-frame differences and $\rho^{\mathrm{in}}_j$ is corrected to
-$\rho^{\mathrm{in}}_j/\sqrt{1-N_j/P_j}$, $P_j$ the input band power, which assumes
-additive noise uncorrelated with the reference; cells with $N_j/P_j>0.9$ are unstable
-under this correction and are reported as such.
+\noindent\textbf{Predictability of the local term.} Log input block mean, input variance and the
+reference-normalised output block mean predict within-frame, energy-weighted centred block gains,
+cross-fitted by scene so no frame is predicted by its own scene. Adding the log reference mean is a
+reference-assisted comparison, unavailable at inference, and a convolutional predictor tests richer
+spatial features.
 
-\noindent\textbf{Predictability of the local term.} A ceiling obtained with the reference in hand is not a method, so for the block term we
-ask whether the oracle coefficients can be predicted at inference: we regress the
-within-frame centred block coefficients on the input block mean, the input block variance
-and the output block mean, cross-fitting by scene so that no frame of a scene is used to fit its own prediction, and
-as a reference point repeat the fit with the reference block mean included, which bounds what a block-level summary can explain.
+\noindent\textbf{A highlight-anchored correction.} The global term above is an oracle, but the diagnosis makes it
+actionable under a checkable precondition. Well-exposed long-exposure references saturate at their upper percentiles: at
+$q=\nFQ{}$, \nFsatS{} percent of the Sony training references already reach the 8-bit ceiling, so the anchor is that
+ceiling, whose value needs no data. We therefore rescale each output by $1/Q_q(y)$, with $Q_q$ its $q$th
+percentile, clamped to $[0.5,2]$, a guard that never binds here; the rule needs no reference, calibration set or per-scene fitting. This is the one-sided,
+single-parameter case of percentile-based colour balance~\cite{scb2011}, an upper-percentile anchor of the kind used to estimate atmospheric light~\cite{dcp2011} and, on the input, to amplify it~\cite{irlle2026}; we divide a trained output instead. The precondition is measurable on any benchmark by
+the fraction of training references saturated at $q$, and we report the correction where that fraction is high and where it
+is not. It is measured on training references and transfers: all \nNSCENE{} Sony test references saturate at \nFQ{} as well. We report its sensitivity to $q$ rather than tuning it: $q=\nFqaK{}$, \nFqbK{}, \nFqcK{}, \nFqdK{}, \nFQ{}, \nFqeK{} and \nFqfK{} give \nFqa{}, \nFqb{}, \nFqc{}, \nFqd{}, \nFRetgain{}, \nFqe{} and \nFqf{}\,dB. Percentiles are non-decreasing in $q$ and every training reference saturates at \nFQ{}, so the precondition holds for every $q\ge\nFQ{}$--against \nFqasat{} to \nFqdsat{} percent saturated at \nFqaK{} to \nFqdK{}--and we take \nFQ{}, the smallest at which every training reference saturates.

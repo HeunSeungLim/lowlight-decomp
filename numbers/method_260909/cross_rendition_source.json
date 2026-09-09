@@ -19,6 +19,6 @@
   "previous_text": "Sony-Total-Dark. This dataset is a conversion of a SID subset. To make this dataset more challenging we convert the raw format images to sRGB with gamma correction, resulting in images with low brightness.",
   "what_was_wrong": "The quote was reconstructed from two-column text truncated by the reading command, so 'with no gamma correction' became 'with gamma correction' and 'extreme darkness' became 'low brightness'. The field was nevertheless labelled verbatim and verified.",
   "how_verified_now": "pdftotext -raw on the stored PDF, whitespace-normalised, full sentence read without truncation",
-  "effect_on_the_claim": "None against it: the true text names a stronger difference (no gamma curve at all), so the two-rendition claim and the 5.29 dB cross-rendition score stand."
+  "effect_on_the_claim": "The existence claim is strengthened: the other rendition is built with no gamma curve at all. But the reading of 5.29 dB changes with it. It is not a subtle pixel-convention gap; it is one checkpoint applied across renditions whose transfer functions differ in kind, which is also why that residual is excluded from the decomposition."
  }
 }

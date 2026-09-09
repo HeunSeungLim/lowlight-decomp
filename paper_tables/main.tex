@@ -1,46 +1,58 @@
 \documentclass{article}
 \usepackage{spconf,amsmath,amssymb,graphicx,booktabs,microtype,url,balance}
+\usepackage{mathptmx}
 \makeatletter\newcommand{\inputrows}[1]{\@@input #1 }\makeatother
-\newcommand{\needcheck}[1]{\textbf{[CHECK: #1]}}
 
-\title{ERROR DECOMPOSITION AND BAND-WISE IDENTIFIABILITY\\ OF EXTREME-DARK IMAGE ENHANCEMENT}
+\title{PRICING THE PROTOCOL AND DECOMPOSING THE RESIDUAL\\ IN EXTREME-DARK IMAGE ENHANCEMENT}
 \name{\begin{tabular}{c}Heunseung Lim$^{*}$, Jinhoi Kim, Youngmin Son, Jihyeon Ryu,\\ Seongwoong Kim, and Gichul Yoo\end{tabular}%
 \thanks{$^{*}$Corresponding author: Heunseung Lim.}}
 \address{SK intellix}
 
-\setlength{\textfloatsep}{2pt plus 1pt minus 1pt}
+\setlength{\textfloatsep}{1pt plus 1pt minus 1pt}
 \setlength{\floatsep}{3pt plus 2pt minus 2pt}
 \setlength{\intextsep}{3pt plus 1pt minus 1pt}
-\setlength{\dbltextfloatsep}{2pt plus 1pt minus 1pt}
-\setlength{\dblfloatsep}{4pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{1pt plus 1pt minus 1pt}
+\setlength{\dblfloatsep}{2pt plus 1pt minus 1pt}
 \makeatletter
 \renewcommand\section{\@startsection{section}{1}{\z@}{-1.3ex plus -0.5ex minus -0.2ex}{0.5ex plus 0.2ex}{\reset@font\large\bf\centering}}
 \makeatother
 \setlength{\abovecaptionskip}{1pt}
 \setlength{\belowcaptionskip}{0pt}
-\renewcommand{\arraystretch}{0.90}
+\renewcommand{\arraystretch}{0.79}
 
 \hyphenation{CIDNet Retinexformer LightenDiffusion LLFormer}
 \input{numbers}
+\input{numbers_method}
+\input{numbers_final}
+\let\origthebibliography\thebibliography
+\renewcommand{\thebibliography}[1]{\origthebibliography{#1}%
+  \setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}}
 \begin{document}
 \ninept
 \maketitle
 
 \begin{abstract}
-Extreme-dark enhancement is scored by one number that does not say which part of the residual moved. We decompose a model's residual into a global gain, a per-channel gain, a spatially varying low-frequency term and radial bands, price each with an oracle ceiling (control-corrected where spatial), and ask band by band whether the residual is information the model discards or information the rendition never carried. On a Sony sRGB benchmark the tone and colour ceiling is real but bounded, the structural term is a collapse of high-frequency correlation, and no band carries single-frame agreement the model discards beyond a small share after noise correction; on a second benchmark a different term dominates. Averaging frames raises the input's correlation, yet the single-frame model turns the average into a larger low-frequency error. No predictor we tried recovers the single-frame block gain field. Protocol choices move the score as much as inter-method margins.
+Scores reported for extreme-dark enhancement are not comparable across papers: three protocol
+choices---rectifying the output's brightness from the reference, the rule for converting to eight
+bits, and which rendition is used---move them, rectification by nearly five decibels. We rerun eighteen method--benchmark pairs under one protocol, price the three choices on the checkpoints each applies to, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark,
+the spatially varying low-frequency term is common to all, and the global term is a generalisation
+gap: its oracle gain is near one on a model's training scenes and dispersed on new ones. The
+diagnosis prescribes one correction with a checkable precondition, rescaling each output so its
+upper percentile reaches the ceiling well-exposed references saturate. It gains where the
+precondition holds and harms where it fails, and we report both.
 \end{abstract}
 \begin{keywords}
-Low-light image enhancement, error decomposition, identifiability, evaluation protocol, image restoration
+Evaluation protocol, low-light image enhancement, error decomposition, band-wise correlation, image restoration
 \end{keywords}
 
 \input{sec_intro}
 \IfFileExists{fig_workflow.pdf}{%
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{fig_workflow.pdf}
+\includegraphics[width=0.98\textwidth]{fig_workflow.pdf}
 \caption{Overview, worst $0.033$\,s Sony frame (input $\times20$): the residual after the oracle global gain is split into low-frequency, per-block gain
-and high-frequency parts (real maps from this frame), and every radial band is labelled by whether the input still carries
-its structure (red: unidentifiable, grey: exhausted; green would mark recoverable; no band reaches it on this frame). Bottom: the three measurements over the benchmark (LF/HF: low-/high-frequency error energy; the $0.1$\,s input
+and high-frequency parts (real maps from this frame), and radial bands compare input and output reference correlation
+(red: below floor; grey: no advantage; green: input advantage, absent on this frame). Labels describe this correlation test. Bottom: benchmark measurements (LF/HF: low-/high-frequency error energy; the $0.1$\,s input
 curves use the $36$ groups with at least eight frames).}
 \label{fig:workflow}
 \end{figure*}}{}
@@ -48,6 +60,7 @@ curves use the $36$ groups with at least eight frames).}
 \input{sec_results}
 \input{sec_discussion}
 
+\clearpage
 \balance
 \emergencystretch=3em
 \bibliographystyle{IEEEbib}

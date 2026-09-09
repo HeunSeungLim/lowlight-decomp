@@ -63,7 +63,7 @@ for anchored in (False, True):
     pf = lambda v: float(np.mean([10 * np.log10(255.0 ** 2 / x) for x in v]))
     d16 = (pf(per["b16"]) - pf(per["g1"])) - (pf(per["wb16"]) - pf(per["wg1"]))
     res["anchored" if anchored else "raw"] = dict(
-        n=len(names), psnr=float(np.mean(ps)), psnr_sd=float(np.std(ps)), ssim=float(np.mean(ss)),
+        n=len(names), psnr=float(np.mean(ps)), psnr_sd=float(np.std(ps, ddof=1)), ssim=float(np.mean(ss)),
         share_global_pct=sq["gl"] / sq["e0"] * 100, share_channel_pct=sq["ch"] / sq["e0"] * 100,
         share_residual_pct=(sq["e0"] - sq["gl"] - sq["ch"]) / sq["e0"] * 100, d16=d16)
     r = res["anchored" if anchored else "raw"]

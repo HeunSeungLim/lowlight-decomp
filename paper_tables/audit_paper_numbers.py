@@ -9,6 +9,11 @@ values we quote on purpose).
 import json, re, subprocess, sys, os
 
 P = os.path.dirname(os.path.abspath(__file__))
+def _src(path):
+    """번들 안에 같은 이름이 있으면 그것을 쓴다. 고정본이 자기 안에서 돌게 하는 배선."""
+    local = os.path.join(P, os.path.basename(path))
+    return local if os.path.exists(local) else path
+
 E = json.load(open(os.path.join(P, "evidence.json")))
 
 def leaves(o, acc):
@@ -28,9 +33,9 @@ for v in list(vals):
 for r in E["ladder"]:
     for k in ("gain", "gain_dof", "affine", "affine_dof"):
         if r.get(k) is not None: derived.append(r[k])
-for _f in (os.environ.get("LLROOT", ".") + "/repro/diag_sid_identifiability.json",
-           os.environ.get("LLROOT", ".") + "/repro/diag_sid_lowfreq.json"):
-    try: _d = json.load(open(_f))
+for _f in (os.environ.get("LLROOT", ".") + "/numbers/diag_sid_identifiability.json",
+           os.environ.get("LLROOT", ".") + "/numbers/diag_sid_lowfreq.json"):
+    try: _d = json.load(open(_src(_f)))
     except Exception: continue
     def _scal(o, acc):                       # 배열은 제외: 프레임별 값을 다 넣으면 검사가 무의미해진다
         if isinstance(o, dict):
@@ -92,7 +97,7 @@ DECLARED = {
 # figure script's own record rather than from the prose
 _fq = os.path.join(P, "fig_qual_numbers.json")
 if os.path.exists(_fq):
-    for v in json.load(open(_fq)).values():
+    for v in json.load(open(_src(_fq))).values():
         derived += [v["psnr"], v["psnr_shown"], v["gain"]]
 
 for _extra in (os.environ.get("LLROOT", ".") + "/method_260909/fix_v52.json",
@@ -104,14 +109,31 @@ for _extra in (os.environ.get("LLROOT", ".") + "/method_260909/fix_v52.json",
                os.environ.get("LLROOT", ".") + "/method_260909/precond_transfer.json",
                os.environ.get("LLROOT", ".") + "/method_260909/affine_oracle.json",
                os.environ.get("LLROOT", ".") + "/method_260909/concentration.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/tost_equivalence.json"):
+               os.environ.get("LLROOT", ".") + "/method_260909/tost_equivalence.json",
+               os.environ.get("LLROOT", ".") + "/method_260909/decomp_anchored.json",
+               os.environ.get("LLROOT", ".") + "/method_260909/anchor_lol_retinexformer.json",
+               os.environ.get("LLROOT", ".") + "/method_260909/protocol_pricing.json",
+               os.environ.get("LLROOT", ".") + "/method_260909/unresolved_cells.json",
+               os.environ.get("LLROOT", ".") + "/method_260909/anchored_sony_sd.json",
+               os.environ.get("LLROOT", ".") + "/method_260909/tab3_anchored_column.json",
+               os.environ.get("LLROOT", ".") + "/method_260909/qsat_train181.json"):
     if os.path.exists(_extra):
+        def _strip_printed(o):
+            """영수증이 담고 있는 인쇄값 사본은 대조 출처가 될 수 없다."""
+            if isinstance(o, dict):
+                return {k: _strip_printed(v) for k, v in o.items()
+                        if k not in ("printed", "table_reference", "measured_printed", "reported_source",
+                                     "reported_on_its_own", "value", "previous_text", "correction",
+                                     "psnr_sd_ddof0", "sat_train_lol_truncated120",
+                                     "previous_scope_prefix0_only")}
+            if isinstance(o, list): return [_strip_printed(v) for v in o]
+            return o
         def _lvx(o, acc):
             if isinstance(o, dict): [_lvx(v, acc) for v in o.values()]
             elif isinstance(o, list): [_lvx(v, acc) for v in o]
             elif isinstance(o, (int, float)): acc.append(float(o))
             return acc
-        for v in _lvx(json.load(open(_extra)), []):
+        for v in _lvx(_strip_printed(json.load(open(_src(_extra)))), []):
             derived += [v, abs(v), round(v, 1), round(v, 2), round(abs(v), 2), round(v, 3), float(round(v)), float(round(abs(v)))]
 _fe = os.path.join(P, "final_evidence.json")                  # 최종 규칙 실측값·백분위 라벨
 if os.path.exists(_fe):
@@ -123,7 +145,7 @@ if os.path.exists(_fe):
             try: acc.append(float(o))
             except ValueError: pass
         return acc
-    _fej = json.load(open(_fe)); _fej.pop("printed", None)      # 인쇄값이 스스로를 검증하지 않도록 제외
+    _fej = _strip_printed(json.load(open(_src(_fe)))); _fej.pop("printed", None)      # 인쇄값이 스스로를 검증하지 않도록 제외
     for v in _lv4(_fej, []):
         derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), round(v, 4)]
         if abs(v - round(v)) < 1e-9: ints_extra = int(round(v))
@@ -134,7 +156,7 @@ if os.path.exists(_an):
         elif isinstance(o, list): [_lv3(v, acc) for v in o]
         elif isinstance(o, (int, float)): acc.append(float(o))
         return acc
-    for v in _lv3(json.load(open(_an)), []):
+    for v in _lv3(_strip_printed(json.load(open(_src(_an)))), []):
         derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), v * 100]
 _f2 = os.path.join(P, "fig_cmp2_numbers.json")
 if os.path.exists(_f2):
@@ -143,7 +165,7 @@ if os.path.exists(_f2):
         elif isinstance(o, list): [_lv2(v, acc) for v in o]
         elif isinstance(o, (int, float)): acc.append(float(o))
         return acc
-    for v in _lv2(json.load(open(_f2)), []):
+    for v in _lv2(json.load(open(_src(_f2))), []):
         derived += [v, round(v, 1), round(v, 2), round(v, 3)]
 _me = os.path.join(P, "method_evidence.json")            # 우리 방법 실측값
 if os.path.exists(_me):
@@ -152,11 +174,11 @@ if os.path.exists(_me):
         elif isinstance(o, list): [_lv(v, acc) for v in o]
         elif isinstance(o, (int, float)): acc.append(float(o))
         return acc
-    for v in _lv(json.load(open(_me)), []):
+    for v in _lv(json.load(open(_src(_me))), []):
         derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), v * 100, v / 100]
 _dg = os.path.join(P, "diag_gap.json")
 if os.path.exists(_dg):
-    for v in json.load(open(_dg)).values():
+    for v in json.load(open(_src(_dg))).values():
         derived += [float(v), round(float(v), 3), round(float(v), 4)]
 _fc = os.path.join(P, "fig_cmp_numbers.json")
 if os.path.exists(_fc):
@@ -165,7 +187,7 @@ if os.path.exists(_fc):
         elif isinstance(o, list): [ _leaves(v, acc) for v in o ]
         elif isinstance(o, (int, float)): acc.append(float(o))
         return acc
-    for v in _leaves(json.load(open(_fc)), []):
+    for v in _leaves(json.load(open(_src(_fc))), []):
         derived += [v, round(v, 1), round(v, 2)]
 
 txt = subprocess.run(["pdftotext", os.path.join(P, "main.pdf"), "-"],
@@ -187,7 +209,9 @@ def only_declared_tex(x):
 
 unmatched = sorted({x for x in found if not known(x) and not only_declared_tex(x)})
 weak = sorted({x for x in found if only_declared_tex(x)})
-print(f"독립 검증: 측정 덤프로 대조된 값 {len({x for x in found if known(x)})}개, "
+_meas = {x for x in found if any(abs(v - x) < max(5e-4, abs(x) * 1e-4) for v in derived)}
+_decl = {x for x in found if x not in _meas and any(abs(v - x) < 5e-4 for v in DECLARED)}
+print(f"독립 검증: 측정 덤프로 대조된 값 {len(_meas)}개, 선언된 인용값 {len(_decl)}개, "
       f"생성된 tex 사본으로만 대조된 값 {len(weak)}개 (독립 아님)")
 if weak:
     print("  tex 사본에만 의존하는 값:", weak[:24], "..." if len(weak) > 24 else "")
@@ -195,14 +219,24 @@ if weak:
 # integers (2-4 digits) printed in the prose, outside citations, years and section numbers
 INT_DECLARED = {95: "percentile label", 98: "percentile label", 99: "percentile label", 16: "block side (px)", 32: "ladder block side", 64: "ladder block side", 128: "ladder block side", 256: "ladder block side",
                 12: "Zero-DCE++ size multiple", 11: "number of radial bands", 20: "20 dB level in the prose", 10: "10 pixels / percent scale",
-                15: "LOL test frames", 50: "Sony scenes", 100: "percent scale", 255: "8-bit range"}
+                15: "LOL test frames", 50: "Sony scenes", 100: "percent scale", 255: "8-bit range", 512: "Sony frame height", 960: "Sony frame width"}
 ints_found = [int(x) for x in re.findall(r"(?<![\w.\[\-\u2013/:])(\d{2,4})(?![\w\]%\u2013\-/:]|\.\d)", body)]   # a sentence-final dot is not a decimal point
 ints_found = [v for v in ints_found if not (1900 <= v <= 2100)]
+import math as _math
 ints_known = {int(round(v)) for v in derived if abs(v - round(v)) < 1e-9}
-ints_known |= {int(x) for x in re.findall(r"\{(\d+)\}\s*$", open(os.path.join(P, "numbers.tex")).read(), re.M)}
+# 본문이 "바깥쪽 반올림" 이라고 밝힌 경계만 유도한다: 제곱오차 몫과 저주파 몫 계열
+_bounds = []
+for _row in E.get("cmp_rows", []):
+    for _k in ("glob", "chan", "resid", "lf"):
+        if isinstance(_row, dict) and isinstance(_row.get(_k), (int, float)): _bounds.append(float(_row[_k]))
+for _m, _v in (E.get("lol") or {}).items():
+    if isinstance(_v, dict) and isinstance(_v.get("lf"), (int, float)): _bounds.append(float(_v["lf"]))
+ints_known |= {int(_math.floor(v)) for v in _bounds}
+ints_known |= {int(_math.ceil(v)) for v in _bounds}
+ints_declared_tex = {int(x) for x in re.findall(r"\{(\d+)\}\s*$", open(os.path.join(P, "numbers.tex")).read(), re.M)}
 for f in ("tab_rho_rows.tex", "tab_cmp_rows.tex"):
     p = os.path.join(P, f)
-    if os.path.exists(p): ints_known |= {int(x) for x in re.findall(r"(?<![\d.])(\d+)(?![\d.])", open(p).read())}
+    if os.path.exists(p): ints_declared_tex |= {int(x) for x in re.findall(r"(?<![\d.])(\d+)(?![\d.])", open(p).read())}
 ints_unmatched = sorted({v for v in ints_found if v not in ints_known and v not in INT_DECLARED})
 
 # self-report of the matching width: how much of [0, 100) the tolerance windows cover, and how many prose values are ambiguous

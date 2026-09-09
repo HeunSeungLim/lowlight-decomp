@@ -649,7 +649,7 @@ def report():
         kl = [x for x in [1, 2, 4, 8] if x <= kf]
         A(f"{e} (fix 코호트, KFIX={kf})")
         A("```")
-        A("주파수구간 " + "".join(f"  입력평균 k={k}" for k in kl) +
+        A("주파수구간 ".join(f"  입력평균 k={k}" for k in kl) +
           "".join(f"  출력평균 k={k}" for k in kl) +
           "".join(f"   rho_in k={k}" for k in kl) + " | 입증가 출증가 in증가")
         A("-" * (11 + 14 * len(kl) * 3 + 24))
@@ -660,8 +660,8 @@ def report():
             for k in kl:
                 q = (ident or {}).get("input", {}).get(f"{e}|pw|{k}|fix")
                 ri.append(q["rho_luma"][b] if q else float("nan"))
-            A(f"{names[b]:>10s}" + "".join(f"{v:14.4f}" for v in ro) +
-              "".join(f"{v:14.4f}" for v in rw) + "".join(f"{v:14.4f}" for v in ri) +
+            A(f"{names[b]:>10s}".join(f"{v:14.4f}" for v in ro) +
+              "".join(f"{v:14.4f}" for v in rw).join(f"{v:14.4f}" for v in ri) +
               f" | {ro[-1]-ro[0]:+6.3f} {rw[-1]-rw[0]:+6.3f} {ri[-1]-ri[0]:+6.3f}")
         A("```")
         A("")
@@ -714,7 +714,7 @@ def report():
                          resid=q["e_resid"], dlo=q["e_dlo"], dhi=q["e_dhi"])
                 if b0 is None:
                     b0 = v
-                A(f"{e:7s} {k:3d} |" + "".join(f"{100*v[t]/b0[t]:10.2f}"
+                A(f"{e:7s} {k:3d} |".join(f"{100*v[t]/b0[t]:10.2f}"
                                                for t in ["tot", "glob", "chan", "resid",
                                                          "dlo", "dhi"]))
             A("")

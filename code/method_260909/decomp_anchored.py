@@ -6,7 +6,8 @@
 """
 import os, json, os, sys, numpy as np, torch
 M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", ".")
-sys.path.insert(0, f"{R}/release_v2/code")
+for _c in (f"{R}/code", f"{R}/release_v2/code", os.path.join(os.path.dirname(M), "code")):
+    if os.path.isdir(_c) and _c not in sys.path: sys.path.insert(0, _c)
 from diag_sid_lowfreq import block_index, block_fit
 CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
 GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"

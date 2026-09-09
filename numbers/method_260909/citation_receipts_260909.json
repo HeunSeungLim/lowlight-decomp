@@ -1,7 +1,7 @@
 {
  "2605.28605": {
   "title": "Internally Referenced Low-Light Enhancement",
-  "authors": "He, Peiyuan and Wang, Hainuo and Liu, Hengxing and Li, Mingjia and Gu, Xiaojie",
+  "authors": "He, Peiyuan and Wang, Hainuo and Liu, Hengxing and Li, Mingjia and Guo, Xiaojie",
   "year": 2026,
   "arxiv": "2605.28605",
   "verbatim_from_body": "quantile-based robust white balancing; by isolating the top q-th quantile luminance Q_q(.) of the input I_low; local maximum Imax to yield a rough amplification map G_rough = 1/(Imax + eps)",

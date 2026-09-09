@@ -681,15 +681,15 @@ def report():
             continue
         A(f"{e}  (fix 코호트 k=1 표본 {gin(e,'scalar',ks[0],'fix')['n']}장, KFIX={d['kfix'][e]})")
         A("```")
-        A("주파수구간  " + "".join(f"  scalar k={k}" for k in ks) +
-          "  scalar_inf |" + "".join(f"      pw k={k}" for k in ks) + "      pw_inf")
+        A("주파수구간  ".join(f"  scalar k={k}" for k in ks) +
+          "  scalar_inf |".join(f"      pw k={k}" for k in ks) + "      pw_inf")
         A("-" * (12 + 12 * (len(ks) + 1) * 2 + 2))
         es = ext.get((e, "scalar")); ep = ext.get((e, "pw"))
         for b in range(nb):
             r1 = [gin(e, "scalar", k, "fix")["rho_luma"][b] for k in ks]
             r2 = [gin(e, "pw", k, "fix")["rho_luma"][b] for k in ks]
-            A(f"{names[b]:>12s}" + "".join(f"{v:12.4f}" for v in r1) +
-              f"{es[0][b]:12.4f}" + " |" + "".join(f"{v:12.4f}" for v in r2) +
+            A(f"{names[b]:>12s}".join(f"{v:12.4f}" for v in r1) +
+              f"{es[0][b]:12.4f}" + " |".join(f"{v:12.4f}" for v in r2) +
               f"{ep[0][b]:12.4f}")
         A("```")
         A("")
@@ -716,7 +716,7 @@ def report():
             if not rs:
                 continue
             spread = float(np.max(np.max(np.array(rs), 0) - np.min(np.array(rs), 0)))
-            A(f"{e:7s} {v:8s}" + "".join(f"{r[10]:9.4f}" for r in rs) +
+            A(f"{e:7s} {v:8s}".join(f"{r[10]:9.4f}" for r in rs) +
               " " * (9 * (4 - len(rs))) + f" | {spread:14.4f}")
     A("```")
     A("")
@@ -777,7 +777,7 @@ def report():
             ng.append(q["n"] if q else 0)
         if ng[0] == 0:
             continue
-        A(f"{e:7s}" + "".join(("%9.3f" % v) if v == v else "        -" for v in vs) +
+        A(f"{e:7s}".join(("%9.3f" % v) if v == v else "        -" for v in vs) +
           "  | " + ",".join(str(x) for x in ng))
     A("```")
     A("")
@@ -806,7 +806,7 @@ def report():
     A("본체는 rho 비교이고 dB 는 같은 척도로 환산해 크기를 보는 참고값이다.")
     A("")
     A("```")
-    A("대상                                     전체     " + "".join(f"{e:>10s}" for e in exps))
+    A("대상                                     전체     ".join(f"{e:>10s}" for e in exps))
     A("---------------------------------------------------------------------------")
 
     def line(tag, get):
@@ -816,7 +816,7 @@ def report():
                 vals.append(f"{get(e):10.3f}")
             except Exception:
                 vals.append(f"{'-':>10s}")
-        A(f"{tag:36s}" + "".join(vals))
+        A(f"{tag:36s}".join(vals))
 
     line("(i) 입력 scalar, 스칼라 이득만", lambda e: gin(e, "scalar", 1)["psnr_plain"])
     line("(i) 입력 scalar + 대역이득 최적", lambda e: gin(e, "scalar", 1)["psnr_bandls"])
@@ -846,7 +846,7 @@ def report():
         for v in ["scalar", "pw"]:
             ks = [k for k in d["ks"] if gin(e, v, k, "fix")]
             vs = [gin(e, v, k, "fix")["psnr_bandls"] for k in ks]
-            A(f"{e:7s} {v:8s}" + "".join(f"{x:9.3f}" for x in vs) +
+            A(f"{e:7s} {v:8s}".join(f"{x:9.3f}" for x in vs) +
               " " * (9 * (4 - len(vs))) + f" | {vs[-1]-vs[0]:+9.3f}")
     A("```")
     A("")
