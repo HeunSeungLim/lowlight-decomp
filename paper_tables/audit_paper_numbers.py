@@ -31,16 +31,21 @@ def _strip_pool(o):
         return [_strip_pool(v) for v in o]
     return o
 
+_MISSING_RECEIPTS = []
+
 def _src(path):
-    """영수증을 찾는 순서. 고정본(같은 폴더)과 공개본(numbers/ 아래) 어느 배치에서도 돌게 한다."""
+    """영수증을 찾는 순서. 고정본(원고 옆)과 공개본(numbers/ 아래) 어느 배치에서도 돌게 한다.
+    못 찾으면 저자 트리로 넘어가지 않는다 — 그러면 남의 기계에서만 조용히 실패하기 때문이다."""
     b = os.path.basename(path)
     for cand in (os.path.join(P, b),
                  os.path.join(P, "..", "numbers", "method_260909", b),
                  os.path.join(P, "..", "numbers", b),
-                 os.path.join(P, "..", "method_260909", b)):
+                 os.path.join(P, "..", "method_260909", b),
+                 os.path.join(P, "..", "repro", b)):
         if os.path.exists(cand):
             return cand
-    return path
+    _MISSING_RECEIPTS.append(b)
+    return os.path.join(P, b)
 
 E = json.load(open(os.path.join(P, "evidence.json")))
 
@@ -61,8 +66,8 @@ for v in list(vals):
 for r in E["ladder"]:
     for k in ("gain", "gain_dof", "affine", "affine_dof"):
         if r.get(k) is not None: derived.append(r[k])
-for _f in ("/home/user/lowlight_paper/repro/diag_sid_identifiability.json",
-           "/home/user/lowlight_paper/repro/diag_sid_lowfreq.json"):
+for _f in ("diag_sid_identifiability.json",
+           "diag_sid_lowfreq.json"):
     try: _d = json.load(open(_src(_f)))
     except Exception: continue
     def _scal(o, acc):                       # 배열은 제외: 프레임별 값을 다 넣으면 검사가 무의미해진다
@@ -79,8 +84,8 @@ def _leaves_all(o, acc):
     elif isinstance(o, list): [_leaves_all(v, acc) for v in o]
     elif isinstance(o, (int, float)) and not isinstance(o, bool): acc.append(float(o))
     return acc
-for _v in _leaves_all(E, []):          # 진단 측정 덤프 전량 (인쇄값 사본이 아니라 측정 결과)
-    derived += [_v, abs(_v), round(_v, 1), round(_v, 2), round(_v, 3)]
+for _v in _leaves_all(_strip_pool(E), []):   # 진단 측정 덤프 전량 (설정값은 _strip_pool 이 걸러낸다)
+    derived += [_v, round(_v, 1), round(_v, 2), round(_v, 3)]
 
 declared_tex = []   # 생성된 tex: 인쇄값의 사본이므로 독립 출처가 아니다
 for f in ("tab_rho_rows.tex", "tab_cmp_rows.tex"):
@@ -121,33 +126,26 @@ DECLARED = {
     15.0: "LOL frames",
 }
 
-# numbers printed on the qualitative figure are real per-frame scores; take them from the
-# figure script's own record rather than from the prose
-_fq = os.path.join(P, "fig_qual_numbers.json")
-if os.path.exists(_src(_fq)):
-    for v in json.load(open(_src(_fq))).values():
-        derived += [v["psnr"], v["psnr_shown"], v["gain"]]
-
-for _extra in ("/home/user/lowlight_paper/method_260909/fix_v52.json",
-               "/home/user/lowlight_paper/method_260909/robust_acting.json",
-               "/home/user/lowlight_paper/method_260909/qsweep_rule.json",
-               "/home/user/lowlight_paper/method_260909/final_rule.json",
-               "/home/user/lowlight_paper/method_260909/shares.json",
-               "/home/user/lowlight_paper/method_260909/controls_v58.json",
-               "/home/user/lowlight_paper/method_260909/precond_transfer.json",
-               "/home/user/lowlight_paper/method_260909/affine_oracle.json",
-               "/home/user/lowlight_paper/method_260909/concentration.json",
-               "/home/user/lowlight_paper/method_260909/tost_equivalence.json",
-               "/home/user/lowlight_paper/method_260909/decomp_anchored.json",
-               "/home/user/lowlight_paper/method_260909/anchor_lol_retinexformer.json",
-               "/home/user/lowlight_paper/method_260909/protocol_pricing.json",
-               "/home/user/lowlight_paper/method_260909/unresolved_cells.json",
-               "/home/user/lowlight_paper/method_260909/anchored_sony_sd.json",
-               "/home/user/lowlight_paper/method_260909/tab3_anchored_column.json",
-               "/home/user/lowlight_paper/method_260909/qsat_train181.json",
-               "/home/user/lowlight_paper/method_260909/protocol_sweep.json",
-               "/home/user/lowlight_paper/method_260909/multiframe_drop.json",
-               "/home/user/lowlight_paper/method_260909/bootstrap_config.json"):
+for _extra in ("fix_v52.json",
+               "robust_acting.json",
+               "qsweep_rule.json",
+               "final_rule.json",
+               "shares.json",
+               "controls_v58.json",
+               "precond_transfer.json",
+               "affine_oracle.json",
+               "concentration.json",
+               "tost_equivalence.json",
+               "decomp_anchored.json",
+               "anchor_lol_retinexformer.json",
+               "protocol_pricing.json",
+               "unresolved_cells.json",
+               "anchored_sony_sd.json",
+               "tab3_anchored_column.json",
+               "qsat_train181.json",
+               "protocol_sweep.json",
+               "multiframe_drop.json",
+               "bootstrap_config.json"):
     if os.path.exists(_src(_extra)):
         def _lvx(o, acc):
             if isinstance(o, dict): [_lvx(v, acc) for v in o.values()]
@@ -305,7 +303,10 @@ for _bt in ("main.tex", "sec_intro.tex", "sec_method.tex", "sec_results.tex", "s
 _regen_ran, _regen_bad, _regen_skip = [], [], []
 for _g, _outs in _GEN:
     if not os.path.exists(os.path.join(P, _g)):
-        _regen_skip.append((_g, "생성기 없음")); continue
+        # 생성기를 지우면 검사가 사라지는 구멍을 막는다: 산출물이 있는데 생성기가 없으면 실패다
+        if any(os.path.exists(os.path.join(P, _o)) for _o in _outs):
+            _regen_bad.append((_g, "생성기가 없는데 산출물은 있다")); continue
+        _regen_skip.append((_g, "생성기와 산출물 모두 없음")); continue
     import shutil as _sh, subprocess as _sp, tempfile as _tf, filecmp as _fc
     _base = _tf.mkdtemp(prefix="regen_")
     _tmp = os.path.join(_base, "paper"); os.makedirs(_tmp, exist_ok=True)
@@ -313,19 +314,48 @@ for _g, _outs in _GEN:
         for _n in os.listdir(P):
             _s0 = os.path.join(P, _n)
             if os.path.isfile(_s0): _sh.copy2(_s0, os.path.join(_tmp, _n))
-        # 진단 생성기는 원고 폴더의 형제인 evidence/ 를 읽는다
+        # 생성기가 기대하는 이웃 관계를 사본 안에 그대로 만든다.
+        # 이걸 안 하면 생성기들이 폴백 사슬 끝의 저자 트리로 떨어지고, 사본만으로 도는지 알 수 없게 된다.
+        _numdir = os.path.join(_base, "numbers"); os.makedirs(_numdir, exist_ok=True)
+        _mdst = os.path.join(_numdir, "method_260909"); os.makedirs(_mdst, exist_ok=True)
+        # 번들 배치: 영수증이 원고 옆에 있다. 이 경우 형제 폴더를 들여다보지 않는다.
+        for _n in os.listdir(_tmp):
+            if _n.endswith((".json", ".npz", ".npy", ".md")):
+                _sh.copy2(os.path.join(_tmp, _n), os.path.join(_mdst, _n))
+                _sh.copy2(os.path.join(_tmp, _n), os.path.join(_numdir, _n))
+        # 번들이면 영수증이 원고 옆에 다 있다. 그때만 형제 폴더를 안 본다.
+        if not os.path.exists(os.path.join(_tmp, "final_rule.json")):   # 공개·정본 배치
+            for _msrc in (os.path.join(P, "..", "method_260909"),
+                          os.path.join(P, "..", "numbers", "method_260909")):
+                if os.path.isdir(_msrc):
+                    for _n in os.listdir(_msrc):
+                        _f0 = os.path.join(_msrc, _n)
+                        if os.path.isfile(_f0) and not os.path.exists(os.path.join(_mdst, _n)):
+                            _sh.copy2(_f0, os.path.join(_mdst, _n))
+            for _rsrc in (os.path.join(P, "..", "numbers"), os.path.join(P, "..", "repro")):
+                if os.path.isdir(_rsrc):
+                    for _n in os.listdir(_rsrc):
+                        _f0 = os.path.join(_rsrc, _n)
+                        if os.path.isfile(_f0) and not os.path.exists(os.path.join(_numdir, _n)):
+                            _sh.copy2(_f0, os.path.join(_numdir, _n))
         for _ed in (os.path.join(P, "evidence"), os.path.join(P, "..", "evidence_diag"),
                     os.path.join(P, "..", "evidence")):
             if os.path.isdir(_ed):
                 _sh.copytree(_ed, os.path.join(_base, "evidence")); break
-        _r = _sp.run([sys.executable, _g], cwd=_tmp, capture_output=True, text=True)
+        _env = dict(os.environ)
+        _env["LLMETHOD"] = _mdst
+        _env["LOWLIGHT_EVIDENCE_ROOT"] = _numdir
+        _env["LOWLIGHT_REANALYSIS_ROOT"] = os.path.join(_base, "evidence")
+        _r = _sp.run([sys.executable, _g], cwd=_tmp, capture_output=True, text=True, env=_env)
         if _r.returncode != 0:
             # 영수증이 없어서 생성기가 죽는 것을 "건너뜀" 으로 넘기면, 영수증을 지워도 감사가 통과한다
             _regen_bad.append((_g, "재실행 실패: " + (_r.stderr.strip().splitlines() or ["실패"])[-1][:90])); continue
         _diff = []
         for _n in _outs:
             _a, _b = os.path.join(P, _n), os.path.join(_tmp, _n)
-            if not (os.path.exists(_a) and os.path.exists(_b)): continue
+            if not os.path.exists(_a): continue
+            if not os.path.exists(_b):
+                _diff.append(_n + " (재생성이 이 파일을 만들지 않았다)"); continue
             if _n.startswith("numbers"):
                 # 미사용 매크로는 정리 단계가 지우므로, 원고가 실제로 쓰는 매크로만 값으로 비교한다
                 _mv = lambda f: dict(re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}", open(f).read()))
@@ -342,6 +372,28 @@ for _g, _outs in _GEN:
     finally:
         _sh.rmtree(_base, ignore_errors=True)
 assert len(_USED_MACROS) > 30, "원고에서 매크로를 못 읽었다 — 비교가 헛돈다"
+# 영수증이 기록해 둔 원본 덤프의 해시를 실제 파일과 대조한다.
+# 영수증과 인쇄값을 같이 바꾸는 변조는 이 대조에서만 걸린다.
+import hashlib as _hl
+_hash_checked, _hash_bad = 0, []
+for _rc in ("protocol_sweep.json", "protocol_pricing.json"):
+    _rp = _src(_rc)
+    if not os.path.exists(_rp): continue
+    try: _rj = json.load(open(_rp))
+    except Exception: continue
+    _dp = (_rj.get("dump") or {})
+    _want, _name = _dp.get("sha256"), os.path.basename(_dp.get("path", ""))
+    if not (_want and _name): continue
+    _target = _src(_name)
+    if not os.path.exists(_target):
+        _hash_bad.append((_name, "파일 없음")); continue
+    _got = _hl.sha256(open(_target, "rb").read()).hexdigest()
+    _hash_checked += 1
+    if _got != _want: _hash_bad.append((_name, f"{_got[:12]} != {_want[:12]}"))
+print(f"덤프 해시: {_hash_checked}건 대조, 불일치 {len(_hash_bad)}건")
+for _n, _w in _hash_bad: print(f"  {_n}: {_w}")
+if _hash_bad: sys.exit(1)
+
 print(f"생성 재현: 원고가 쓰는 매크로 {len(_USED_MACROS)}개, 생성기 {len(_regen_ran)}개 재실행, 불일치 {len(_regen_bad)}건" +
       (f", 건너뜀 {len(_regen_skip)}개 {[g for g, _ in _regen_skip]}" if _regen_skip else ""))
 for _g, _r in _regen_skip: print(f"  건너뜀 {_g}: {_r}")
@@ -351,4 +403,6 @@ if _regen_bad:
 
 if _WEAK_FATAL:
     print(f"생성된 tex 사본으로만 맞는 값 {len(weak)}개 — 측정 덤프로 독립 대조되지 않는다"); sys.exit(1)
+if _MISSING_RECEIPTS:
+    print(f"영수증 {len(set(_MISSING_RECEIPTS))}개를 찾지 못했다: {sorted(set(_MISSING_RECEIPTS))}"); sys.exit(1)
 print("전부 대조됨 (측정 덤프 / 생성된 표 / 선언된 인용값)")

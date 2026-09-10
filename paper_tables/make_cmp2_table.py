@@ -7,14 +7,14 @@ def _method_dir_common(P):
     for c in (os.environ.get("LLMETHOD"),
               os.path.join(P, "..", "method_260909"),
               os.path.join(P, "..", "numbers", "method_260909"),
-              "/home/user/lowlight_paper/method_260909"):
+              ):
         if c and os.path.isdir(c): return c
     return os.path.join(P, "..", "method_260909")
 M = _method_dir_common(P)
 def _root():
     for c in (os.environ.get("LOWLIGHT_EVIDENCE_ROOT"),
               os.path.join(P, "..", "numbers"), os.path.join(P, "..", "repro"),
-              "/home/user/lowlight_paper/repro"):
+              ):
         if c and os.path.isdir(c): return c
     return os.path.join(P, "..", "repro")
 R = _root()
@@ -66,7 +66,7 @@ def emph(rows):
 def cell(r):
     p = f"{r['psnr']:.2f}$\\pm${r['sd']:.2f}"
     if r["mark"] == "bf": p = "\\textbf{" + p + "}"
-    elif r["mark"] == "ul": p = p + "$^{\\dagger}$"   # 밑줄은 다음 행 숫자에 닿는다. 세로 공간을 쓰지 않는 표시로 바꾼다.
+    elif r["mark"] == "ul": p = p + "$^{\\ddagger}$"   # 밑줄은 다음 행 숫자에 닿고, 단검은 표 2 가 불안정 셀에 쓴다. 겹치지 않는 기호를 쓴다.
     return f"{r['label']} & {p} & {r['ssim']:.3f} & {r['gl']:.1f} & {r['ch']:.1f} & {r['res']:.1f} & {r['d16']:.2f}"
 
 lol, sony = emph(lol), emph(sony)

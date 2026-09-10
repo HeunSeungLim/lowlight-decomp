@@ -5,7 +5,7 @@ def _method_dir_common(P):
     for c in (os.environ.get("LLMETHOD"),
               os.path.join(P, "..", "method_260909"),
               os.path.join(P, "..", "numbers", "method_260909"),
-              "/home/user/lowlight_paper/method_260909"):
+              ):
         if c and os.path.isdir(c): return c
     return os.path.join(P, "..", "method_260909")
 M=_method_dir_common(P)

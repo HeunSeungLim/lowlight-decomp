@@ -37,8 +37,9 @@ Paths. Scripts read the benchmark under `$LLDATA` (default `data`, and the layou
 Retinexformer's release uses: `lowlight_model/data/...` and `lowlight_model/weights/...`), the cached model
 outputs under `$LLCACHE` (default `cache`), a third-party clone under `$RETINEXFORMER_REPO` (default
 `third_party/Retinexformer`), and the receipts they write and read under `$LLMETHOD` (default
-`numbers/method_260909`). No script carries an absolute path of its own; the figure generators need
-`$LLDATA` and `$LLCACHE` set because they read the benchmark frames they draw. `cache_lol/` is not tracked here because the six LOL caches regenerate from
+`numbers/method_260909`). Every path a script resolves is either one of those variables or relative to the
+script itself. The figure generators additionally need `$LLDATA` and `$LLCACHE` set, because they read the
+benchmark frames they draw. `cache_lol/` is not tracked here because the six LOL caches regenerate from
 `code/newbase_*.py` in a few minutes each, and the intermediate `.npz` feature and control caches are
 not tracked either: each is rebuilt by the script that names it, from the benchmark and the model
 caches above.
@@ -53,9 +54,12 @@ build it, so the audit runs with no further inputs:
     python paper_tables/audit_paper_numbers.py
 
 It extracts every number printed in the PDF and matches it against the receipts, and reports how wide
-its own acceptance windows are, so a reader can judge how much a match is worth. It needs nothing outside
-this release: the receipts it reads are `paper_tables/*.json` plus `numbers/method_260909/`, and it reads
-no path outside the release root. `paper_tables/_isolation_test.py` is the stricter check the frozen review
+its own acceptance windows are, so a reader can judge how much a match is worth. Beyond that pool check it
+re-runs the five generators in a copy and compares, with no tolerance, every macro the manuscript uses and
+every generated table row, so a printed number that is not a function of a receipt fails; it verifies the
+dump hash a receipt records, so editing a dump and its printed value together fails; and a missing receipt
+or a generator that cannot run is a failure rather than a skip. It does not check that a generator computes
+the right thing — only that what is printed is what the generators produce from the receipts. `paper_tables/_isolation_test.py` is the stricter check the frozen review
 bundle ships with, where every receipt sits beside the audit in one directory; run in this release it
 reports the receipts it reaches through `numbers/`, which is the layout documented above, so it is the
 bundle's test and not this release's. Rebuilding the PDF needs `pdflatex` and `bibtex` and nothing else:

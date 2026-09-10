@@ -53,6 +53,53 @@ os.path.exists = guard_pred(_exists, 'exists')
 os.path.isdir = guard_pred(_isdir, 'isdir')
 os.path.isfile = guard_pred(_isfile, 'isfile')
 
+# 감사기는 생성기를 자식 프로세스로 돌린다. 부모만 후킹하면 그 접근이 통째로 안 보인다.
+# 자식에도 같은 차단을 설치하고, 위반을 파일로 받아 합친다.
+GUARD = tempfile.mkdtemp(prefix="isoguard_"); OWN_TMP.append(os.path.realpath(GUARD))
+VIOL = os.path.join(GUARD, "violations.txt")
+open(os.path.join(GUARD, "sitecustomize.py"), "w").write("""
+import builtins, os, os.path
+ROOTS = [r for r in os.environ.get("ISOLATION_ROOTS", "").split(os.pathsep) if r]
+LOG = os.environ.get("ISOLATION_LOG", "")
+ALLOW = ("/usr", "/lib", "/proc", "/dev", "/etc/localtime")
+import sys as _s
+ALLOW = ALLOW + (_s.prefix, _s.base_prefix)
+def _out(p):
+    try: rp = os.path.realpath(os.path.abspath(str(p)))
+    except Exception: return False
+    for r in ROOTS:
+        if rp == r or rp.startswith(r + os.sep): return False
+    for a in ALLOW:
+        if rp.startswith(os.path.realpath(a)): return False
+    return True
+def _note(ch, p):
+    try:
+        with open(LOG, "a") as f: f.write(ch + " " + str(p) + chr(10))
+    except Exception: pass
+_o, _e, _d, _f = builtins.open, os.path.exists, os.path.isdir, os.path.isfile
+def _go(p, *a, **k):
+    if _out(p): _note("open", p); raise FileNotFoundError("isolation: outside " + str(p))
+    return _o(p, *a, **k)
+def _mk(fn, ch):
+    def g(p, *a, **k):
+        if _out(p): _note(ch, p); return False
+        return fn(p, *a, **k)
+    return g
+builtins.open = _go
+os.path.exists = _mk(_e, "exists"); os.path.isdir = _mk(_d, "isdir"); os.path.isfile = _mk(_f, "isfile")
+""")
+
+import subprocess as _subprocess
+_run = _subprocess.run
+def _run_guarded(*a, **k):
+    env = dict(k.get("env") or os.environ)
+    env["PYTHONPATH"] = GUARD + os.pathsep + env.get("PYTHONPATH", "")
+    env["ISOLATION_ROOTS"] = os.pathsep.join([HERE] + OWN_TMP)
+    env["ISOLATION_LOG"] = VIOL
+    k["env"] = env
+    return _run(*a, **k)
+_subprocess.run = _run_guarded
+
 code = 0
 try:
     runpy.run_path('audit_paper_numbers.py', run_name='__main__')
@@ -62,6 +109,10 @@ except SystemExit as e:
 except Exception as e:
     code = 'EXCEPTION'
     print('ISOLATION FAILED:', type(e).__name__, e)
+if os.path.exists(VIOL):
+    for _line in open(VIOL).read().splitlines():
+        _ch, _, _pp = _line.partition(' ')
+        OUTSIDE.append((_ch + '(child)', _pp))
 print('outside-bundle accesses attempted:', len(OUTSIDE))
 for ch, p in OUTSIDE[:8]:
     print('   ', ch, p)

@@ -7,7 +7,7 @@ re-measurement propagates into the paper instead of silently drifting from it.
 import json, os
 import numpy as np
 P = os.path.dirname(os.path.abspath(__file__))
-R = os.environ.get("LOWLIGHT_EVIDENCE_ROOT", os.path.join(P, "..", "numbers") if os.path.isdir(os.path.join(P, "..", "numbers")) else "/home/user/lowlight_paper/repro")
+R = os.environ.get("LOWLIGHT_EVIDENCE_ROOT", os.path.join(P, "..", "numbers") if os.path.isdir(os.path.join(P, "..", "numbers")) else os.path.join(P, "..", "repro"))
 L = lambda n: json.load(open(os.path.join(R, n + ".json")))
 fail, spec, ident, low = (L("diag_sid_failure"), L("diag_sid_spectrum"),
                           L("diag_sid_identifiability"), L("diag_sid_lowfreq"))

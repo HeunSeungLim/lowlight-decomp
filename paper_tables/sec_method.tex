@@ -1,16 +1,14 @@
 \section{Proposed method}
 \label{sec:method}
 
-The procedure combines component-specific least-squares (LS) oracles with reference-correlation diagnostics. Let $y$ be the model output and $g$
+The procedure combines component-specific least-squares (LS) oracles with input--output reference-correlation diagnostics. Let $y$ be the model output and $g$
 the reference, in $[0,255]$. PSNR is computed per frame and averaged; squared-error
 shares are pooled over frames. Shares use \emph{unclipped} LS residuals. Reported global and channel-gain PSNR clips and rounds \emph{after} the LS fit; it is not an optimum over clipped estimators. Spatial oracle gains use unclipped PSNR so matched controls can be subtracted.
 
 \noindent\textbf{Gain terms.} The global fit is
 $a^{\star}=\langle y,g\rangle/\langle y,y\rangle$; fitting it separately per channel
-adds the colour term. The reductions in unclipped squared error define the global and channel shares. We fit a scalar per square block of side
-$b$, and separately an offset or affine map. Extra parameters can improve even a
-noise fit, so each spatial gain over its whole-frame anchor is corrected by the
-gain of the same family against a structureless target of matched variance.
+adds the colour term. The respective reductions in unclipped squared error define the global and additional channel shares. We fit a scalar per square block of side
+$b$, and separately an offset or affine map. Extra parameters improve even a noise fit, so each spatial gain over its whole-frame anchor is corrected by the same family against a structureless target of matched variance.
 
 \noindent\textbf{Band terms and aggregation.} We Fourier-transform luminance and
 group frequencies into radial bands. After fitting each input or output frame's global brightness gain, let $P_{ij}$ and $G_{ij}$ be its and the reference's

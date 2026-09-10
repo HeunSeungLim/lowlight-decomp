@@ -33,9 +33,9 @@
 \maketitle
 
 \begin{abstract}
-Scores reported for extreme-dark enhancement are not comparable across papers: four protocol choices---rectifying the output's brightness from the reference, the eight-bit rule, how PSNR is aggregated, and which rendition is used---move them by up to ten decibels, five among the paired-supervised. We rerun eighteen method--benchmark pairs under one protocol, price each on the pairs it applies to, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark,
+Scores reported for extreme-dark enhancement are not comparable across papers: four protocol choices---rectifying the output's brightness from the reference, the eight-bit rule, how PSNR is aggregated, and which rendition is used---move them by up to ten decibels, five among the paired-supervised. We rerun eighteen method--benchmark pairs under one protocol, price each choice on the pairs it applies to, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark,
 the spatially varying low-frequency term is common to all, and the global term is a generalisation
-gap: its oracle gain is near one on training scenes and dispersed on new ones. The
+gap: its oracle gain is near one on a model's training scenes and dispersed on new ones. The
 diagnosis prescribes one correction with a checkable precondition, rescaling each output so its
 upper percentile reaches the ceiling well-exposed references saturate. It gains where the precondition holds and harms where it fails; we report both.
 \end{abstract}
