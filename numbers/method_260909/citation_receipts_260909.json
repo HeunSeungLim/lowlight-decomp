@@ -10,7 +10,8 @@
   "pdf_bytes": 48427243,
   "pdf_sha256": "d5a9435e68a1b8572c5d05f05d4ab59bf4d703fa782b968ea7e772663d8a2d26",
   "verified_local": "2026-09-09",
-  "verification": "full-text extraction of the downloaded PDF, not the abstract page"
+  "verification": "full-text extraction of the downloaded PDF, not the abstract page",
+  "bib_key": "irlle2026"
  },
  "2408.16254": {
   "title": "EvLight++: Low-Light Video Enhancement with an Event Camera: A Large-Scale Real-World Dataset, Novel Method, and More",
@@ -23,6 +24,311 @@
   "pdf_bytes": 17128289,
   "pdf_sha256": "418320670cbc61946b7cd7ca21933a040d8c859cec7acd60ad37372eb817b49d",
   "verified_local": "2026-09-09",
-  "verification": "full-text extraction of the downloaded PDF, not the abstract page"
+  "verification": "full-text extraction of the downloaded PDF, not the abstract page",
+  "bib_key": "evlightpp2024"
+ },
+ "2104.14868": {
+  "bib_key": "psnragg2021",
+  "title": "On the Computation of PSNR for a Set of Images or Video",
+  "authors": "Keles, Onur and Yilmaz, M. Akin and Tekalp, A. Murat and Korkmaz, Cansu and Dogan, Zafer",
+  "year": 2021,
+  "venue": "Picture Coding Symposium (PCS)",
+  "arxiv": "2104.14868",
+  "checked": "title, author list and order, year, venue confirmed against the arXiv listing and the PCS record",
+  "checked_on": "2026-09-10"
+ },
+ "2604.08172": {
+  "bib_key": "pal2026",
+  "title": "On the Global Photometric Alignment for Low-Level Vision",
+  "authors": "Li, Mingjia and Du, Tianle and Wang, Hainuo and Hu, Qiming and Guo, Xiaojie",
+  "year": 2026,
+  "venue": "arXiv preprint",
+  "arxiv": "2604.08172",
+  "checked": "title, author list and order, year confirmed against the arXiv listing (v1, 2026-04-09)",
+  "checked_on": "2026-09-10"
+ },
+ "2511.15496": {
+  "bib_key": "mill2025",
+  "title": "Evaluating Low-Light Image Enhancement Across Multiple Intensity Levels",
+  "authors": "Pilligua, Maria and Serrano-Lozano, David and Peng, Pai and Baldrich, Ramon and Brown, Michael S. and Vazquez-Corral, Javier",
+  "year": 2025,
+  "venue": "arXiv preprint",
+  "arxiv": "2511.15496",
+  "checked": "title, author list and order, year confirmed against the arXiv listing; the MILL dataset is this paper",
+  "checked_on": "2026-09-10"
+ },
+ "2603.25296": {
+  "bib_key": "clerwkv2026",
+  "title": "Towards Controllable Low-Light Image Enhancement: A Continuous Multi-illumination Dataset and Efficient State Space Framework",
+  "authors": "Han, Hongru and Guo, Tingrui and Zhang, Liming and Su, Yan and Xu, Qiwen and Ye, Zhuohua",
+  "year": 2026,
+  "venue": "arXiv preprint",
+  "arxiv": "2603.25296",
+  "checked": "title and year confirmed against the arXiv listing (submitted 2026-03-26); the paper proposes CLE-RWKV and the Light100 benchmark",
+  "checked_on": "2026-09-10"
+ },
+ "2201.03992": {
+  "bib_key": "frc2022",
+  "title": "Image quality measurements and denoising using Fourier Ring Correlations",
+  "authors": "Kaczmar-Michalska, J. and Hajizadeh, N. R. and Rzepiela, A. J. and Norrelykke, S. F.",
+  "year": 2022,
+  "venue": "arXiv preprint",
+  "arxiv": "2201.03992",
+  "checked": "title, author list, year confirmed against the arXiv listing (2022-01-11)",
+  "checked_on": "2026-09-10"
+ },
+ "2507.20148": {
+  "bib_key": "gtmean2025",
+  "title": "GT-Mean Loss: A Simple Yet Effective Solution for Brightness Mismatch in Low-Light Image Enhancement",
+  "authors": "Liao, Jingxi and Hao, Shijie and Hong, Richang and Wang, Meng",
+  "year": 2025,
+  "venue": "ICCV",
+  "arxiv": "2507.20148",
+  "checked": "title, author list and order, year and venue confirmed against the CVF open-access ICCV 2025 proceedings page",
+  "checked_on": "2026-09-10"
+ },
+ "dcp2011": {
+  "bib_key": "dcp2011",
+  "title": "Single image haze removal using dark channel prior",
+  "authors": "He, Kaiming and Sun, Jian and Tang, Xiaoou",
+  "year": 2011,
+  "venue": "IEEE TPAMI 33(12):2341-2353",
+  "checked": "standing reference; title, authors, volume, number, pages and year as printed in the TPAMI record",
+  "checked_on": "2026-09-10"
+ },
+ "scb2011": {
+  "bib_key": "scb2011",
+  "title": "Simplest Color Balance",
+  "authors": "Limare, Nicolas and Lisani, Jose-Luis and Morel, Jean-Michel and Petro, Ana Belen and Sbert, Catalina",
+  "year": 2011,
+  "venue": "Image Processing On Line 1:297-315",
+  "checked": "standing reference; title, authors, volume, pages and year as printed in the IPOL record",
+  "checked_on": "2026-09-10"
+ },
+ "2303.06705": {
+  "bib_key": "retinexformer",
+  "title": "Retinexformer: One-stage Retinex-based Transformer for Low-light Image Enhancement",
+  "authors": "Cai, Yuanhao and Bian, Hao and Lin, Jing and Wang, Haoqian and Timofte, Radu and Zhang, Yulun",
+  "year": 2023,
+  "venue": "ICCV",
+  "checked": "CVF ICCV 2023 open-access record; authors and order match, pages 12504-12513 (not printed)",
+  "checked_on": "2026-09-10"
+ },
+ "sid2018": {
+  "bib_key": "sid2018",
+  "title": "Learning to See in the Dark",
+  "authors": "Chen, Chen and Chen, Qifeng and Xu, Jia and Koltun, Vladlen",
+  "year": 2018,
+  "venue": "CVPR",
+  "pages": "3291--3300",
+  "checked": "CVF CVPR 2018 open-access record; authors, year and printed pages match",
+  "checked_on": "2026-09-10"
+ },
+ "lol2018": {
+  "bib_key": "lol2018",
+  "title": "Deep Retinex Decomposition for Low-Light Enhancement",
+  "authors": "Wei, Chen and Wang, Wenjing and Yang, Wenhan and Liu, Jiaying",
+  "year": 2018,
+  "venue": "BMVC",
+  "arxiv": "1808.04560",
+  "checked": "BMVC 2018 oral; authors, year and venue match, no pages printed",
+  "checked_on": "2026-09-10"
+ },
+ "snrnet2022": {
+  "bib_key": "snrnet2022",
+  "title": "SNR-Aware Low-Light Image Enhancement",
+  "authors": "Xu, Xiaogang and Wang, Ruixing and Fu, Chi-Wing and Jia, Jiaya",
+  "year": 2022,
+  "venue": "CVPR",
+  "pages": "17714--17724",
+  "checked": "CVF CVPR 2022 open-access record; authors, year and printed pages match",
+  "checked_on": "2026-09-10"
+ },
+ "uretinex2022": {
+  "bib_key": "uretinex2022",
+  "title": "URetinex-Net: Retinex-Based Deep Unfolding Network for Low-Light Image Enhancement",
+  "authors": "Wu, Wenhui and Weng, Jian and Zhang, Pingping and Wang, Xu and Yang, Wenhan and Jiang, Jianmin",
+  "year": 2022,
+  "venue": "CVPR",
+  "pages": "5901--5910",
+  "checked": "CVF CVPR 2022 official BibTeX gives 5901-5910; an institutional record gives 5891-5900. Corrected the entry to the CVF range on 2026-09-10 (it had printed 5891-5900)",
+  "checked_on": "2026-09-10"
+ },
+ "sci2022": {
+  "bib_key": "sci2022",
+  "title": "Toward Fast, Flexible, and Robust Low-Light Image Enhancement",
+  "authors": "Ma, Long and Ma, Tengyu and Liu, Risheng and Fan, Xin and Luo, Zhongxuan",
+  "year": 2022,
+  "venue": "CVPR",
+  "checked": "CVF CVPR 2022 open-access record; authors and year match, pages 5637-5646 (not printed)",
+  "checked_on": "2026-09-10"
+ },
+ "kind2019": {
+  "bib_key": "kind2019",
+  "title": "Kindling the Darkness: A Practical Low-light Image Enhancer",
+  "authors": "Zhang, Yonghua and Zhang, Jiawan and Guo, Xiaojie",
+  "year": 2019,
+  "venue": "ACM Multimedia",
+  "pages": "1632--1640",
+  "checked": "ACM DL record 10.1145/3343031.3350926; authors, year and printed pages match",
+  "checked_on": "2026-09-10"
+ },
+ "gsad2023": {
+  "bib_key": "gsad2023",
+  "title": "Global Structure-Aware Diffusion Process for Low-light Image Enhancement",
+  "authors": "Hou, Jinhui and Zhu, Zhiyu and Hou, Junhui and Liu, Hui and Zeng, Huanqiang and Yuan, Hui",
+  "year": 2023,
+  "venue": "NeurIPS",
+  "arxiv": "2310.17577",
+  "checked": "NeurIPS 2023 proceedings record; authors, order, year and venue match",
+  "checked_on": "2026-09-10"
+ },
+ "lightendiff2024": {
+  "bib_key": "lightendiff2024",
+  "title": "LightenDiffusion: Unsupervised Low-Light Image Enhancement with Latent-Retinex Diffusion Models",
+  "authors": "Jiang, Hai and Luo, Ao and Liu, Xiaohong and Han, Songchen and Liu, Shuaicheng",
+  "year": 2024,
+  "venue": "ECCV",
+  "arxiv": "2407.08939",
+  "checked": "ECCV 2024 proceedings record; authors, order, year and venue match",
+  "checked_on": "2026-09-10"
+ },
+ "llformer2023": {
+  "bib_key": "llformer2023",
+  "title": "Ultra-High-Definition Low-Light Image Enhancement: A Benchmark and Transformer-Based Method",
+  "authors": "Wang, Tao and Zhang, Kaihao and Shen, Tianrun and Luo, Wenhan and Stenger, Bjorn and Lu, Tong",
+  "year": 2023,
+  "venue": "AAAI",
+  "volume": 37,
+  "pages": "2654--2662",
+  "checked": "AAAI proceedings record 10.1609/aaai.v37i3.25364; authors, volume and printed pages match",
+  "checked_on": "2026-09-10"
+ },
+ "fecnet2022": {
+  "bib_key": "fecnet2022",
+  "title": "Deep Fourier-Based Exposure Correction Network with Spatial-Frequency Interaction",
+  "authors": "Huang, Jie and Liu, Yajing and Zhao, Feng and Yan, Keyu and Zhang, Jinghao and Huang, Yukun and Zhou, Man and Xiong, Zhiwei",
+  "year": 2022,
+  "venue": "ECCV",
+  "pages": "163--180",
+  "checked": "ECVA/Springer ECCV 2022 record 10.1007/978-3-031-19800-7_10; authors and printed pages match",
+  "checked_on": "2026-09-10"
+ },
+ "fourllie2023": {
+  "bib_key": "fourllie2023",
+  "title": "FourLLIE: Boosting Low-Light Image Enhancement by Fourier Frequency Information",
+  "authors": "Wang, Chenxi and Wu, Hongjun and Jin, Zhi",
+  "year": 2023,
+  "venue": "ACM Multimedia",
+  "pages": "7459--7469",
+  "checked": "ACM DL record 10.1145/3581783.3611909; authors, year and printed pages match",
+  "checked_on": "2026-09-10"
+ },
+ "eld2020": {
+  "bib_key": "eld2020",
+  "title": "A Physics-based Noise Formation Model for Extreme Low-light Raw Denoising",
+  "authors": "Wei, Kaixuan and Fu, Ying and Yang, Jiaolong and Huang, Hua",
+  "year": 2020,
+  "venue": "CVPR",
+  "pages": "2758--2767",
+  "checked": "CVF CVPR 2020 open-access record; authors and year match. Printed pages 2758-2767 follow the CVF proceedings; a secondary index lists 2755-2764",
+  "checked_on": "2026-09-10"
+ },
+ "blau2018": {
+  "bib_key": "blau2018",
+  "title": "The Perception-Distortion Tradeoff",
+  "authors": "Blau, Yochai and Michaeli, Tomer",
+  "year": 2018,
+  "venue": "CVPR",
+  "pages": "6228--6237",
+  "checked": "CVF CVPR 2018 open-access record, DOI 10.1109/CVPR.2018.00652; printed pages match",
+  "checked_on": "2026-09-10"
+ },
+ "2409.14461": {
+  "bib_key": "empirical2024",
+  "title": "Low-Light Enhancement Effect on Classification and Detection: An Empirical Study",
+  "authors": "Wu, Xu and Lai, Zhihui and Zhou, Jie and Gao, Can and Hou, Xianxu and Zhang, Ya-nan and Shen, Linlin",
+  "year": 2024,
+  "venue": "arXiv preprint",
+  "arxiv": "2409.14461",
+  "checked": "arXiv listing; title, authors and year match",
+  "checked_on": "2026-09-10"
+ },
+ "2410.08810": {
+  "bib_key": "limeeval2024",
+  "title": "LIME-Eval: Rethinking Low-light Image Enhancement Evaluation via Object Detection",
+  "authors": "Li, Mingjia and Zhao, Hao and Guo, Xiaojie",
+  "year": 2024,
+  "venue": "arXiv preprint",
+  "arxiv": "2410.08810",
+  "checked": "arXiv listing; title, authors and year match",
+  "checked_on": "2026-09-10"
+ },
+ "2507.06814": {
+  "bib_key": "cidnetplus",
+  "title": "HVI-CIDNet+: Beyond Extreme Darkness for Low-Light Image Enhancement",
+  "authors": "Yan, Qingsen and Shi, Kangbiao and Feng, Yixu and Hu, Tao and Wu, Peng and Pang, Guansong and Zhang, Yanning",
+  "year": 2025,
+  "venue": "arXiv preprint",
+  "arxiv": "2507.06814",
+  "checked": "arXiv listing; title, author list and order, year match",
+  "checked_on": "2026-09-10"
+ },
+ "zerodcepp2022": {
+  "bib_key": "zerodcepp2022",
+  "title": "Learning to Enhance Low-Light Image via Zero-Reference Deep Curve Estimation",
+  "authors": "Li, Chongyi and Guo, Chunle and Loy, Chen Change",
+  "year": 2022,
+  "venue": "IEEE TPAMI",
+  "volume": 44,
+  "number": 8,
+  "pages": "4225--4238",
+  "checked": "IEEE TPAMI record 10.1109/TPAMI.2021.3063604; authors, volume, number and printed pages match",
+  "checked_on": "2026-09-10"
+ },
+ "cidnet": {
+  "bib_key": "cidnet",
+  "checked": "bibliography matched in an earlier round: HVI CVPR 2025 pp.5678-5687 (round v53)",
+  "checked_on": "earlier round"
+ },
+ "karadeniz2021": {
+  "bib_key": "karadeniz2021",
+  "checked": "bibliography matched in an earlier round: IEEE TIP 30:9372-9385 (round v53)",
+  "checked_on": "earlier round"
+ },
+ "chatterjee2010": {
+  "bib_key": "chatterjee2010",
+  "checked": "bibliography matched in an earlier round: IEEE TIP 19(4):895-911 (round v53)",
+  "checked_on": "earlier round"
+ },
+ "hdrplus2016": {
+  "bib_key": "hdrplus2016",
+  "checked": "bibliography matched in an earlier round: ACM TOG 35(6):192 (round v53)",
+  "checked_on": "earlier round"
+ },
+ "levin2011": {
+  "bib_key": "levin2011",
+  "checked": "bibliography matched in an earlier round: CVPR 2011 pp.2833-2840 (round v55)",
+  "checked_on": "earlier round"
+ },
+ "hoiem2012": {
+  "bib_key": "hoiem2012",
+  "checked": "bibliography matched in an earlier round: ECCV 2012 pp.340-353 (round v55)",
+  "checked_on": "earlier round"
+ },
+ "clahe1994": {
+  "bib_key": "clahe1994",
+  "checked": "bibliography matched in an earlier round: Graphics Gems IV pp.474-485 (round v55)",
+  "checked_on": "earlier round"
+ },
+ "lolv2_2021": {
+  "bib_key": "lolv2_2021",
+  "checked": "bibliography matched in an earlier round: IEEE TIP 30:2072-2086 (round v55)",
+  "checked_on": "earlier round"
+ },
+ "llflow2022": {
+  "bib_key": "llflow2022",
+  "checked": "bibliography matched in an earlier round: AAAI 36:2604-2612 (round v55)",
+  "checked_on": "earlier round"
  }
 }
