@@ -35,7 +35,7 @@ QR=json.load(open(f"{M}/qsweep_rule.json"))["rule"]
 for q,tag in ((95,"a"),(98,"b"),(99,"c"),(99.5,"d"),(99.95,"e"),(99.99,"f")):
     mac[f"nFq{tag}"]=f"{QR[str(q)]['gain']:+.2f}"; mac[f"nFq{tag}K"]=f"{q}"
 for q,tag in ((95,"a"),(98,"b"),(99,"c"),(99.5,"d")):
-    mac[f"nFq{tag}sat"]=f"{QS['sat'][str(q)]:.0f}"
+    pass   # 옛 161장면 포화율은 쓰지 않는다. 아래에서 qsat_train181 로 굽는다.
 FX=json.load(open(f"{M}/fix_v52.json"))
 mac["nFqdGain"]=f"{FX['regression_variant']['gain']:+.2f}"; mac["nFqdWorst"]=f"{FX['regression_variant']['worst']:+.2f}"
 for q,t in ((99.95,"e"),(99.99,"f")):
@@ -58,6 +58,7 @@ mac["nFactT"]=f"{a['t']:.3f}"; mac["nFactSign"]=f"{a['sign_two']:.3f}"; mac["nFa
 mac["nFdropTop"]=f"{RA['drop_top3']['mean']:+.2f}"; mac["nFdropT"]=f"{RA['drop_top3']['t']:.3f}"
 mac["nFjkLo"]=f"{RA['jackknife'][0]:+.2f}"; mac["nFjkHi"]=f"{RA['jackknife'][1]:+.2f}"
 mac["nFactAll"]=f"{RA['acting_scenes_allframes']['mean']:+.2f}"
+mac["nFactAllFr"]=f"{RA['acting_scenes_allframes']['frame_mean']:+.2f}"   # 같은 프레임 집합의 프레임평균
 mac["nFtopfiveB"]=f"{F['sony']['retinexformer']['top5']:.0f}"
 mac["nFwScene"]=f"{RA['worst']['scene_all50']:+.2f}"; mac["nFwAct"]=f"{RA['worst']['scene_acting']:+.2f}"; mac["nFwFrame"]=f"{RA['worst']['frame']:+.2f}"
 for e,t in (("0.033s","s"),("0.04s","m"),("0.1s","l")):
@@ -98,6 +99,9 @@ mac["nAFchan"]=f"{AF['psnr_channel']:.3f}"
 CN=json.load(open(f"{M}/concentration.json"))
 mac["nCONone"]=f"{CN['drop_top1']['scene_mean']:+.3f}"; mac["nCONfive"]=f"{CN['drop_top5']['scene_mean']:+.3f}"
 mac["nCONtopfive"]=f"{CN['top5_share_of_scene_pooled_pct']:.0f}"
+# 헤드라인(프레임가중)의 집중도도 같이 인쇄한다
+mac["nCONtopfiveFr"]=f"{CN['drop_top5']['share_of_frame_pooled_pct']:.0f}"
+mac["nCONoneFr"]=f"{CN['drop_top1']['frame_mean']:+.3f}"; mac["nCONfiveFr"]=f"{CN['drop_top5']['frame_mean']:+.3f}"
 TO=json.load(open(f"{M}/tost_equivalence.json"))
 mac["nCTOST"]=f"{TO['tost_margin']:.2f}"
 mac["nFZdcegain"]=f"{F['sony']['zerodcepp']['gain']:+.3f}"

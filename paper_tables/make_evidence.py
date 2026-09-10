@@ -280,6 +280,7 @@ with open(os.path.join(P, "numbers.tex"), "a") as t:
     t.write("\\newcommand{\\nMFinDrop}{%.2f}\n" % (a1["psnr_in"] - a8["psnr_in"]))
     t.write("\\newcommand{\\nMFoutGain}{%.3f}\n" % (a8["psnr_out"] - a1["psnr_out"]))
     t.write("\\newcommand{\\nMFlongN}{%d}\n" % a8["n"])
+    t.write("\\newcommand{\\nMFmidN}{%d}\n" % MF2["0.04s|8"]["n"])   # 같은 정의(8프레임 이상 그룹수)를 한 생성기에서만 굽는다
     t.write("\\newcommand{\\nMFrhoA}{%.3f}\n" % rho_in_k1)
     t.write("\\newcommand{\\nMFrhoB}{%.3f}\n" % rho_in_k8)
 print("mf2 0.1s: k1 in/out %.3f/%.3f  k8 in/out %.3f/%.3f  n=%d | rho corner in k1 %.3f k8 %.3f" %

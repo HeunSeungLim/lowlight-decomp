@@ -20,7 +20,7 @@ def _strip_printed(o):
     if isinstance(o, list): return [_strip_printed(v) for v in o]
     return o
 
-_POOL_BLOCK = ("rad_edges", "ident_edges", "band_edges", "edges", "bins",
+_POOL_BLOCK = ("sat_superseded_161scenes", "rad_edges", "ident_edges", "band_edges", "edges", "bins",
                "cnn_train_scenes", "printed_bounds")
 
 def _strip_pool(o):
@@ -289,12 +289,13 @@ if unmatched:
     sys.exit(1)
 # 1:1 배선: 생성 파일은 영수증의 함수여야 한다. 사본에서 생성기를 다시 돌려 바이트 비교한다.
 # 허용폭이 없으므로 생성 파일 안의 인쇄값 하나를 고치면 반드시 잡힌다.
-_GEN = (("make_evidence.py", ("numbers.tex", "tab_cmp_rows.tex", "tab_cross_rows.tex", "tab_decomp_rows.tex",
-                              "tab_ladder_rows.tex", "tab_repro_rows.tex", "tab_rho_rows.tex")),
+_GEN = (("make_evidence.py", ("numbers.tex", "tab_cmp_rows.tex",
+                              "tab_rho_rows.tex")),
         ("make_final_evidence.py", ("numbers_final.tex", "tab_fin_rows.tex")),
-        ("make_method_evidence.py", ("numbers_method.tex", "tab_cal_rows.tex")),
+        ("make_method_evidence.py", ("numbers_method.tex",)),
         ("make_cmp2_table.py", ("tab_cmp2_rows.tex",)),
-        ("make_declared_evidence.py", ("numbers_declared.tex",)))
+        ("make_declared_evidence.py", ("numbers_declared.tex",)),
+        ("make_diagnostic_evidence.py", ("evidence.json", "tab_rho_rows.tex")))
 _USED_MACROS = set()
 for _bt in ("main.tex", "sec_intro.tex", "sec_method.tex", "sec_results.tex", "sec_discussion.tex"):
     _bp = os.path.join(P, _bt)
@@ -346,6 +347,12 @@ for _g, _outs in _GEN:
         _env["LLMETHOD"] = _mdst
         _env["LOWLIGHT_EVIDENCE_ROOT"] = _numdir
         _env["LOWLIGHT_REANALYSIS_ROOT"] = os.path.join(_base, "evidence")
+        # 입력이면서 산출물인 파일(제자리 보강)은 지우면 생성기가 못 돈다
+        _INPLACE = {"evidence.json"}
+        for _o in _outs:
+            _e0 = os.path.join(_tmp, _o)
+            if _o not in _INPLACE and os.path.exists(_e0):
+                os.remove(_e0)      # 생성기가 다시 쓰지 않으면 없는 채로 남아 실패한다
         _r = _sp.run([sys.executable, _g], cwd=_tmp, capture_output=True, text=True, env=_env)
         if _r.returncode != 0:
             # 영수증이 없어서 생성기가 죽는 것을 "건너뜀" 으로 넘기면, 영수증을 지워도 감사가 통과한다
@@ -353,7 +360,8 @@ for _g, _outs in _GEN:
         _diff = []
         for _n in _outs:
             _a, _b = os.path.join(P, _n), os.path.join(_tmp, _n)
-            if not os.path.exists(_a): continue
+            if not os.path.exists(_a):
+                _diff.append(_n + " (생성기가 만드는 파일이 원고 폴더에 없다)"); continue
             if not os.path.exists(_b):
                 _diff.append(_n + " (재생성이 이 파일을 만들지 않았다)"); continue
             if _n.startswith("numbers"):
@@ -372,6 +380,24 @@ for _g, _outs in _GEN:
     finally:
         _sh.rmtree(_base, ignore_errors=True)
 assert len(_USED_MACROS) > 30, "원고에서 매크로를 못 읽었다 — 비교가 헛돈다"
+# 생성된 매크로를 본문이 다시 정의하면 생성 파일은 멀쩡한 채 인쇄값만 바뀐다.
+# 재생성 대조가 보증하는 범위 밖이라 여기서 따로 막는다.
+_GENMAC = set()
+for _gf in ("numbers.tex", "numbers_method.tex", "numbers_final.tex", "numbers_declared.tex"):
+    _gp = os.path.join(P, _gf)
+    if os.path.exists(_gp):
+        _GENMAC |= set(re.findall(r"\\newcommand\{\\(n[A-Za-z]+)\}", open(_gp).read()))
+_redef = []
+for _bt in ("main.tex", "sec_intro.tex", "sec_method.tex", "sec_results.tex", "sec_discussion.tex"):
+    _bp = os.path.join(P, _bt)
+    if not os.path.exists(_bp): continue
+    for _m in re.finditer(r"\\(?:re)?newcommand\{\\(n[A-Za-z]+)\}", open(_bp).read()):
+        if _m.group(1) in _GENMAC: _redef.append((_bt, _m.group(1)))
+print(f"매크로 재정의: 생성 매크로 {len(_GENMAC)}개 중 본문이 다시 정의한 것 {len(_redef)}개")
+if _redef:
+    for _f0, _m0 in _redef: print(f"  {_f0} 가 {_m0} 를 다시 정의한다 — 생성값이 인쇄되지 않는다")
+    sys.exit(1)
+
 # 영수증이 기록해 둔 원본 덤프의 해시를 실제 파일과 대조한다.
 # 영수증과 인쇄값을 같이 바꾸는 변조는 이 대조에서만 걸린다.
 import hashlib as _hl

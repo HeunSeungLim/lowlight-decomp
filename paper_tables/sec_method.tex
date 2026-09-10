@@ -8,7 +8,7 @@ shares are pooled over frames. Shares use \emph{unclipped} LS residuals. Reporte
 \noindent\textbf{Gain terms.} The global fit is
 $a^{\star}=\langle y,g\rangle/\langle y,y\rangle$; fitting it separately per channel
 adds the colour term. The respective reductions in unclipped squared error define the global and additional channel shares. We fit a scalar per square block of side
-$b$, and separately an offset or affine map. Extra parameters improve even a noise fit, so each spatial gain over its whole-frame anchor is corrected by the same family against a structureless target of matched variance.
+$b$, and separately an offset or affine map. Extra parameters improve even a noise fit, so each spatial gain over its whole-frame anchor is corrected by the gain of the same family against a structureless target of matched variance.
 
 \noindent\textbf{Band terms and aggregation.} We Fourier-transform luminance and
 group frequencies into radial bands. After fitting each input or output frame's global brightness gain, let $P_{ij}$ and $G_{ij}$ be its and the reference's

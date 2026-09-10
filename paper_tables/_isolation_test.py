@@ -48,10 +48,36 @@ def guard_pred(fn, name):
         return fn(p, *a, **k)
     return g
 
+def guard_raise(fn, name):
+    def g(p, *a, **k):
+        if _outside(p):
+            OUTSIDE.append((name, str(p))); raise FileNotFoundError('isolation: outside bundle ' + str(p))
+        return fn(p, *a, **k)
+    return g
+
 builtins.open = guard_open
 os.path.exists = guard_pred(_exists, 'exists')
 os.path.isdir = guard_pred(_isdir, 'isdir')
 os.path.isfile = guard_pred(_isfile, 'isfile')
+# open 만 막으면 os.open / pathlib / glob 로 새어 나간다.
+# os.stat/listdir/scandir 과 os.open 은 인터프리터·subprocess 가 내부적으로 써서 후킹하면 멈춘다.
+# 미차단 채널로 남기고 여기 적어 둔다: os.open, os.stat, os.listdir, os.scandir, 비파이썬 자식 프로세스.
+import io as _io
+_io.open = guard_open
+import glob as _glob
+_glob_orig = _glob.glob
+def _glob_guard(pat, *a, **k):
+    if _outside(os.path.dirname(str(pat)) or '.'):
+        OUTSIDE.append(('glob', str(pat))); return []
+    return _glob_orig(pat, *a, **k)
+_glob.glob = _glob_guard
+import pathlib as _pl
+_path_open_orig = _pl.Path.open
+def _path_open(self, *a, **k):
+    if _outside(self):
+        OUTSIDE.append(('pathlib.open', str(self))); raise FileNotFoundError('isolation: outside bundle ' + str(self))
+    return _path_open_orig(self, *a, **k)
+_pl.Path.open = _path_open
 
 # 감사기는 생성기를 자식 프로세스로 돌린다. 부모만 후킹하면 그 접근이 통째로 안 보인다.
 # 자식에도 같은 차단을 설치하고, 위반을 파일로 받아 합친다.
@@ -87,6 +113,26 @@ def _mk(fn, ch):
     return g
 builtins.open = _go
 os.path.exists = _mk(_e, "exists"); os.path.isdir = _mk(_d, "isdir"); os.path.isfile = _mk(_f, "isfile")
+def _mr(fn, ch):
+    def g(p, *a, **k):
+        if _out(p): _note(ch, p); raise FileNotFoundError("isolation: outside " + str(p))
+        return fn(p, *a, **k)
+    return g
+os.open = _mr(os.open, "os.open")
+import io as _io2
+_io2.open = _go
+import glob as _g2
+_gg2 = _g2.glob
+def _glob_g(pat, *a, **k):
+    if _out(os.path.dirname(str(pat)) or "."): _note("glob", pat); return []
+    return _gg2(pat, *a, **k)
+_g2.glob = _glob_g
+import pathlib as _pl2
+_po2 = _pl2.Path.open
+def _path_open2(self, *a, **k):
+    if _out(self): _note("pathlib.open", self); raise FileNotFoundError("isolation: outside " + str(self))
+    return _po2(self, *a, **k)
+_pl2.Path.open = _path_open2
 """)
 
 import subprocess as _subprocess

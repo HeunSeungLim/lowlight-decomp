@@ -24,7 +24,6 @@ def _load(name):
     return None
 
 AC = _load("analysis_constants.json")
-MG = _load("multiframe_gain.json")
 FC = _load("fig_cmp2_numbers.json")
 CR = _load("cross_rendition_source.json")
 UC = _load("unresolved_cells.json")
@@ -35,14 +34,6 @@ if AC:
     mac["nCIlevel"] = f"{AC['confidence_level_pct']['value']}"
 if CR and "value" in CR:
     mac["nCIDreported"] = f"{CR['value']:.3f}"
-if MG:
-    from collections import Counter as _C
-    _c = _C()
-    for _k, _v in MG["group_sizes"].items():
-        _n = _v if isinstance(_v, int) else len(_v)
-        if _n >= 8: _c[_k.split("|")[1]] += 1
-    mac["nMFlongGroups"] = f"{_c['0.1s']}"
-    mac["nMFmidGroups"] = f"{_c['0.04s']}"
 if FC:
     mac["nCALIBgain"] = f"{FC['calibration_gain']:.3f}"
 if UC:
@@ -50,7 +41,7 @@ if UC:
     mac["nUnresLo"] = f"{cells[0]:.3f}"
     mac["nUnresHi"] = f"{cells[-1]:.3f}"
 
-assert len(mac) >= 8, "선언 상수를 못 읽었다 — 빈 파일을 쓰지 않는다"
+assert len(mac) >= 6, "선언 상수를 못 읽었다 — 빈 파일을 쓰지 않는다"
 out = "".join("\\newcommand{\\%s}{%s}\n" % (k, v) for k, v in sorted(mac.items()))
 open(os.path.join(P, "numbers_declared.tex"), "w").write(out)
 print("numbers_declared.tex: %d개 (%s)" % (len(mac), ", ".join(sorted(mac))))
