@@ -1,6 +1,6 @@
 """최종 규칙(q=99.9, K=1)의 모든 인쇄값을 한 파일에서 굽는다. 중복 정의 없이 numbers_final.tex 만 만든다."""
 import re, json, os, numpy as np
-P=os.path.dirname(os.path.abspath(__file__)); M=os.environ.get("LLROOT", ".") + "/method_260909"
+P=os.path.dirname(os.path.abspath(__file__)); M=os.environ.get("LLMETHOD", os.path.join(P, "..", "numbers", "method_260909") if os.path.isdir(os.path.join(P, "..", "numbers", "method_260909")) else "/home/user/lowlight_paper/method_260909")
 F=json.load(open(f"{M}/final_rule.json")); QS=json.load(open(f"{M}/qsweep.json"))
 A=json.load(open(f"{M}/anchor.json")); S49=json.load(open(f"{M}/safe_calib.json"))
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.5,99.9]
@@ -93,14 +93,30 @@ mac["nCONtopfive"]=f"{CN['top5_share_of_scene_pooled_pct']:.0f}"
 TO=json.load(open(f"{M}/tost_equivalence.json"))
 mac["nCTOST"]=f"{TO['tost_margin']:.2f}"
 mac["nFZdcegain"]=f"{F['sony']['zerodcepp']['gain']:+.3f}"
-mac["nFZdcep"]=f"{F['sony']['zerodcepp']['p_raw']:.2f}"
+mac["nFZdcep"]=f"{F['sony']['zerodcepp']['p_raw']:.4f}"
+MFD=json.load(open(f"{M}/multiframe_drop.json"))
+BS=json.load(open(f"{M}/bootstrap_config.json"))
+mac["nMFdropRe"]=f"{MFD['drop_db']:.2f}"
+mac["nBootB"]=f"{BS['resamples']}"; mac["nBootSeed"]=f"{BS['seed']}"
+mac["nBootSpecB"]=f"{BS['spectral_bootstrap']['resamples']}"; mac["nBootSpecSeed"]=f"{BS['spectral_bootstrap']['seed']}"
+SW=json.load(open(f"{M}/protocol_sweep.json"))
+mac["nSWn"]=f"{SW['rectification_sweep']['pairs']}"
+mac["nSWlo"]=f"{SW['rectification_sweep']['range_db'][0]:+.2f}"
+mac["nSWhi"]=f"{SW['rectification_sweep']['range_db'][1]:+.2f}"
+mac["nAGlo"]=f"{SW['aggregation_convention']['range_db'][0]:.2f}"
+mac["nAGhi"]=f"{SW['aggregation_convention']['range_db'][1]:.2f}"
+_bf=SW["rectification_sweep"]["by_family"]
+mac["nSWtrHi"]=f"{_bf['reference_trained']['range_db'][1]:+.2f}"
+mac["nSWtrN"]=f"{_bf['reference_trained']['pairs']}"
 LOLRF=json.load(open(f"{M}/anchor_lol_retinexformer.json"))
-mac["nLOLRFloss"]=f"{LOLRF['raw']['psnr']-LOLRF['anchored']['psnr']:.2f}"
+mac["nLOLRFloss"]=f"{LOLRF['raw']['psnr']-LOLRF['anchored']['psnr']:.3f}"
 QS181=json.load(open(f"{M}/qsat_train181.json"))
 for _q,_t in ((95,"a"),(98,"b"),(99,"c"),(99.5,"d")):
     mac[f"nFq{_t}sat"]=f"{QS181['saturated_pct'][str(_q)]:.0f}"
 for _e,_t in (("0.033s","s"),("0.04s","m"),("0.1s","l")):
     mac[f"nFext{_t}"]=f"{RA[f'exp_{_e}']['t']:.3f}"
+mac["nCTOSTpct"]=f"{TO['margin_as_pct_of_effect']:.0f}"
+mac["nQSATn"]=f"{QS181['scenes']}"
 
 mac = {k: ("$-$"+v[1:] if isinstance(v, str) and v.startswith("-") else v) for k, v in mac.items()}   # 줄바꿈 분리 방지
 open(os.path.join(P,"numbers_final.tex"),"w").write("".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k,v in mac.items()))

@@ -1,10 +1,13 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """최종 규칙 q=99.9, K=1(8비트 상한): Sony 4모델 + LOL 6모델, 10쌍 Holm, SSIM, 버스트, 포화 의존."""
-import os, json, os, sys, collections, numpy as np
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", "."); sys.path.insert(0,f"{R}/code")
+import json, os, sys, collections, numpy as np
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))); sys.path.insert(0,f"{R}/code")
 from repro_measure import ssim_indep
 import diag_lolv1 as DL
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
 Q=99.9; rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.5,99.9]
 Ksony=float(tz["QG"][:,QLt.index(99.9)].mean()); satS=float((tz["QG"][:,QLt.index(99.9)]>=0.999).mean())*100
@@ -16,7 +19,7 @@ def gt_of(s,_c={}):
         _c.clear(); _c[s]=np.load(f"{GTD}/{s}/{f}")[:,:,::-1].astype(np.float32)/255.0
     return _c[s]
 def load(m,i,r):
-    if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if m=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 rng=np.random.RandomState(20260909); RES={"K":1.0,"q":Q,"sat_train_sony":satS,"sony":{},"lol":{}}
 grp=collections.defaultdict(list)
@@ -52,7 +55,7 @@ print(f"버스트: 출력평균 {sb.mean():.4f} → 앵커 {sa.mean():.4f} ({(sa
 # LOL
 pairs=list(DL.build_pairs()); ids=[p[0] for p in pairs]; GT={p[0]:p[2] for p in pairs}
 import glob, cv2
-hi_dir=os.environ.get("LLDATA", "data") + "/lowlight_model/data/LOLv1/our485/high"
+hi_dir="/data/HSL/lowlight_model/data/LOLv1/our485/high"
 fs=sorted(glob.glob(f"{hi_dir}/*"))
 Klol=float(np.mean([np.percentile(cv2.imread(f)[:,:,::-1].astype(np.float32)/255.,Q) for f in fs]))
 satL=float(np.mean([np.percentile(cv2.imread(f)[:,:,::-1].astype(np.float32)/255.,Q)>=0.999 for f in fs]))*100

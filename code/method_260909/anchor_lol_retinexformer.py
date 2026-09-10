@@ -1,17 +1,20 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """LOL 최고 모델(Retinexformer)에 같은 앵커 규칙을 적용해 표 1 LOL 블록의 우리 행을 만든다.
 
 검증: 보정 전 값이 표 1 의 LOL Retinexformer 행(25.15 / 0.845 / 41.4 / 4.1 / 54.5 / 1.17)을
 재현하는지 먼저 확인한 뒤 보정본을 보고한다.
 """
-import os, json, os, sys, numpy as np, torch
-M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", ".")
+import json, os, sys, numpy as np, torch
+M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
 sys.path.insert(0, f"{R}/release_v2/code"); sys.path.insert(0, f"{R}/code")
 from diag_sid_lowfreq import block_index, block_fit
 from repro_measure import ssim_indep
-RF_REPO = os.environ.get("LLDATA", "data") + "/hsl/hsl/Retinexformer"
-RF_W = os.environ.get("LLDATA", "data") + "/lowlight_model/weights/retinexformer/pretrain_model/LOL_v1.pth"
-LOW = os.environ.get("LLDATA", "data") + "/lowlight_model/data/LOLv1/eval15/low"
-HIGH = os.environ.get("LLDATA", "data") + "/lowlight_model/data/LOLv1/eval15/high"
+RF_REPO = "/data/HSL/hsl/hsl/Retinexformer"
+RF_W = "/data/HSL/lowlight_model/weights/retinexformer/pretrain_model/LOL_v1.pth"
+LOW = "/data/HSL/lowlight_model/data/LOLv1/eval15/low"
+HIGH = "/data/HSL/lowlight_model/data/LOLv1/eval15/high"
 Q = 99.9
 from PIL import Image
 sys.path.insert(0, RF_REPO)

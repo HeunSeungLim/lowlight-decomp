@@ -1,0 +1,289 @@
+{
+ "note": "Two further prices computable from the same dump, with no new inference. Restricted to the method rows of Table 1.",
+ "verified_local": "2026-09-10 09:01 KST",
+ "dump": {
+  "path": "numbers/compare_methods.json",
+  "sha256": "f976e9a555160e51f477062df8005411d3971131adc2b02180087f999a55bf48"
+ },
+ "excluded": [
+  "cidnet_wperc",
+  "gamma",
+  "input"
+ ],
+ "rectification_sweep": {
+  "pairs": 18,
+  "unit": "dB gained by setting the output's mean from the reference",
+  "range_db": [
+   -0.2633624459412669,
+   9.809724006025998
+  ],
+  "largest": {
+   "pair": "LOL/clahe",
+   "plain": 9.132288670430164,
+   "rectified": 18.942012676456162,
+   "gain_db": 9.809724006025998
+  },
+  "smallest": {
+   "pair": "Sony/ar",
+   "plain": 12.928883857915144,
+   "rectified": 12.665521411973877,
+   "gain_db": -0.2633624459412669
+  },
+  "rows": [
+   {
+    "pair": "LOL/clahe",
+    "plain": 9.132288670430164,
+    "rectified": 18.942012676456162,
+    "gain_db": 9.809724006025998
+   },
+   {
+    "pair": "LOL/ar",
+    "plain": 11.040531406200826,
+    "rectified": 19.939209807861115,
+    "gain_db": 8.89867840166029
+   },
+   {
+    "pair": "LOL/gsad",
+    "plain": 22.808251339375815,
+    "rectified": 27.70647617481898,
+    "gain_db": 4.898224835443166
+   },
+   {
+    "pair": "LOL/uretinex",
+    "plain": 19.860032732781473,
+    "rectified": 24.618601665605073,
+    "gain_db": 4.7585689328236
+   },
+   {
+    "pair": "LOL/zerodcepp",
+    "plain": 15.344088861311828,
+    "rectified": 20.076383401936216,
+    "gain_db": 4.7322945406243875
+   },
+   {
+    "pair": "LOL/cidnet_woperc",
+    "plain": 23.60867035330826,
+    "rectified": 28.228678794175856,
+    "gain_db": 4.620008440867597
+   },
+   {
+    "pair": "LOL/sci",
+    "plain": 14.853782766827722,
+    "rectified": 19.053191890021374,
+    "gain_db": 4.199409123193652
+   },
+   {
+    "pair": "LOL/lightendiff",
+    "plain": 20.115796036268048,
+    "rectified": 23.72035561073432,
+    "gain_db": 3.604559574466272
+   },
+   {
+    "pair": "LOL/llformer",
+    "plain": 23.648463729272375,
+    "rectified": 26.10574488962396,
+    "gain_db": 2.4572811603515845
+   },
+   {
+    "pair": "LOL/snrnet",
+    "plain": 24.609534151538394,
+    "rectified": 26.811759852614742,
+    "gain_db": 2.2022257010763475
+   },
+   {
+    "pair": "LOL/retinexformer",
+    "plain": 25.152286748364354,
+    "rectified": 27.16933299876354,
+    "gain_db": 2.0170462503991864
+   },
+   {
+    "pair": "Sony/clahe",
+    "plain": 13.320693316049619,
+    "rectified": 14.748461854336187,
+    "gain_db": 1.4277685382865677
+   },
+   {
+    "pair": "Sony/snrnet",
+    "plain": 22.86723387540167,
+    "rectified": 24.10941294484822,
+    "gain_db": 1.24217906944655
+   },
+   {
+    "pair": "Sony/retinexformer",
+    "plain": 24.438298441252588,
+    "rectified": 25.60206275552153,
+    "gain_db": 1.163764314268942
+   },
+   {
+    "pair": "Sony/sci",
+    "plain": 11.804710281096277,
+    "rectified": 12.731388045249176,
+    "gain_db": 0.9266777641528989
+   },
+   {
+    "pair": "Sony/lightendiff",
+    "plain": 17.09258155137507,
+    "rectified": 17.98568559261378,
+    "gain_db": 0.8931040412387112
+   },
+   {
+    "pair": "Sony/zerodcepp",
+    "plain": 12.736862671506568,
+    "rectified": 12.74635927894607,
+    "gain_db": 0.009496607439501759
+   },
+   {
+    "pair": "Sony/ar",
+    "plain": 12.928883857915144,
+    "rectified": 12.665521411973877,
+    "gain_db": -0.2633624459412669
+   }
+  ],
+  "source": "agg[pair] psnr_gtmean minus psnr",
+  "by_family": {
+   "reference_trained": {
+    "pairs": 10,
+    "range_db": [
+     0.8931040412387112,
+     4.898224835443166
+    ],
+    "largest": "LOL/gsad"
+   },
+   "training_free_or_inhouse": {
+    "pairs": 8,
+    "range_db": [
+     -0.2633624459412669,
+     9.809724006025998
+    ],
+    "largest": "LOL/clahe"
+   },
+   "note": "The sweep maximum belongs to a training-free baseline whose brightness is far off; the reference-trained subset tops out lower."
+  }
+ },
+ "aggregation_convention": {
+  "pairs": 18,
+  "unit": "dB between the frame-mean PSNR and the PSNR of the pooled MSE",
+  "range_db": [
+   0.8161912123322814,
+   3.310191507374931
+  ],
+  "largest": {
+   "pair": "LOL/gsad",
+   "frame_mean": 22.808251339375815,
+   "pooled_mse": 19.498059832000884,
+   "delta_db": 3.310191507374931
+  },
+  "rows": [
+   {
+    "pair": "LOL/gsad",
+    "frame_mean": 22.808251339375815,
+    "pooled_mse": 19.498059832000884,
+    "delta_db": 3.310191507374931
+   },
+   {
+    "pair": "LOL/cidnet_woperc",
+    "frame_mean": 23.60867035330826,
+    "pooled_mse": 20.64335665736302,
+    "delta_db": 2.9653136959452375
+   },
+   {
+    "pair": "LOL/llformer",
+    "frame_mean": 23.648463729272375,
+    "pooled_mse": 21.131525599417746,
+    "delta_db": 2.51693812985463
+   },
+   {
+    "pair": "LOL/snrnet",
+    "frame_mean": 24.609534151538394,
+    "pooled_mse": 22.421486954108808,
+    "delta_db": 2.1880471974295865
+   },
+   {
+    "pair": "LOL/sci",
+    "frame_mean": 14.853782766827722,
+    "pooled_mse": 12.752764339050234,
+    "delta_db": 2.101018427777488
+   },
+   {
+    "pair": "LOL/zerodcepp",
+    "frame_mean": 15.344088861311828,
+    "pooled_mse": 13.316787296877564,
+    "delta_db": 2.0273015644342642
+   },
+   {
+    "pair": "LOL/uretinex",
+    "frame_mean": 19.860032732781473,
+    "pooled_mse": 18.217118464873646,
+    "delta_db": 1.6429142679078268
+   },
+   {
+    "pair": "Sony/snrnet",
+    "frame_mean": 22.867233875401688,
+    "pooled_mse": 21.311860337283814,
+    "delta_db": 1.5553735381178733
+   },
+   {
+    "pair": "Sony/retinexformer",
+    "frame_mean": 24.438298441252574,
+    "pooled_mse": 22.988110523159094,
+    "delta_db": 1.45018791809348
+   },
+   {
+    "pair": "Sony/lightendiff",
+    "frame_mean": 17.092581551375066,
+    "pooled_mse": 15.701924558471898,
+    "delta_db": 1.3906569929031676
+   },
+   {
+    "pair": "LOL/ar",
+    "frame_mean": 11.040531406200826,
+    "pooled_mse": 9.839886409769967,
+    "delta_db": 1.2006449964308583
+   },
+   {
+    "pair": "Sony/zerodcepp",
+    "frame_mean": 12.736862671506575,
+    "pooled_mse": 11.575277371673192,
+    "delta_db": 1.1615852998333835
+   },
+   {
+    "pair": "Sony/ar",
+    "frame_mean": 12.928883857915146,
+    "pooled_mse": 11.828707040801339,
+    "delta_db": 1.100176817113807
+   },
+   {
+    "pair": "Sony/sci",
+    "frame_mean": 11.804710281096273,
+    "pooled_mse": 10.73976545774331,
+    "delta_db": 1.0649448233529633
+   },
+   {
+    "pair": "LOL/lightendiff",
+    "frame_mean": 20.115796036268048,
+    "pooled_mse": 19.081098591642622,
+    "delta_db": 1.0346974446254258
+   },
+   {
+    "pair": "Sony/clahe",
+    "frame_mean": 13.320693316049624,
+    "pooled_mse": 12.349410447853412,
+    "delta_db": 0.9712828681962122
+   },
+   {
+    "pair": "LOL/retinexformer",
+    "frame_mean": 25.152286748364354,
+    "pooled_mse": 24.234376481703922,
+    "delta_db": 0.9179102666604315
+   },
+   {
+    "pair": "LOL/clahe",
+    "frame_mean": 9.132288670430164,
+    "pooled_mse": 8.316097458097882,
+    "delta_db": 0.8161912123322814
+   }
+  ],
+  "source": "per_frame[bench][model]; frame mean of per-frame PSNR against 10log10(1/mean MSE)",
+  "sign_note": "The sign is not empirical: the difference equals 10log10(AM(mse)/GM(mse)) and is non-negative by AM-GM. What the dump supplies is the magnitude."
+ }
+}

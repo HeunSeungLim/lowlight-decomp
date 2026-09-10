@@ -1,12 +1,15 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """앵커판을 LOL 6모델에 적용. K 는 LOL 학습 분할 기준영상의 99.5백분위 평균(테스트 라벨 미사용)."""
-import os, json, os, sys, glob, numpy as np
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", "."); sys.path.insert(0,f"{R}/code")
+import json, os, sys, glob, numpy as np
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))); sys.path.insert(0,f"{R}/code")
 import diag_lolv1 as DL
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 pairs=list(DL.build_pairs()); ids=[p[0] for p in pairs]; GT={p[0]:p[2] for p in pairs}
 # LOL 학습 분할 기준영상에서 K
-cand=[d for d in (os.environ.get("LLDATA", "data") + "/enhance_data/lowlight_bench/LOLdataset/our485/high",os.environ.get("LLDATA", "data") + "/lowlight_model/data/LOLv1/our485/high",
-                  os.environ.get("LLDATA", "data") + "/enhance_data/LOLv1/our485/high") if os.path.isdir(d)]
+cand=[d for d in ("/data/HSL/enhance_data/lowlight_bench/LOLdataset/our485/high","/data/HSL/lowlight_model/data/LOLv1/our485/high",
+                  "/data/HSL/enhance_data/LOLv1/our485/high") if os.path.isdir(d)]
 if cand:
     import cv2
     fs=sorted(glob.glob(f"{cand[0]}/*"))[:120]

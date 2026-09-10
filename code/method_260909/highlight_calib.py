@@ -1,10 +1,13 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """하이라이트 정합 보정(HC): 기준 촬영의 상위 백분위는 장면이 달라도 거의 일정하다는 성질을 이용한다.
 학습 장면에서 (1) 어느 백분위가 가장 안정적인지, (2) 그 비율에서 이득으로 가는 회귀계수를 배운다.
 평가 장면에서는 출력만 보고 이득을 정한다. 전역판과 채널별판을 함께 낸다. 장면 5겹 교차검증."""
-import os, json, os, numpy as np
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+import json, os, numpy as np
+CACHE = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
+rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 QL = [90, 95, 98, 99, 99.5, 99.9]
 def gt_of(s, _c={}):
     if s not in _c:

@@ -1,9 +1,12 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """보정 후보 여러 개를 같은 장면 5겹 교차검증으로 비교한다. 특징 선택·회귀·수축계수는 전부 학습 장면 안에서만 정한다.
 후보: (a) 백분위 기반 전역 이득 예측, (b) 색 비율만 정규화, (c) 둘 다."""
-import os, json, os, numpy as np
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+import json, os, numpy as np
+CACHE = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
+rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 QL = [50, 75, 90, 95, 98, 99, 99.5, 99.9]
 F = f"{OUT}/calib2_cache.npz"
 def gt_of(s, _c={}):

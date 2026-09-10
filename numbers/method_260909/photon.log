@@ -1,0 +1,17 @@
+  0/598
+  150/598
+  300/598
+  450/598
+
+특징 (598, 7), 프레임 598
+장면 단위 단변량 상관:
+  log slope    r=-0.102
+  log inter    r=+0.102
+  log var@low  r=+0.021
+  log var@high r=-0.220
+  log mu       r=+0.105
+  log var      r=+0.043
+  log exp      r=+0.034
+
+장면 단위 leave-one-out R^2 = -0.0470 (lambda 1000), 상관 -0.809
+예측력 부족 — 적용 생략

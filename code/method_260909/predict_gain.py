@@ -1,9 +1,12 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """정답 없이 전역 이득 a* 를 맞힐 수 있는가. 입력·출력 통계만 쓰고 장면 5겹 교차검증으로 학습·평가한다."""
-import os, json, os, numpy as np
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; SHD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/short_sid2"
+import json, os, numpy as np
+CACHE = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; SHD = "/data/HSL/lowlight_model/data/SID_raw/SID/short_sid2"
 OUT = os.path.dirname(os.path.abspath(__file__))
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 def gt_of(s, _c={}):
     if s not in _c:
         f = [x for x in sorted(os.listdir(f"{GTD}/{s}")) if x.endswith(".npy")][0]

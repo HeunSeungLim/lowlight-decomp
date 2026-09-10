@@ -31,5 +31,8 @@
     "res": 54.5,
     "d16": 1.17
   },
-  "sd_convention": "sample standard deviation with ddof=1, matching Table 1; ddof=0 values kept as psnr_sd_ddof0 (factor sqrt(15/14))"
+  "sd_convention": "sample standard deviation with ddof=1, matching Table 1; ddof=0 values kept as psnr_sd_ddof0 (factor sqrt(15/14))",
+  "loss_db": 2.686551404879882,
+  "loss_db_1dp": 2.7,
+  "rounding_note": "Full precision gives 2.687 dB. The rounded table rows (25.15 and 22.47) differ by 2.68, so the manuscript states the loss to one decimal, which both roundings support."
 }

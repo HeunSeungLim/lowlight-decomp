@@ -1,13 +1,16 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """최종 형태: 보정용 장면 몇 개로 회귀를 맞추고, 평가 장면에서는 장면 단위로 예측 이득을 평균해 적용한다.
 보정 장면 수를 바꿔가며 성능을 재고, 프레임 단위 예측과 비교한다. 정답은 보정 장면에서만 쓴다."""
-import os, json, os, numpy as np
+import json, os, numpy as np
 def linfit(x, y):                      # 닫힌형 최소자승 (LAPACK 회피)
     x = np.asarray(x, float); y = np.asarray(y, float); vx = x.var()
     b = 0.0 if vx < 1e-18 else float(((x - x.mean()) * (y - y.mean())).mean() / vx)
     return b, float(y.mean() - b * x.mean())
-OUT = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", ".")
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
+OUT = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CACHE = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
 z = np.load(f"{OUT}/calib2_cache.npz", allow_pickle=True); QY, QG, A, S, BASE = z["QY"], z["QG"], z["A"], z["S"], z["BASE"]
 tz = np.load(f"{OUT}/train_feats.npz", allow_pickle=True)
 QL = [50, 75, 90, 95, 98, 99, 99.5, 99.9]

@@ -1,9 +1,12 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """전역 이득 예측 재시도: 로그 특징(비율 구조)과 장면 단위 leave-one-scene-out 로 정규화 세기를 고른다."""
-import os, json, os, numpy as np
+import json, os, numpy as np
 OUT = os.path.dirname(os.path.abspath(__file__)); D = np.load(f"{OUT}/feat_cache.npz", allow_pickle=True) if os.path.exists(f"{OUT}/feat_cache.npz") else None
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; SHD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/short_sid2"
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+CACHE = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; SHD = "/data/HSL/lowlight_model/data/SID_raw/SID/short_sid2"
+rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 if D is None:
     def gt_of(s, _c={}):
         if s not in _c:

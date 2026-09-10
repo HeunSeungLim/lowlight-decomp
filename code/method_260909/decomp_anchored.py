@@ -1,16 +1,19 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """보정된 출력의 잔차 분해: 표 1 의 gl./ch./res./Delta16 을 우리 행에도 채운다.
 
 집계는 표 1 과 같다 — 프레임별 dB 를 구한 뒤 프레임 평균. Delta16 은
 (16픽셀 블록 이득 - 전역 1x1 블록 이득) 에서 구조없는표적 대조군의 같은 차를 뺀 값이다.
 검증: 같은 절차를 보정하지 않은 출력에 돌려 표 1 의 1.19 를 재현하는지 먼저 확인한다.
 """
-import os, json, os, sys, numpy as np, torch
-M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", ".")
+import json, os, sys, numpy as np, torch
+M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
 for _c in (f"{R}/code", f"{R}/release_v2/code", os.path.join(os.path.dirname(M), "code")):
     if os.path.isdir(_c) and _c not in sys.path: sys.path.insert(0, _c)
 from diag_sid_lowfreq import block_index, block_fit
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
+CACHE = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
 Q = 99.9
 rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 

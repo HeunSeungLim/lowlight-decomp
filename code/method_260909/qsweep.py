@@ -1,9 +1,12 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """q 민감도와 q=99.9 판(K=1, 데이터 불필요) 확정 측정 + SSIM + 10쌍 Holm."""
-import os, json, os, sys, collections, numpy as np
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", "."); sys.path.insert(0,f"{R}/code")
+import json, os, sys, collections, numpy as np
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))); sys.path.insert(0,f"{R}/code")
 from repro_measure import ssim_indep
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.5,99.9]
 QS=[95,98,99,99.5,99.9]
@@ -15,7 +18,7 @@ def gt_of(s,_c={}):
     return _c[s]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(m,i,r):
-    if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if m=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 # 학습 분할 기준영상에서 q별 K (테스트 라벨 미사용)
 K={q: float(tz["QG"][:,QLt.index(q)].mean()) for q in QS}

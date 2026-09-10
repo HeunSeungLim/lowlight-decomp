@@ -21,8 +21,8 @@ the multi-frame comparisons (it moves single-frame PSNR by about 0.004 dB).
 
 ## Measurement code for the correction and its controls (260909)
 
-code/method_260909/   the highlight-anchored correction, its controls and the diagnostics behind them
-numbers/method_260909/ every JSON the paper's final-section numbers are generated from
+code/method_260909/    the highlight-anchored correction, its controls and the diagnostics behind them
+numbers/method_260909/ every JSON the paper's final-section numbers are generated from, with run logs
 
 Key entries. `final_rule.py` applies the rule at q=99.9 to four Sony models and six LOL models with
 scene bootstrap and Holm adjustment. `controls_v58.py` fits the oracle constant on the acting frames,
@@ -34,8 +34,27 @@ final-section dumps. `tost_equivalence.json` records the equivalence resolution 
 supports.
 
 Paths. Scripts read the benchmark under `$LLDATA` and the cached model outputs under `$LLCACHE`
-(default `numbers/cache_retinexformer_sony`); set both before running. `cache_lol/` is not tracked here
-because the six LOL caches regenerate from `code/newbase_*.py` in a few minutes each.
+(default `cache`); the receipts they write and read live under `$LLMETHOD` (default
+`numbers/method_260909`). `cache_lol/` is not tracked here because the six LOL caches regenerate from
+`code/newbase_*.py` in a few minutes each, and the intermediate `.npz` feature and control caches are
+not tracked either: each is rebuilt by the script that names it, from the benchmark and the model
+caches above.
+
+Layout of this section. `code/method_260909/` holds the scripts, `numbers/method_260909/` the JSON
+receipts and the `.log` transcript of the run that produced each one, so a receipt can be read without
+rerunning anything.
+
+Audit and manuscript. `paper_tables/` carries the compiled `main.pdf` together with the sources that
+build it, so the audit runs with no further inputs:
+
+    python paper_tables/audit_paper_numbers.py
+
+It extracts every number printed in the PDF and matches it against the receipts, and reports how wide
+its own acceptance windows are, so a reader can judge how much a match is worth. It is self-contained:
+`paper_tables/_isolation_test.py` reruns it with every file outside `paper_tables/` made unreadable and
+fails if the audit still needs one. Rebuilding the PDF needs `pdflatex` and `bibtex` and nothing else:
+
+    cd paper_tables && pdflatex main && bibtex main && pdflatex main && pdflatex main
 
 Audit. `paper_tables/audit_paper_numbers.py` extracts every number printed in the compiled PDF and
 matches it against these dumps. It separates values matched against measurement dumps from values that

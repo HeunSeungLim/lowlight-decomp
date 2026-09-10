@@ -1,11 +1,14 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """반증 좌석이 요구한 대조군: 작동집합에서의 오라클 상수배, 배율 순열, 오라클 회수율.
 
 앵커와 같은 캐시·같은 8비트 규칙을 쓰되 통계는 독립 재구현한다.
 """
-import os, json, os, sys, collections, numpy as np
-M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", ".")
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
+import json, os, sys, collections, numpy as np
+M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
 Q = 99.9
 rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8 = lambda a, b: 10 * np.log10(255.0 ** 2 / np.mean((a.astype(np.float64) - b.astype(np.float64)) ** 2))
@@ -19,7 +22,7 @@ def gt_of(s, _c={}):
 
 Y, G8, S, base, mult, num, den = [], [], [], [], [], [], []
 for i, r in enumerate(rows):
-    y = np.load(f"{CACHE}/{i:04d}.npy").transpose(1, 2, 0).astype(np.float32)
+    y = np.load(f"{CODEX}/{i:04d}.npy").transpose(1, 2, 0).astype(np.float32)
     g = gt_of(r["scene"]); Gu = g8(g)
     base.append(p8(g8(y), Gu)); S.append(r["scene"])
     mult.append(float(np.clip(1.0 / max(float(np.percentile(y, Q)), 1e-6), 0.5, 2.0)))

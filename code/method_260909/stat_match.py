@@ -1,9 +1,12 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """학습 장면의 기준 통계에 출력 밝기를 맞추는 보정. 평가 장면의 정답은 쓰지 않는다.
 gain = (학습 GT 통계 평균) / (이 출력의 같은 통계). 장면 5겹 교차검증, 통계 후보별 전량 보고."""
-import os, json, os, numpy as np
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+import json, os, numpy as np
+CACHE = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
+rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 QS = [("mean", None), ("p50", 50), ("p75", 75), ("p90", 90), ("p95", 95), ("p99", 99)]
 def stat(x, q): return float(x.mean()) if q is None else float(np.percentile(x, q))
 def gt_of(s, _c={}):

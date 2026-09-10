@@ -18,7 +18,7 @@
 \makeatother
 \setlength{\abovecaptionskip}{1pt}
 \setlength{\belowcaptionskip}{0pt}
-\renewcommand{\arraystretch}{0.79}
+\renewcommand{\arraystretch}{0.77}
 
 \hyphenation{CIDNet Retinexformer LightenDiffusion LLFormer}
 \input{numbers}
@@ -26,15 +26,13 @@
 \input{numbers_final}
 \let\origthebibliography\thebibliography
 \renewcommand{\thebibliography}[1]{\origthebibliography{#1}%
-  \setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}}
+  \fontsize{8.75}{10.5}\selectfont\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}}
 \begin{document}
 \ninept
 \maketitle
 
 \begin{abstract}
-Scores reported for extreme-dark enhancement are not comparable across papers: three protocol
-choices---rectifying the output's brightness from the reference, the rule for converting to eight
-bits, and which rendition is used---move them, rectification by nearly five decibels. We rerun eighteen method--benchmark pairs under one protocol, price the three choices on the checkpoints each applies to, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark,
+Scores reported for extreme-dark enhancement are not comparable across papers: four protocol choices---rectifying the output's brightness from the reference, the eight-bit rule, how PSNR is aggregated, and which rendition is used---move them by up to ten decibels, five among the reference-trained. We rerun eighteen method--benchmark pairs under one protocol, price each choice on the pairs it applies to, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark,
 the spatially varying low-frequency term is common to all, and the global term is a generalisation
 gap: its oracle gain is near one on a model's training scenes and dispersed on new ones. The
 diagnosis prescribes one correction with a checkable precondition, rescaling each output so its

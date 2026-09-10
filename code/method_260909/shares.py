@@ -1,8 +1,11 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """R5'·R7' 용 수치: 작동 집합 내 집중도, 프레임가중 대 장면가중 평균, 무변화 장면 수."""
-import os, json, os, numpy as np
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; Q=99.9
+import json, os, numpy as np
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; Q=99.9
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def gt_of(s,_c={}):
@@ -12,7 +15,7 @@ def gt_of(s,_c={}):
     return _c[s]
 gain=[];S=[];act=[];EX=[]
 for i,r in enumerate(rows):
-    y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"]); Gu=g8(g)
+    y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"]); Gu=g8(g)
     p=float(np.clip(1.0/max(float(np.percentile(y,Q)),1e-6),0.5,2.0))
     gain.append(p8(g8(y*p),Gu)-p8(g8(y),Gu)); S.append(r["scene"]); act.append(abs(p-1.0)>1e-4); EX.append(r["exp"])
     if i%200==0: print(f"  {i}/{len(rows)}",flush=True)

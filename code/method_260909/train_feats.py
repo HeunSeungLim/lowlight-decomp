@@ -1,8 +1,11 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """SID 공식 학습 장면(161개)에 Retinexformer 를 돌려 예측기 학습자료를 만든다.
 저장하는 건 프레임별 백분위 특징과 최적 전역이득뿐이고 영상은 저장하지 않는다."""
 import os, sys, glob, json, numpy as np, torch
-R = os.environ.get("LLROOT", "."); sys.path.insert(0, f"{R}/code/third_party/Retinexformer")
-DATA = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID"; W = os.environ.get("LLDATA", "data") + "/lowlight_model/weights/retinexformer/pretrain_model/SID.pth"
+R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))); sys.path.insert(0, f"{R}/code/third_party/Retinexformer")
+DATA = "/data/HSL/lowlight_model/data/SID_raw/SID"; W = "/data/HSL/lowlight_model/weights/retinexformer/pretrain_model/SID.pth"
 OUT = os.path.dirname(os.path.abspath(__file__)); QL = [50, 75, 90, 95, 98, 99, 99.5, 99.9]
 PER_SCENE = int(sys.argv[1]) if len(sys.argv) > 1 else 4
 from basicsr.models.archs.RetinexFormer_arch import RetinexFormer

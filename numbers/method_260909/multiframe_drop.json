@@ -1,0 +1,16 @@
+{
+ "note": "Raw-score drop of the eight-frame input mean, on the cohort the adjacent sentences use.",
+ "cohort": "match cohort: 0.1 s, groups with at least eight frames, non-overlapping blocks",
+ "k1_rows": 288,
+ "k8_rows": 36,
+ "k1_mean": 25.35102997592973,
+ "k8_mean": 20.779030685317693,
+ "drop_db": 4.5719992906120375,
+ "source": "repro/multiframe_gain.json rows with match true; evidence.json/mf2 is the same cohort",
+ "correction": {
+  "corrected_local": "2026-09-10 09:08 KST",
+  "previous_claim": "4.57 could not be reproduced from any cohort in this dump; the value was changed to 4.56",
+  "what_was_wrong": "The reconstruction used the fix cohort (4.5363) and a scene-mean variant (4.5607) and never the match cohort, which reproduces 4.5720. The claim of irreproducibility was false, and changing the printed value split two adjacent sentences across different cohorts: the 0.672 output-averaging gain in the next sentence uses this cohort's k=1 baseline of 25.3510.",
+  "resolution": "Printed value restored to the match-cohort figure; both sentences now use one cohort."
+ }
+}

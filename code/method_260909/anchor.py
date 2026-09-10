@@ -1,9 +1,12 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """고정 앵커판: p = K / Q99.5(y). 보정 장면도, 분할 시드도 필요 없다.
 K 는 학습 분할의 기준 영상 99.5백분위 평균에서 얻는다(테스트 라벨 미사용). K 민감도도 함께 낸다."""
-import os, json, os, numpy as np
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]; QI=QL.index(99.5)
+import json, os, numpy as np
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]; QI=QL.index(99.5)
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True)
 K_train=float(tz["QG"][:,QI].mean()); print(f"학습 분할 기준 99.5백분위 평균 K={K_train:.4f} (프레임 {len(tz['QG'])})")
@@ -14,7 +17,7 @@ def gt_of(s,_c={}):
     return _c[s]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(model,i,r):
-    if model=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if model=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{model}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 KS=[0.90,0.92,0.94,0.953,0.96,0.98,1.00,1.02, K_train]
 rng=np.random.RandomState(20260909); RES={}

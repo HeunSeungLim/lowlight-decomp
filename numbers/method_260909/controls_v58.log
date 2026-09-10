@@ -1,0 +1,21 @@
+  적재 0/598
+  적재 100/598
+  적재 200/598
+  적재 300/598
+  적재 400/598
+  적재 500/598
+작동 프레임 148/598, 작동 장면 17
+  순열 1회 완료
+n_frames 598
+n_acting_frames 148
+n_acting_scenes 17
+anchor_pooled {"frame_mean": 0.20566705107601196, "scene_mean": 0.21101487430656277, "scene_ci": [0.048650088739249114, 0.45971422788683725], "scenes": 50}
+anchor_acting {"frame_mean": 0.8309410944485032, "scene_mean": 0.8624088235446428, "scene_ci": [0.31666935118022715, 1.5570468204996877], "scenes": 17}
+oracle_constant_pooled {"constant": 1.0114503262412857, "frame_mean": 0.005708870478428354, "scene_mean": 0.00279335409350904, "scene_ci": [-0.08397994295341252, 0.09327525367448757], "scenes": 50}
+oracle_constant_acting {"constant": 1.0766442146350002, "frame_mean": 0.7545922839418181, "scene_mean": 0.9125293948351201, "scene_ci": [-0.09606852274122717, 1.8805177934591608], "scenes": 17}
+oracle_perframe_pooled {"frame_mean": 1.340960434426684, "scene_mean": 1.325304355741622, "scenes": 50}
+anchor_recovery_pooled 15.3373
+oracle_perframe_acting {"frame_mean": 2.1238645042979374, "scene_mean": 2.369561232590565, "scenes": 17}
+anchor_recovery_acting 39.124
+paired_anchor_minus_constant_acting {"scene_mean": -0.05012057129047725, "scene_ci": [-0.887202376198424, 0.8396651092994496], "scenes": 17, "positive": 6, "frame_mean": 0.07634881050668507}
+permutation_acting {"mean": -0.007119228504966625, "sd": 0.08806117180384714, "repeats": 20, "values": [0.0106, -0.1538, -0.0491, -0.103, -0.139, -0.0614, -0.0638, 0.1047, 0.0725, -0.0039, 0.0047, -0.04, 0.0623, -0.0922, 0.0824, 0.1327, -0.1063, 0.0913, 0.0087, 0.1002]}

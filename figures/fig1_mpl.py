@@ -5,26 +5,26 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, Rectangle
 from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
-E = json.load(open(os.path.join(HERE, "..", "paper_tables", "evidence.json")))
+E = json.load(open(os.path.join(HERE, "..", "..", "evidence.json")))
 V = json.load(open(os.path.join(HERE, "verdicts.json")))
-plt.rcParams.update({"mathtext.fontset": "dejavuserif", "font.family": "serif", "font.serif": ["Liberation Serif", "DejaVu Serif"], "font.size": 9.6,
-                     "axes.labelsize": 9.6, "xtick.labelsize": 9.4, "ytick.labelsize": 9.4, "legend.fontsize": 9.4,
+plt.rcParams.update({"mathtext.fontset": "stix", "font.family": "serif", "font.serif": ["Nimbus Roman", "TeX Gyre Termes", "Liberation Serif"], "font.size": 9.2,
+                     "axes.labelsize": 9.2, "xtick.labelsize": 9.2, "ytick.labelsize": 9.2, "legend.fontsize": 9.2,
                      "axes.linewidth": 0.6, "xtick.major.width": 0.6, "ytick.major.width": 0.6})
 NAVY, TEAL, ORANGE, DARK = (0.11, 0.17, 0.37), (0.09, 0.5, 0.5), (0.84, 0.46, 0.08), (0.15, 0.15, 0.15)
 COL = {"rec": (46/255, 125/255, 50/255), "exh": (150/255, 150/255, 150/255), "un": (200/255, 60/255, 40/255)}
 src = open(os.path.join(HERE, "build_overview.py")).read()
 plot_src = src[src.index("ed = E[\"ident_edges\"]"):src.index("fig_panel(p1, \"F1_rho\")")]
-plot_src = plot_src.replace('fontsize=9.4, loc="upper center", ncol=2, handlelength=2.0, columnspacing=1.0', 'fontsize=9.4, loc="upper center", ncol=2, handlelength=1.6, columnspacing=0.8, labelspacing=0.25').replace('fontsize=10, loc="upper left")', 'fontsize=9.4, loc="upper left", labelspacing=0.25)').replace('fontsize=11, loc="upper left")', 'fontsize=9.4, loc="upper left", labelspacing=0.25)').replace('ax.set_ylim(0, 2.75); ax.set_yticks([0, 0.5, 1.0])', 'ax.set_ylim(0, 3.6); ax.set_yticks([0, 1])').replace('ax.set_ylim(0, 4.3)', 'ax.set_ylim(0, 5.6)')
+plot_src = plot_src.replace('fontsize=9.2, loc="upper center", ncol=2, handlelength=2.0, columnspacing=1.0', 'fontsize=9.2, loc="upper center", ncol=2, handlelength=1.6, columnspacing=0.8, labelspacing=0.25').replace('fontsize=10, loc="upper left")', 'fontsize=9.2, loc="upper left", labelspacing=0.25)').replace('fontsize=11, loc="upper left")', 'fontsize=9.2, loc="upper left", labelspacing=0.25)').replace('ax.set_ylim(0, 2.75); ax.set_yticks([0, 0.5, 1.0])', 'ax.set_ylim(0, 3.6); ax.set_yticks([0, 1])').replace('ax.set_ylim(0, 4.3)', 'ax.set_ylim(0, 5.6)')
 plot_src = (plot_src.replace('label="model, 0.1 s"', 'label="model 0.1 s"').replace('label="input, 0.1 s"', 'label="input 0.1 s"').replace('label="input, 0.1 s, 8 frames"', 'label="input 0.1 s, 8 fr."').replace('label="model, 0.033 s"', 'label="model 0.033 s"').replace('label="input, 0.033 s"', 'label="input 0.033 s"')
             .replace('label="low-freq. error, k-frame mean"', 'label="LF error, $k$-mean"').replace('label="high-freq. error"', 'label="HF error"').replace('label="1/k, pure variance"', 'label="$1/k$"')
             .replace('ncol=2, handlelength=1.6, columnspacing=0.8, labelspacing=0.25', 'ncol=2, handlelength=1.2, columnspacing=0.6, labelspacing=0.2, borderaxespad=0.1'))
-plot_src = plot_src.replace('ax.legend(frameon=False, fontsize=9.4, loc="upper left", labelspacing=0.25)\ndef p3', 'ax.legend(frameon=False, fontsize=9.4, loc="lower right", labelspacing=0.25)\ndef p3')
-plot_src = plot_src.replace('ax.set_yticks([0, 1, 2]); ax.legend(frameon=False, fontsize=9.4, loc="upper left", labelspacing=0.25)', 'ax.set_yticks([0, 1, 2]); ax.legend(frameon=False, fontsize=9.4, loc="upper right", labelspacing=0.25)')
+plot_src = plot_src.replace('ax.legend(frameon=False, fontsize=9.2, loc="upper left", labelspacing=0.25)\ndef p3', 'ax.legend(frameon=False, fontsize=9.2, loc="lower right", labelspacing=0.25)\ndef p3')
+plot_src = plot_src.replace('ax.set_yticks([0, 1, 2]); ax.legend(frameon=False, fontsize=9.2, loc="upper left", labelspacing=0.25)', 'ax.set_yticks([0, 1, 2]); ax.legend(frameon=False, fontsize=9.2, loc="upper right", labelspacing=0.25)')
 exec(plot_src)                                                     # defines p1, p2, p3 (same data, same styling)
 img = lambda n: np.asarray(Image.open(os.path.join(HERE, n)).convert("RGB"))
 P1, P2, P3, PR = img("P1_input.png"), img("P2_output.png"), img("P3_gt.png"), img("P_res_raw.png")
 PL, PB, PH = img("P_lf_raw.png"), img("P_blk_raw.png"), img("P_hf_raw.png")
-W, H = 7.008, 2.0
+W, H = 7.008, 1.90
 fig = plt.figure(figsize=(W, H), dpi=300)
 # ---- row 1: panels
 top, bot, gap = 0.91, 0.715, 0.012
@@ -34,7 +34,7 @@ axes1 = []
 for x, im, ti, col in zip(xs, (P1, P2, P3, PR), titles, (NAVY, TEAL, NAVY, NAVY)):
     ax = fig.add_axes([x, bot, pw, top - bot]); ax.imshow(im); ax.set_xticks([]); ax.set_yticks([])
     for sp in ax.spines.values(): sp.set_edgecolor(col); sp.set_linewidth(1.2)
-    ax.set_title(ti, fontsize=9.6, fontweight="bold", pad=4); axes1.append(ax)
+    ax.set_title(ti, fontsize=9.2, fontweight="bold", pad=4); axes1.append(ax)
 def arrow(x0, x1, y, label=None):
     fig.add_artist(FancyArrowPatch((x0, y), (x1, y), transform=fig.transFigure, arrowstyle="-|>", mutation_scale=12, lw=2.0, color=TEAL))
     if label: fig.text((x0 + x1) / 2, y + 0.035, label, ha="center", va="bottom", fontsize=10, style="italic", color=TEAL)
@@ -45,17 +45,17 @@ x4 = xs[3] + pw + 0.038; sw = 0.058; sh = (top - bot - 2 * 0.02) / 3
 for k, (im, lab, col) in enumerate(((PL, "low-freq.", NAVY), (PB, "block gain", (0.2, 0.55, 0.25)), (PH, "high-freq.", ORANGE))):
     ax = fig.add_axes([x4, top - (k + 1) * sh - k * 0.02, sw, sh]); ax.imshow(im); ax.set_xticks([]); ax.set_yticks([]); axes1.append(ax)
     for sp in ax.spines.values(): sp.set_edgecolor(col); sp.set_linewidth(1.0)
-    fig.text(x4 + sw + 0.006, top - (k + 0.5) * sh - k * 0.02, lab, ha="left", va="center", fontsize=9.6)
-fig.text(x4 + sw / 2 + 0.035, top + 0.014, "decompose", ha="center", va="bottom", fontsize=9.6, fontweight="bold")
+    fig.text(x4 + sw + 0.006, top - (k + 0.5) * sh - k * 0.02, lab, ha="left", va="center", fontsize=9.2)
+fig.text(x4 + sw / 2 + 0.035, top + 0.014, "decompose", ha="center", va="bottom", fontsize=9.2, fontweight="bold")
 arrow(xs[3] + pw + 0.004, x4 - 0.004, ym)
-fig.text(x4, bot - 0.1, "$a=\\langle y,g\\rangle/\\langle y,y\\rangle$, the best single gain", ha="left", va="top", fontsize=9.6, style="italic", color=DARK)
+fig.text(x4, bot - 0.113, "$a=\\langle y,g\\rangle/\\langle y,y\\rangle$, the best single gain", ha="left", va="top", fontsize=9.2, style="italic", color=DARK)
 # verdict strips
 x5 = x4 + sw + 0.105; vw = 0.992 - x5
-fig.text(x5 + vw / 2, top + 0.014, "band verdicts", ha="center", va="bottom", fontsize=9.6, fontweight="bold")
+fig.text(x5 + vw / 2, top + 0.014, "band diagnostics", ha="center", va="bottom", fontsize=9.2, fontweight="bold")
 STRIPS = []
 def strip(y, exp):
     vs = V[exp]; cw = vw / len(vs)
-    fig.text(x5, y + 0.076, exp.replace("s", " s"), ha="left", va="bottom", fontsize=9.4)
+    fig.text(x5, y + 0.062, exp.replace("s", " s"), ha="left", va="bottom", fontsize=9.2)
     for k, vv in enumerate(vs): fig.add_artist(Rectangle((x5 + k * cw + 0.002, y), cw - 0.004, 0.058, transform=fig.transFigure, color=COL[vv])); STRIPS.append((x5 + k * cw + 0.002, y, x5 + (k + 1) * cw - 0.002, y + 0.058))
 strip(top - 0.12, "0.033s"); strip(top - 0.275, "0.1s")
 arrow(x4 + sw + 0.066, x5 + 0.012, top + 0.054)
@@ -64,7 +64,7 @@ pb, pt = 0.205, 0.455
 def p1b(ax):
     p1(ax); lg = ax.get_legend(); lg and lg.remove(); ax.set_ylim(0, 1.08); ax.set_yticks([0, 0.5, 1])
     h, l = ax.get_legend_handles_labels()
-    fig.legend(h, l, loc="lower left", bbox_to_anchor=(0.005, pt + 0.012), ncol=2, frameon=False, fontsize=9.2, handlelength=1.3, columnspacing=0.6, labelspacing=0.15, borderpad=0.2, borderaxespad=0.0)
+    fig.legend(h, l, loc="lower left", bbox_to_anchor=(0.005, pt + -0.004), ncol=2, frameon=False, fontsize=9.2, handlelength=1.3, columnspacing=0.6, labelspacing=0.15, borderpad=0.2, borderaxespad=0.0)
 def p2b(ax):
     p2(ax); lg = ax.get_legend(); lg and lg.remove(); ax.set_ylim(0, 2.1); ax.set_yticks([0, 1, 2])
     h, l = ax.get_legend_handles_labels()                          # legend above the axes, like the first plot
@@ -75,11 +75,11 @@ def p3b(ax):
     for ln in ax.get_lines():
         lab = ln.get_label()
         if lab in short:
-            yy = float(np.asarray(ln.get_ydata())[-1]); ax.text(8.7, yy + short[lab][1], short[lab][0], ha="left", va="center", fontsize=9.4, color=ln.get_color())
+            yy = float(np.asarray(ln.get_ydata())[-1]); ax.text(8.7, yy + short[lab][1], short[lab][0], ha="left", va="center", fontsize=9.2, color=ln.get_color())
 for k, fn in enumerate((p1b, p2b, p3b)):
     ax = fig.add_axes([0.075 + k * 0.335, pb, 0.255, pt - pb]); fn(ax)
     for s_ in ("top", "right"): ax.spines[s_].set_visible(False)
-OUT = os.path.join(HERE, "fig_workflow.pdf")
+OUT = os.path.join(HERE, "..", "..", "fig_workflow.pdf")
 fig.savefig(OUT); print("saved fig_workflow.pdf", W, H)
 
 # ---- self-check on the saved PDF: no foreign coloured ink inside any text box, no black-text / coloured-curve overlap

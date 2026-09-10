@@ -1,7 +1,10 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """LOL 에서 독립 재현: 같은 절차(하이라이트 정합, 장면 단위, 강도는 보정셋 PSNR로 선택)를 15장에 적용.
 표본이 작아 leave-one-out 으로 평가한다."""
-import os, json, os, sys, numpy as np
-R=os.environ.get("LLROOT", "."); OUT=os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, f"{R}/code")
+import json, os, sys, numpy as np
+R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))); OUT=os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, f"{R}/code")
 import diag_lolv1 as DL
 QL=[50,75,90,95,98,99,99.5,99.9]; LAMS=[0.0,0.25,0.5,0.75,1.0]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)

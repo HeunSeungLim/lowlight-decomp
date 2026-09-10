@@ -1,10 +1,13 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """적용 규약을 갈라서 잰다: 전역 오라클 / 고정 공간맵 / 둘 다 / 프레임 오라클 장.
 클리핑·8bit 채점과 클리핑 없는 float 채점을 함께 낸다. 공간맵은 장면 5겹 교차검증으로 학습 장면에서만 만든다."""
-import os, json, os, numpy as np
+import json, os, numpy as np
 from scipy.ndimage import zoom
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__)); B = 16
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+CACHE = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__)); B = 16
+rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 def gt_of(s, _c={}):
     if s not in _c:
         f = [x for x in sorted(os.listdir(f"{GTD}/{s}")) if x.endswith(".npy")][0]

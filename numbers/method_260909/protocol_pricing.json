@@ -1,5 +1,5 @@
 {
- "note": "The three protocol choices the title prices, each with the dump it is computed from and the A/B it is a difference of.",
+ "note": "The four protocol choices the title prices. Per-axis A/B here; the full sweeps are in protocol_sweep.json.",
  "verified_local": "2026-09-09 23:01 KST",
  "rectification": {
   "what": "reference-mean rectification: the output's brightness is set from the reference before scoring",
@@ -54,5 +54,11 @@
   "caveat": "5.29 is an absolute PSNR of one checkpoint on the other rendition, not a difference; the comparison is against the 22.904 that checkpoint reports on its own rendition. The other rendition is built with no gamma correction, so this is a cross-domain application, not a subtle convention difference.",
   "source": "evidence.json cross_variant; the reported value in cross_rendition_source.json"
  },
- "sample_caveat": "Rectification is priced on one Sony model over 598 frames and two LOL checkpoints; the 8-bit rule on three LOL checkpoints; the rendition on one checkpoint over 598 frames. Not a single eighteen-pair sweep."
+ "sample_caveat": "Rectification and the aggregation convention are now swept over all 18 method-benchmark pairs (protocol_sweep.json). The 8-bit rule is priced on three LOL checkpoints and the rendition on one checkpoint over 598 frames.",
+ "synced_local": "2026-09-10 09:01 KST",
+ "aggregation_convention": {
+  "what": "frame-mean PSNR against the PSNR of the pooled MSE",
+  "see": "protocol_sweep.json aggregation_convention",
+  "sign_note": "Non-negative by AM-GM; the dump supplies the magnitude, not the sign."
+ }
 }

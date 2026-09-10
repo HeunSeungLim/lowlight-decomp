@@ -1,9 +1,12 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """안전판: 보정 강도 lambda 를 보정 장면의 실제 PSNR 이득으로 고른다(0 이면 보정 안 함).
 평가 장면의 정답은 쓰지 않는다. 장면 5겹 교차검증, 장면 단위 적용."""
-import os, json, os, sys, numpy as np
-OUT=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]; LAMS=[0.0,0.25,0.5,0.75,1.0]
+import json, os, sys, numpy as np
+OUT=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]; LAMS=[0.0,0.25,0.5,0.75,1.0]
 sys.path.insert(0, f"{R}/code"); from repro_measure import ssim_indep
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 def linfit(x,y):
@@ -16,7 +19,7 @@ def gt_of(s,_c={}):
     return _c[s]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(model,i,r):
-    if model=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if model=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{model}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 def feats(model):
     f=f"{OUT}/tr_{model}.npz"

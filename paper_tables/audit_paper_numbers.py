@@ -9,10 +9,26 @@ values we quote on purpose).
 import json, re, subprocess, sys, os
 
 P = os.path.dirname(os.path.abspath(__file__))
+def _strip_printed(o):
+    """영수증이 담고 있는 인쇄값 사본은 대조 출처가 될 수 없다."""
+    if isinstance(o, dict):
+        return {k: _strip_printed(v) for k, v in o.items()
+                if k not in ("printed", "table_reference", "measured_printed", "reported_source",
+                             "reported_on_its_own", "value", "previous_text", "correction", "printed_after",
+                             "psnr_sd_ddof0", "sat_train_lol_truncated120",
+                             "previous_scope_prefix0_only")}
+    if isinstance(o, list): return [_strip_printed(v) for v in o]
+    return o
+
 def _src(path):
-    """번들 안에 같은 이름이 있으면 그것을 쓴다. 고정본이 자기 안에서 돌게 하는 배선."""
-    local = os.path.join(P, os.path.basename(path))
-    return local if os.path.exists(local) else path
+    """같은 이름이 번들 안이나 공개 레이아웃의 영수증 폴더에 있으면 그것을 쓴다."""
+    b = os.path.basename(path)
+    for cand in (os.path.join(P, b),
+                 os.path.join(P, "..", "numbers", "method_260909", b),
+                 os.path.join(P, "..", "numbers", b)):
+        if os.path.exists(cand):
+            return cand
+    return path
 
 E = json.load(open(os.path.join(P, "evidence.json")))
 
@@ -33,8 +49,8 @@ for v in list(vals):
 for r in E["ladder"]:
     for k in ("gain", "gain_dof", "affine", "affine_dof"):
         if r.get(k) is not None: derived.append(r[k])
-for _f in (os.environ.get("LLROOT", ".") + "/numbers/diag_sid_identifiability.json",
-           os.environ.get("LLROOT", ".") + "/numbers/diag_sid_lowfreq.json"):
+for _f in (os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))), "numbers", "diag_sid_identifiability.json"),
+           os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))), "numbers", "diag_sid_lowfreq.json")):
     try: _d = json.load(open(_src(_f)))
     except Exception: continue
     def _scal(o, acc):                       # 배열은 제외: 프레임별 값을 다 넣으면 검사가 무의미해진다
@@ -96,38 +112,31 @@ DECLARED = {
 # numbers printed on the qualitative figure are real per-frame scores; take them from the
 # figure script's own record rather than from the prose
 _fq = os.path.join(P, "fig_qual_numbers.json")
-if os.path.exists(_fq):
+if os.path.exists(_src(_fq)):
     for v in json.load(open(_src(_fq))).values():
         derived += [v["psnr"], v["psnr_shown"], v["gain"]]
 
-for _extra in (os.environ.get("LLROOT", ".") + "/method_260909/fix_v52.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/robust_acting.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/qsweep_rule.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/final_rule.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/shares.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/controls_v58.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/precond_transfer.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/affine_oracle.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/concentration.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/tost_equivalence.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/decomp_anchored.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/anchor_lol_retinexformer.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/protocol_pricing.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/unresolved_cells.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/anchored_sony_sd.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/tab3_anchored_column.json",
-               os.environ.get("LLROOT", ".") + "/method_260909/qsat_train181.json"):
-    if os.path.exists(_extra):
-        def _strip_printed(o):
-            """영수증이 담고 있는 인쇄값 사본은 대조 출처가 될 수 없다."""
-            if isinstance(o, dict):
-                return {k: _strip_printed(v) for k, v in o.items()
-                        if k not in ("printed", "table_reference", "measured_printed", "reported_source",
-                                     "reported_on_its_own", "value", "previous_text", "correction",
-                                     "psnr_sd_ddof0", "sat_train_lol_truncated120",
-                                     "previous_scope_prefix0_only")}
-            if isinstance(o, list): return [_strip_printed(v) for v in o]
-            return o
+for _extra in (os.path.join(os.path.dirname(os.path.abspath(__file__)), "fix_v52.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "robust_acting.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "qsweep_rule.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "final_rule.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "shares.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "controls_v58.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "precond_transfer.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "affine_oracle.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "concentration.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "tost_equivalence.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "decomp_anchored.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "anchor_lol_retinexformer.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "protocol_pricing.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "unresolved_cells.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "anchored_sony_sd.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "tab3_anchored_column.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "qsat_train181.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "protocol_sweep.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "multiframe_drop.json"),
+               os.path.join(os.path.dirname(os.path.abspath(__file__)), "bootstrap_config.json")):
+    if os.path.exists(_src(_extra)):
         def _lvx(o, acc):
             if isinstance(o, dict): [_lvx(v, acc) for v in o.values()]
             elif isinstance(o, list): [_lvx(v, acc) for v in o]
@@ -136,7 +145,7 @@ for _extra in (os.environ.get("LLROOT", ".") + "/method_260909/fix_v52.json",
         for v in _lvx(_strip_printed(json.load(open(_src(_extra)))), []):
             derived += [v, abs(v), round(v, 1), round(v, 2), round(abs(v), 2), round(v, 3), float(round(v)), float(round(abs(v)))]
 _fe = os.path.join(P, "final_evidence.json")                  # 최종 규칙 실측값·백분위 라벨
-if os.path.exists(_fe):
+if os.path.exists(_src(_fe)):
     def _lv4(o, acc):
         if isinstance(o, dict): [_lv4(v, acc) for v in o.values()]
         elif isinstance(o, list): [_lv4(v, acc) for v in o]
@@ -150,7 +159,7 @@ if os.path.exists(_fe):
         derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), round(v, 4)]
         if abs(v - round(v)) < 1e-9: ints_extra = int(round(v))
 _an = os.path.join(P, "anchor_evidence.json")                 # 앵커판 실측값
-if os.path.exists(_an):
+if os.path.exists(_src(_an)):
     def _lv3(o, acc):
         if isinstance(o, dict): [_lv3(v, acc) for v in o.values()]
         elif isinstance(o, list): [_lv3(v, acc) for v in o]
@@ -159,7 +168,7 @@ if os.path.exists(_an):
     for v in _lv3(_strip_printed(json.load(open(_src(_an)))), []):
         derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), v * 100]
 _f2 = os.path.join(P, "fig_cmp2_numbers.json")
-if os.path.exists(_f2):
+if os.path.exists(_src(_f2)):
     def _lv2(o, acc):
         if isinstance(o, dict): [_lv2(v, acc) for v in o.values()]
         elif isinstance(o, list): [_lv2(v, acc) for v in o]
@@ -168,7 +177,7 @@ if os.path.exists(_f2):
     for v in _lv2(json.load(open(_src(_f2))), []):
         derived += [v, round(v, 1), round(v, 2), round(v, 3)]
 _me = os.path.join(P, "method_evidence.json")            # 우리 방법 실측값
-if os.path.exists(_me):
+if os.path.exists(_src(_me)):
     def _lv(o, acc):
         if isinstance(o, dict): [_lv(v, acc) for v in o.values()]
         elif isinstance(o, list): [_lv(v, acc) for v in o]
@@ -177,11 +186,11 @@ if os.path.exists(_me):
     for v in _lv(json.load(open(_src(_me))), []):
         derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), v * 100, v / 100]
 _dg = os.path.join(P, "diag_gap.json")
-if os.path.exists(_dg):
+if os.path.exists(_src(_dg)):
     for v in json.load(open(_src(_dg))).values():
         derived += [float(v), round(float(v), 3), round(float(v), 4)]
 _fc = os.path.join(P, "fig_cmp_numbers.json")
-if os.path.exists(_fc):
+if os.path.exists(_src(_fc)):
     def _leaves(o, acc):
         if isinstance(o, dict): [ _leaves(v, acc) for v in o.values() ]
         elif isinstance(o, list): [ _leaves(v, acc) for v in o ]
@@ -231,8 +240,9 @@ for _row in E.get("cmp_rows", []):
         if isinstance(_row, dict) and isinstance(_row.get(_k), (int, float)): _bounds.append(float(_row[_k]))
 for _m, _v in (E.get("lol") or {}).items():
     if isinstance(_v, dict) and isinstance(_v.get("lf"), (int, float)): _bounds.append(float(_v["lf"]))
-ints_known |= {int(_math.floor(v)) for v in _bounds}
-ints_known |= {int(_math.ceil(v)) for v in _bounds}
+_printed_bounds = {41, 89, 14, 42, 67, 70, 3, 60, 13, 18}   # 본문이 바깥쪽 반올림이라 밝힌 경계만
+ints_known |= {int(_math.floor(v)) for v in _bounds if int(_math.floor(v)) in _printed_bounds}
+ints_known |= {int(_math.ceil(v)) for v in _bounds if int(_math.ceil(v)) in _printed_bounds}
 ints_declared_tex = {int(x) for x in re.findall(r"\{(\d+)\}\s*$", open(os.path.join(P, "numbers.tex")).read(), re.M)}
 for f in ("tab_rho_rows.tex", "tab_cmp_rows.tex"):
     p = os.path.join(P, f)

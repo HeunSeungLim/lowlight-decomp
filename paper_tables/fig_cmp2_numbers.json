@@ -1,0 +1,16 @@
+{
+ "frame": "10198_00_0.033s.npy",
+ "scene": "10198",
+ "calibration_gain": 1.0449832170767879,
+ "panels": {
+  "input ($\\times$1.4)": 7.6,
+  "Zero-DCE++": 8.5,
+  "SNR-Net": 16.1,
+  "LightenDiff.": 11.6,
+  "Retinexformer": 17.7,
+  "+anc. (ours)": 18.1
+ },
+ "calibrated_psnr": 18.054830170606834,
+ "retinexformer_psnr": 17.6587038623832,
+ "color_range": 157.46733392631245
+}

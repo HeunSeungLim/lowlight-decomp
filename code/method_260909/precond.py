@@ -1,11 +1,14 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """전제의 예측력 검정: 출력 포화도가 규칙의 이득을 예측하는가.
 장면을 출력 포화 비율로 5분위로 나눠 이득을 재고, 단조성과 상관을 검정한다.
 또 작동 프레임(148장)만의 짝지은 검정과 두 노출 구간에서의 재현을 낸다."""
-import os, json, os, collections, numpy as np
+import json, os, collections, numpy as np
 from scipy import stats
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; Q=99.9
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; Q=99.9
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def gt_of(s,_c={}):
@@ -15,7 +18,7 @@ def gt_of(s,_c={}):
     return _c[s]
 base=[];gain=[];S=[];EX=[];satfrac=[];q999=[]
 for i,r in enumerate(rows):
-    y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"]); Gu=g8(g)
+    y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"]); Gu=g8(g)
     qv=float(np.percentile(y,Q)); p=float(np.clip(1.0/max(qv,1e-6),0.5,2.0)); b=p8(g8(y),Gu)
     base.append(b); gain.append(p8(g8(y*p),Gu)-b); S.append(r["scene"]); EX.append(r["exp"])
     satfrac.append(float((y>=0.999).mean())); q999.append(qv)

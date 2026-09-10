@@ -1,0 +1,32 @@
+  0/598
+  150/598
+  300/598
+  450/598
+{
+ "headline_frame_mean": 0.20566700245130692,
+ "exposures": {
+  "0.033s": {
+   "frames": 28,
+   "scenes": 14,
+   "frame_mean": 0.2984035325283676,
+   "scene_mean": 0.2984035325283676
+  },
+  "0.04s": {
+   "frames": 180,
+   "scenes": 29,
+   "frame_mean": 0.24916927093105232,
+   "scene_mean": 0.34183682737069676
+  },
+  "0.1s": {
+   "frames": 390,
+   "scenes": 50,
+   "frame_mean": 0.17893102509614825,
+   "scene_mean": 0.15068702817538643
+  }
+ },
+ "recombination_check": {
+  "frame_weighted_from_frame_means": 0.2056670024513069,
+  "frame_weighted_from_scene_means": 0.21514024887277663,
+  "identity_error": 2.7755575615628914e-17
+ }
+}

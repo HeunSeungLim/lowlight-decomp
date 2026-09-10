@@ -1,0 +1,10 @@
+retinexformer  24.4382→24.7228 (+0.2846)  대조 -0.0049  차이 +0.2895 [-0.0886,+0.6802] p=0.1361  개선 32/50
+   선택된 예측기: [('ridge', None, None, 0.3, np.float64(0.298)), ('ratio', 6, 7, 0.03, np.float64(0.469)), ('ridge', None, None, 0.3, np.float64(0.482)), ('ridge', None, None, 0.3, np.float64(0.44)), ('ratio', 6, 7, 0.03, np.float64(0.492))]
+snrnet         22.8672→22.8785 (+0.0113)  대조 -0.0000  차이 +0.0113 [-0.1235,+0.1399] p=0.8681  개선 30/50
+   선택된 예측기: [('single', 4, None, 0.0, np.float64(0.255)), ('single', 5, None, 0.0, np.float64(0.143)), ('ratio', 5, 7, 0.03, np.float64(0.15)), ('ratio', 5, 7, 0.03, np.float64(0.111)), ('ridge', None, None, 0.03, np.float64(0.214))]
+lightendiff    17.0926→17.3138 (+0.2213)  대조 -0.0284  차이 +0.2497 [-0.0961,+0.5948] p=0.1622  개선 29/50
+   선택된 예측기: [('single', 5, None, 0.0, np.float64(0.329)), ('single', 6, None, 0.0, np.float64(0.24)), ('single', 6, None, 0.0, np.float64(0.278)), ('single', 6, None, 0.0, np.float64(0.264)), ('ratio', 6, 7, 0.03, np.float64(0.223))]
+zerodcepp      12.7369→13.2094 (+0.4725)  대조 +0.3811  차이 +0.0914 [-0.0230,+0.2046] p=0.1173  개선 36/50
+   선택된 예측기: [('single', 5, None, 0.0, np.float64(0.313)), ('ratio', 5, 2, 0.03, np.float64(0.334)), ('ratio', 5, 2, 0.03, np.float64(0.275)), ('ratio', 5, 2, 0.03, np.float64(0.268)), ('single', 5, None, 0.0, np.float64(0.22))]
+
+Holm: {'retinexformer': 0.4083, 'snrnet': 0.8681, 'lightendiff': 0.3244, 'zerodcepp': 0.4692}

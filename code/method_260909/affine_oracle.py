@@ -1,12 +1,15 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """전프레임 아핀 오라클: 3x3 색행렬 + 편향. pal2026 의 광도항과 같은 범위다.
 
 우리 전역 이득·채널 이득이 그 진부분집합이므로, 아핀이 잔차를 얼마나 더 가져가는지 재서
 "당신 잔차가 사실 광도항 아니냐"는 질문에 답한다.
 """
-import os, json, os, numpy as np
-M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", ".")
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
+import json, os, numpy as np
+M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX = os.environ.get("LLCACHE", "cache")
+GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
 rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8 = lambda a, b: 10 * np.log10(255.0 ** 2 / np.mean((a.astype(np.float64) - b.astype(np.float64)) ** 2))
 g8 = lambda x: np.rint(np.clip(x, 0, 1) * 255).astype(np.uint8)
@@ -20,7 +23,7 @@ def gt_of(s, _c={}):
 base, gl, ch, af, S = [], [], [], [], []
 sq_res, sq_gl, sq_ch, sq_af = 0.0, 0.0, 0.0, 0.0
 for i, r in enumerate(rows):
-    y = np.load(f"{CACHE}/{i:04d}.npy").transpose(1, 2, 0).astype(np.float64)
+    y = np.load(f"{CODEX}/{i:04d}.npy").transpose(1, 2, 0).astype(np.float64)
     g = gt_of(r["scene"]).astype(np.float64); Gu = g8(g)
     b0 = p8(g8(y), Gu); base.append(b0); S.append(r["scene"])
     Y = y.reshape(-1, 3); G = g.reshape(-1, 3)

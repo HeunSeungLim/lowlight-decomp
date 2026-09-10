@@ -1,13 +1,16 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """고정 저주파 보정맵: 학습 장면에서 블록 이득장의 평균 모양을 배우고, 처음 보는 장면에 그대로 곱한다.
 GT는 학습 장면에서만 쓰고 평가 장면에서는 쓰지 않는다. 장면 단위 5겹 교차검증."""
-import os, json, os, sys, numpy as np
+import json, os, sys, numpy as np
 
-CACHE = os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GT = os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
+CACHE = os.environ.get("LLCACHE", "cache")
+GT = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
 OUT = os.path.dirname(os.path.abspath(__file__))
 B = int(sys.argv[1]) if len(sys.argv) > 1 else 16
 
-rows = json.load(open(os.environ.get("LLROOT", ".") + "/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
+rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 def gt_of(scene, _c={}):
     if scene not in _c:
         f = [x for x in sorted(os.listdir(f"{GT}/{scene}")) if x.endswith(".npy")][0]

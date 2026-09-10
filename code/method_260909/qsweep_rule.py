@@ -1,8 +1,11 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """논문이 정의한 규칙(앵커 = 8비트 천장, K=1)으로 q 민감도를 다시 잰다. 규약 혼용 제거."""
-import os, json, os, numpy as np
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"
+import json, os, numpy as np
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 QS=[95,98,99,99.5,99.9,99.95,99.99]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
@@ -15,7 +18,7 @@ tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.
 SAT={q: float((tz["QG"][:,QLt.index(q)]>=0.999).mean())*100 for q in QS if q in QLt}
 G={q:[] for q in QS}; S=[]
 for i,r in enumerate(rows):
-    y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"]); Gu=g8(g); b=p8(g8(y),Gu)
+    y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"]); Gu=g8(g); b=p8(g8(y),Gu)
     for q in QS:
         p=float(np.clip(1.0/max(float(np.percentile(y,q)),1e-6),0.5,2.0))   # 규칙 그대로: 천장 앵커
         G[q].append(p8(g8(y*p),Gu)-b)

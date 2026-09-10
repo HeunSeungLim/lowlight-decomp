@@ -1,0 +1,21 @@
+  0/598
+  100/598
+  200/598
+  300/598
+  400/598
+  500/598
+{
+ "n": 598,
+ "base": 24.438178684941835,
+ "gain_global": 1.34096043902591,
+ "gain_channel": 2.04824919349389,
+ "gain_affine": 2.9399394780959685,
+ "psnr_global": 25.77913912396774,
+ "psnr_channel": 26.48642787843572,
+ "psnr_affine": 27.3781181630378,
+ "share_global_pct": 27.03728683549414,
+ "share_channel_pct": 35.79641757408814,
+ "share_affine_pct": 45.78289044778761,
+ "affine_minus_channel_db": 0.8916902846020783,
+ "scene_mean_affine_minus_channel": 0.9067994547308404
+}

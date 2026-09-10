@@ -1,11 +1,14 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """새 방법 후보 1: 잡음 통계로 노출/밝기 척도를 추정해 필요한 이득을 맞힌다.
 입력 프레임에서 국소 평균-분산 관계(광자전달 곡선)의 기울기·절편을 뽑아 a* 를 예측한다.
 평가 장면 정답 미사용, 장면 5겹 교차검증."""
-import os, json, os, numpy as np
+import json, os, numpy as np
 from scipy import stats
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; SHD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/short_sid2"
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; SHD="/data/HSL/lowlight_model/data/SID_raw/SID/short_sid2"
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def gt_of(s,_c={}):
@@ -29,7 +32,7 @@ def photon_feats(x):
                 mu_med=float(np.median(mu)), va_med=float(np.median(va)))
 X=[];A=[];S=[];BASE=[];EX=[]
 for i,r in enumerate(rows):
-    y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     x=np.load(f"{SHD}/{r['scene']}/{r['id']}")[:,:,::-1].astype(np.float32)/255.0
     g=gt_of(r["scene"]); f=photon_feats(x)
     if f is None: continue
@@ -66,7 +69,7 @@ if r2>0.05:
     pred=np.exp(np.array([prs[us.index(s)] for s in S])); pred=np.clip(pred,0.5,2.0)
     gains=np.zeros(len(A))
     for i,(s,idx) in enumerate(zip(S,range(len(A)))):
-        y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+        y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
         gains[i]=p8(g8(y*pred[i]),g8(gt_of(s)))-BASE[i]
     sc=np.array([gains[S==s].mean() for s in us]); rng=np.random.RandomState(20260909)
     bt=np.array([np.mean(rng.choice(sc,len(sc))) for _ in range(20000)])

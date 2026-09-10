@@ -1,12 +1,15 @@
+import os as _os
+_M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                     "..", "..", "numbers", "method_260909")))
 """새 방법 후보 2·3: 천장 앵커를 채널별로, 그리고 블록별(국소 화이트패치)로 내린다.
 A) 채널별: y_c / Q999(y_c)   B) 국소: 블록별 Q999 로 이득장 만들고 매끄럽게, 포화 블록은 항등
 C) A+B.  정답 미사용. 장면 부트스트랩."""
-import os, json, os, numpy as np
+import json, os, numpy as np
 from scipy import stats
 from scipy.ndimage import zoom, uniform_filter
-M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", ".")
-CACHE=os.environ.get("LLCACHE", "numbers/cache_retinexformer_sony")
-GTD=os.environ.get("LLDATA", "data") + "/lowlight_model/data/SID_raw/SID/long_sid2"; Q=99.9
+M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
+CODEX=os.environ.get("LLCACHE", "cache")
+GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; Q=99.9
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def gt_of(s,_c={}):
@@ -15,7 +18,7 @@ def gt_of(s,_c={}):
         _c.clear(); _c[s]=np.load(f"{GTD}/{s}/{f}")[:,:,::-1].astype(np.float32)/255.0
     return _c[s]
 def load(m,i,r):
-    if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if m=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 def glob_anchor(y):
     return float(np.clip(1.0/max(float(np.percentile(y,Q)),1e-6),0.5,2.0))

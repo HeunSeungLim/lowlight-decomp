@@ -1,0 +1,14 @@
+{
+ "note": "Scene bootstrap configuration used throughout the final section.",
+ "resamples": 20000,
+ "seed": 20260909,
+ "p_resolution": 0.0001,
+ "source": "method_260909/*.py: np.random.RandomState(20260909) and range(20000) in final_rule.py, robust_acting.py, controls_v58.py, qsweep_rule.py",
+ "distinct_from": "the spectral bootstrap in the diagnostic section, which uses 2000 resamples; the two were conflated in an earlier macro and are now separate",
+ "spectral_bootstrap": {
+  "resamples": 2000,
+  "seed": 20260907,
+  "used_for": "the band-label resampling whose retention percentages are printed in Sec. 3",
+  "source": "make_diagnostic_evidence.py reads spectral.bootstrap from the diagnostic dump"
+ }
+}
