@@ -6,7 +6,7 @@ import json, os, numpy as np, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 OUT=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
 CODEX=os.environ.get("LLCACHE", "cache")
-GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; SHD="/data/HSL/lowlight_model/data/SID_raw/SID/short_sid2"
+GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; SHD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/short_sid2"
 QL=[50,75,90,95,98,99,99.5,99.9]
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 z=np.load(f"{OUT}/calib2_cache.npz",allow_pickle=True); QY,QG,A,S,BASE=z["QY"],z["QG"],z["A"],z["S"],z["BASE"]

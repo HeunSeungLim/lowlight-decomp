@@ -3,16 +3,16 @@
 'reference g'                    foreign_coloured_px=   0 min_gap_bp=-
 'residual a y − g'               foreign_coloured_px=   0 min_gap_bp=-
 '0.0'                            foreign_coloured_px=   0 min_gap_bp=-
-'0.2'                            foreign_coloured_px=   0 min_gap_bp=11.52
-'0.4'                            foreign_coloured_px=   0 min_gap_bp=8.52
-'0.6'                            foreign_coloured_px=   0 min_gap_bp=8.04
+'0.2'                            foreign_coloured_px=   0 min_gap_bp=11.16
+'0.4'                            foreign_coloured_px=   0 min_gap_bp=8.28
+'0.6'                            foreign_coloured_px=   0 min_gap_bp=7.56
 'radial frequency'               foreign_coloured_px=   0 min_gap_bp=-
 '0.0'                            foreign_coloured_px=   0 min_gap_bp=-
 '0.5'                            foreign_coloured_px=   0 min_gap_bp=-
 '1.0'                            foreign_coloured_px=   0 min_gap_bp=-
-'correlation'                    foreign_coloured_px=   0 min_gap_bp=5.76
-'frame 256'                      foreign_coloured_px=   0 min_gap_bp=9.36
-'128'                            foreign_coloured_px=   0 min_gap_bp=-
+'correlation'                    foreign_coloured_px=   0 min_gap_bp=4.80
+'frame 256'                      foreign_coloured_px=   0 min_gap_bp=9.12
+'128'                            foreign_coloured_px=   0 min_gap_bp=12.60
 '64'                             foreign_coloured_px=   0 min_gap_bp=-
 '32'                             foreign_coloured_px=   0 min_gap_bp=-
 '16'                             foreign_coloured_px=   0 min_gap_bp=-
@@ -20,7 +20,7 @@
 '0'                              foreign_coloured_px=   0 min_gap_bp=-
 '1'                              foreign_coloured_px=   0 min_gap_bp=-
 '2'                              foreign_coloured_px=   0 min_gap_bp=-
-'dB over frame'                  foreign_coloured_px=   0 min_gap_bp=27.36
+'dB over frame'                  foreign_coloured_px=   0 min_gap_bp=27.12
 '1'                              foreign_coloured_px=   0 min_gap_bp=-
 '2'                              foreign_coloured_px=   0 min_gap_bp=-
 '4'                              foreign_coloured_px=   0 min_gap_bp=-
@@ -29,41 +29,43 @@
 '0'                              foreign_coloured_px=   0 min_gap_bp=-
 '1'                              foreign_coloured_px=   0 min_gap_bp=-
 '2'                              foreign_coloured_px=   0 min_gap_bp=-
-'energy / k=1'                   foreign_coloured_px=   0 min_gap_bp=32.52
+'energy / k=1'                   foreign_coloured_px=   0 min_gap_bp=31.80
 'LF'                             foreign_coloured_px=   0 min_gap_bp=-
 'HF'                             foreign_coloured_px=   0 min_gap_bp=-
-'1/k'                            foreign_coloured_px=   0 min_gap_bp=4.32
+'1/k'                            foreign_coloured_px=   0 min_gap_bp=4.44
 'f'                              foreign_coloured_px=   0 min_gap_bp=-
-'low-freq.'                      foreign_coloured_px=   0 min_gap_bp=8.16
-'block gain'                     foreign_coloured_px=   0 min_gap_bp=-
+'low-freq.'                      foreign_coloured_px=   0 min_gap_bp=10.92
+'block gain'                     foreign_coloured_px=   0 min_gap_bp=15.60
 'high-freq.'                     foreign_coloured_px=   0 min_gap_bp=-
-'decompose'                      foreign_coloured_px=   0 min_gap_bp=3.60
-'a = ⟨y, g⟩/⟨y, y⟩, the best single gain' foreign_coloured_px=   0 min_gap_bp=-
-'band verdicts'                  foreign_coloured_px=   0 min_gap_bp=12.48
-'0.033 s'                        foreign_coloured_px=   0 min_gap_bp=4.68
+'decompose'                      foreign_coloured_px=   0 min_gap_bp=-
+'a = ⟨y, g⟩/⟨y, y⟩, the best single gain' foreign_coloured_px=   0 min_gap_bp=15.12
+'band diagnostics'               foreign_coloured_px=   0 min_gap_bp=-
+'0.033 s'                        foreign_coloured_px=   0 min_gap_bp=5.28
 '0.1 s'                          foreign_coloured_px=   0 min_gap_bp=-
-'model 0.1 s'                    foreign_coloured_px=   0 min_gap_bp=5.28
-'input 0.1 s'                    foreign_coloured_px=   0 min_gap_bp=-
-'input 0.1 s, 8 fr.'             foreign_coloured_px=   0 min_gap_bp=8.04
-'model 0.033 s'                  foreign_coloured_px=   0 min_gap_bp=5.28
-'input 0.033 s'                  foreign_coloured_px=   0 min_gap_bp=-
-'affine per block'               foreign_coloured_px=   0 min_gap_bp=-
+'model 0.1 s'                    foreign_coloured_px=   0 min_gap_bp=3.72
+'input 0.1 s'                    foreign_coloured_px=   0 min_gap_bp=14.40
+'input 0.1 s, 8 fr.'             foreign_coloured_px=   0 min_gap_bp=6.48
+'model 0.033 s'                  foreign_coloured_px=   0 min_gap_bp=3.72
+'input 0.033 s'                  foreign_coloured_px=   0 min_gap_bp=14.40
+'affine per block'               foreign_coloured_px=   0 min_gap_bp=12.24
 'gain per block'                 foreign_coloured_px=   0 min_gap_bp=-
-black-black '0.2' / 'radial frequency' ink_gap_bp=6.24
-black-black '0.4' / 'radial frequency' ink_gap_bp=8.52
-black-black 'frame 256' / 'block side (px)' ink_gap_bp=6.84
-black-black '128' / 'block side (px)' ink_gap_bp=6.24
-black-black '64' / 'block side (px)' ink_gap_bp=6.48
-black-black '2' / 'frames averaged k' ink_gap_bp=8.28
-black-black '4' / 'frames averaged k' ink_gap_bp=8.40
-black-black '8' / 'frames averaged k' ink_gap_bp=6.12
-black-black 'low-freq.' / 'block gain' ink_gap_bp=3.60
+black-black '0.2' / 'radial frequency' ink_gap_bp=6.96
+black-black '0.4' / 'radial frequency' ink_gap_bp=9.00
+black-black '0.5' / '0.0' ink_gap_bp=9.72
+black-black '1.0' / '0.5' ink_gap_bp=9.96
+black-black '128' / 'block side (px)' ink_gap_bp=6.96
+black-black '64' / 'block side (px)' ink_gap_bp=7.08
+black-black '2' / 'frames averaged k' ink_gap_bp=6.96
+black-black '4' / 'frames averaged k' ink_gap_bp=9.12
+black-black '8' / 'frames averaged k' ink_gap_bp=9.00
+black-black '1' / '0' ink_gap_bp=8.88
+black-black '2' / '1' ink_gap_bp=9.00
+black-black 'low-freq.' / 'block gain' ink_gap_bp=3.72
 black-black 'block gain' / 'high-freq.' ink_gap_bp=3.72
-black-black 'decompose' / 'low-freq.' ink_gap_bp=3.36
-black-black 'band verdicts' / '0.033 s' ink_gap_bp=2.28
-black-black 'model 0.1 s' / 'input 0.1 s' ink_gap_bp=3.48
-black-black 'input 0.1 s' / 'input 0.1 s, 8 fr.' ink_gap_bp=3.60
-black-black 'input 0.1 s, 8 fr.' / '1.0' ink_gap_bp=5.28
-black-black 'model 0.033 s' / 'input 0.033 s' ink_gap_bp=3.48
-black-black 'affine per block' / 'gain per block' ink_gap_bp=3.36
-boxes=51 foreign_total=0 worst_gap_bp=3.60 worst_black_black_bp=2.28 (min 0.5/1.0) rects_checked=29 -> PASS
+black-black 'a = ⟨y, g⟩/⟨y, y⟩, the best single gain' / 'energy / k=1' ink_gap_bp=2.16
+black-black 'model 0.1 s' / 'input 0.1 s' ink_gap_bp=4.32
+black-black 'input 0.1 s' / 'input 0.1 s, 8 fr.' ink_gap_bp=4.44
+black-black 'input 0.1 s, 8 fr.' / '1.0' ink_gap_bp=3.72
+black-black 'model 0.033 s' / 'input 0.033 s' ink_gap_bp=4.32
+black-black 'affine per block' / 'gain per block' ink_gap_bp=4.44
+boxes=51 foreign_total=0 worst_gap_bp=3.72 worst_black_black_bp=2.16 (min 0.5/1.0) rects_checked=29 -> PASS

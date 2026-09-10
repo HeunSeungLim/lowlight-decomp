@@ -10,7 +10,7 @@ def linfit(x, y):                      # 닫힌형 최소자승 (LAPACK 회피)
     return b, float(y.mean() - b * x.mean())
 OUT = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
 CACHE = os.environ.get("LLCACHE", "cache")
-GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
+GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 z = np.load(f"{OUT}/calib2_cache.npz", allow_pickle=True); QY, QG, A, S, BASE = z["QY"], z["QG"], z["A"], z["S"], z["BASE"]
 tz = np.load(f"{OUT}/train_feats.npz", allow_pickle=True)
 QL = [50, 75, 90, 95, 98, 99, 99.5, 99.9]

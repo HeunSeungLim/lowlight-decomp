@@ -1,7 +1,7 @@
 """전제조건 범위 정정: 학습 분할 전체(접두 0 + 2, 181장면)와 테스트(접두 1, 50장면)의 q 포화율."""
 import json, os, numpy as np
 M = os.path.dirname(os.path.abspath(__file__))
-GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
+GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 Q = 99.9
 scenes = sorted(os.listdir(GTD))
 split = {"train": [s for s in scenes if s[0] in "02"], "test": [s for s in scenes if s[0] == "1"]}

@@ -5,7 +5,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 후보: (a) 백분위 기반 전역 이득 예측, (b) 색 비율만 정규화, (c) 둘 다."""
 import json, os, numpy as np
 CACHE = os.environ.get("LLCACHE", "cache")
-GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
+GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
 rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 QL = [50, 75, 90, 95, 98, 99, 99.5, 99.9]
 F = f"{OUT}/calib2_cache.npz"

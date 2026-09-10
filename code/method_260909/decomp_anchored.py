@@ -13,7 +13,7 @@ for _c in (f"{R}/code", f"{R}/release_v2/code", os.path.join(os.path.dirname(M),
     if os.path.isdir(_c) and _c not in sys.path: sys.path.insert(0, _c)
 from diag_sid_lowfreq import block_index, block_fit
 CACHE = os.environ.get("LLCACHE", "cache")
-GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
+GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 Q = 99.9
 rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 

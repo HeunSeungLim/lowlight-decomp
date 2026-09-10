@@ -6,7 +6,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 import json, os, numpy as np
 from scipy.ndimage import zoom
 CACHE = os.environ.get("LLCACHE", "cache")
-GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__)); B = 16
+GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__)); B = 16
 rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 def gt_of(s, _c={}):
     if s not in _c:

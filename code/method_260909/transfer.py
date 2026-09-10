@@ -3,7 +3,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
                      "..", "..", "numbers", "method_260909")))
 """하이라이트 정합 보정을 다른 모델로 전이하고, 수축·보호 장치로 최악 장면을 잡는다. 장면 5겹 교차검증."""
 import json, os, sys, numpy as np
-R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))); GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
+R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))); GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
 CODEX = os.environ.get("LLCACHE", "cache")
 rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 QL = [50, 75, 90, 95, 98, 99, 99.5, 99.9]

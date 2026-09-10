@@ -11,10 +11,10 @@ M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.
 sys.path.insert(0, f"{R}/release_v2/code"); sys.path.insert(0, f"{R}/code")
 from diag_sid_lowfreq import block_index, block_fit
 from repro_measure import ssim_indep
-RF_REPO = "/data/HSL/hsl/hsl/Retinexformer"
-RF_W = "/data/HSL/lowlight_model/weights/retinexformer/pretrain_model/LOL_v1.pth"
-LOW = "/data/HSL/lowlight_model/data/LOLv1/eval15/low"
-HIGH = "/data/HSL/lowlight_model/data/LOLv1/eval15/high"
+RF_REPO = os.environ.get("RETINEXFORMER_REPO", os.path.join(os.environ.get("LLROOT", "."), "third_party", "Retinexformer"))
+RF_W = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/weights/retinexformer/pretrain_model/LOL_v1.pth"
+LOW = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/LOLv1/eval15/low"
+HIGH = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/LOLv1/eval15/high"
 Q = 99.9
 from PIL import Image
 sys.path.insert(0, RF_REPO)

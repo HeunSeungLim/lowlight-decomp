@@ -5,7 +5,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 gain = (학습 GT 통계 평균) / (이 출력의 같은 통계). 장면 5겹 교차검증, 통계 후보별 전량 보고."""
 import json, os, numpy as np
 CACHE = os.environ.get("LLCACHE", "cache")
-GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
+GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; OUT = os.path.dirname(os.path.abspath(__file__))
 rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
 QS = [("mean", None), ("p50", 50), ("p75", 75), ("p90", 90), ("p95", 95), ("p99", 99)]
 def stat(x, q): return float(x.mean()) if q is None else float(np.percentile(x, q))

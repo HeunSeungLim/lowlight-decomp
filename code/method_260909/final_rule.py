@@ -7,7 +7,7 @@ M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path
 from repro_measure import ssim_indep
 import diag_lolv1 as DL
 CODEX=os.environ.get("LLCACHE", "cache")
-GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
+GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 Q=99.9; rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.5,99.9]
 Ksony=float(tz["QG"][:,QLt.index(99.9)].mean()); satS=float((tz["QG"][:,QLt.index(99.9)]>=0.999).mean())*100
@@ -55,7 +55,7 @@ print(f"버스트: 출력평균 {sb.mean():.4f} → 앵커 {sa.mean():.4f} ({(sa
 # LOL
 pairs=list(DL.build_pairs()); ids=[p[0] for p in pairs]; GT={p[0]:p[2] for p in pairs}
 import glob, cv2
-hi_dir="/data/HSL/lowlight_model/data/LOLv1/our485/high"
+hi_dir=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/LOLv1/our485/high"
 fs=sorted(glob.glob(f"{hi_dir}/*"))
 Klol=float(np.mean([np.percentile(cv2.imread(f)[:,:,::-1].astype(np.float32)/255.,Q) for f in fs]))
 satL=float(np.mean([np.percentile(cv2.imread(f)[:,:,::-1].astype(np.float32)/255.,Q)>=0.999 for f in fs]))*100

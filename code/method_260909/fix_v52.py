@@ -6,7 +6,7 @@ import json, os, glob, numpy as np
 from scipy import stats
 M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
 CODEX=os.environ.get("LLCACHE", "cache")
-GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
+GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def gt_of(s,_c={}):
@@ -36,7 +36,7 @@ tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.
 OUT["sat_train_sony_q999"]=float((tz["QG"][:,QLt.index(99.9)]>=0.999).mean())*100
 # LOL 전량 포화율
 import cv2
-fs=sorted(glob.glob("/data/HSL/lowlight_model/data/LOLv1/our485/high/*"))
+fs=sorted(glob.glob((os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/LOLv1/our485/high/*"))
 v=[np.percentile(cv2.imread(f)[:,:,::-1].astype(np.float32)/255.,99.9) for f in fs]
 OUT["lol_sat_all"]=float(np.mean(np.array(v)>=0.999))*100; OUT["lol_K_all"]=float(np.mean(v)); OUT["lol_n"]=len(fs)
 print(f"LOL 학습기준 {len(fs)}장 전량: q99.9 포화율 {OUT['lol_sat_all']:.1f}%, K={OUT['lol_K_all']:.4f}")

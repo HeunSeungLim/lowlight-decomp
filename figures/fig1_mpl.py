@@ -5,7 +5,15 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, Rectangle
 from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
-E = json.load(open(os.path.join(HERE, "..", "..", "evidence.json")))
+P = os.path.dirname(HERE)
+def _find(name):
+    """번들·공개 레이아웃 어느 쪽에서든 생성된 수치 파일을 찾는다."""
+    for d in (P, os.path.join(P, "paper_tables"), os.path.join(HERE, "..", "..")):
+        c = os.path.join(d, name)
+        if os.path.exists(c):
+            return c
+    return os.path.join(P, name)
+E = json.load(open(_find("evidence.json")))
 V = json.load(open(os.path.join(HERE, "verdicts.json")))
 plt.rcParams.update({"mathtext.fontset": "stix", "font.family": "serif", "font.serif": ["Nimbus Roman", "TeX Gyre Termes", "Liberation Serif"], "font.size": 9.2,
                      "axes.labelsize": 9.2, "xtick.labelsize": 9.2, "ytick.labelsize": 9.2, "legend.fontsize": 9.2,
@@ -24,7 +32,7 @@ exec(plot_src)                                                     # defines p1,
 img = lambda n: np.asarray(Image.open(os.path.join(HERE, n)).convert("RGB"))
 P1, P2, P3, PR = img("P1_input.png"), img("P2_output.png"), img("P3_gt.png"), img("P_res_raw.png")
 PL, PB, PH = img("P_lf_raw.png"), img("P_blk_raw.png"), img("P_hf_raw.png")
-W, H = 7.008, 1.90
+W, H = 7.008, 1.94
 fig = plt.figure(figsize=(W, H), dpi=300)
 # ---- row 1: panels
 top, bot, gap = 0.91, 0.715, 0.012

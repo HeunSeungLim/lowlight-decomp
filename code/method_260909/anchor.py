@@ -6,7 +6,7 @@ K 는 학습 분할의 기준 영상 99.5백분위 평균에서 얻는다(테스
 import json, os, numpy as np
 M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
 CODEX=os.environ.get("LLCACHE", "cache")
-GTD="/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]; QI=QL.index(99.5)
+GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]; QI=QL.index(99.5)
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True)
 K_train=float(tz["QG"][:,QI].mean()); print(f"학습 분할 기준 99.5백분위 평균 K={K_train:.4f} (프레임 {len(tz['QG'])})")

@@ -6,7 +6,7 @@ GT는 학습 장면에서만 쓰고 평가 장면에서는 쓰지 않는다. 장
 import json, os, sys, numpy as np
 
 CACHE = os.environ.get("LLCACHE", "cache")
-GT = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
+GT = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 OUT = os.path.dirname(os.path.abspath(__file__))
 B = int(sys.argv[1]) if len(sys.argv) > 1 else 16
 

@@ -1,7 +1,7 @@
 """학습 분할 전체(접두 0+2, 181장면)에서 q별 기준영상 포화율. 같은 문단의 100퍼센트와 분모를 맞춘다."""
 import json, os, numpy as np
 M = os.path.dirname(os.path.abspath(__file__))
-GTD = "/data/HSL/lowlight_model/data/SID_raw/SID/long_sid2"
+GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 QS = [95, 98, 99, 99.5, 99.9, 99.95, 99.99]
 scenes = sorted(s for s in os.listdir(GTD) if s[0] in "02")
 q = np.zeros((len(scenes), len(QS)))
