@@ -20,12 +20,24 @@ def _strip_printed(o):
     if isinstance(o, list): return [_strip_printed(v) for v in o]
     return o
 
+_POOL_BLOCK = ("rad_edges", "ident_edges", "band_edges", "edges", "bins",
+               "cnn_train_scenes", "printed_bounds")
+
+def _strip_pool(o):
+    """축·빈 경계와 다른 분모의 장면수는 측정 결과가 아니라 설정값이다. 대조 근거로 쓰지 않는다."""
+    if isinstance(o, dict):
+        return {k: _strip_pool(v) for k, v in o.items() if k not in _POOL_BLOCK}
+    if isinstance(o, list):
+        return [_strip_pool(v) for v in o]
+    return o
+
 def _src(path):
-    """같은 이름이 번들 안이나 공개 레이아웃의 영수증 폴더에 있으면 그것을 쓴다."""
+    """영수증을 찾는 순서. 고정본(같은 폴더)과 공개본(numbers/ 아래) 어느 배치에서도 돌게 한다."""
     b = os.path.basename(path)
     for cand in (os.path.join(P, b),
                  os.path.join(P, "..", "numbers", "method_260909", b),
-                 os.path.join(P, "..", "numbers", b)):
+                 os.path.join(P, "..", "numbers", b),
+                 os.path.join(P, "..", "method_260909", b)):
         if os.path.exists(cand):
             return cand
     return path
@@ -41,7 +53,7 @@ def leaves(o, acc):
         acc.append(float(o))
     return acc
 
-vals = leaves(E, [])
+vals = leaves(_strip_pool(E), [])
 # values a table can legitimately show that are derived from the dumps
 derived = []
 for v in list(vals):
@@ -49,8 +61,8 @@ for v in list(vals):
 for r in E["ladder"]:
     for k in ("gain", "gain_dof", "affine", "affine_dof"):
         if r.get(k) is not None: derived.append(r[k])
-for _f in (os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))), "numbers", "diag_sid_identifiability.json"),
-           os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))), "numbers", "diag_sid_lowfreq.json")):
+for _f in ("/home/user/lowlight_paper/repro/diag_sid_identifiability.json",
+           "/home/user/lowlight_paper/repro/diag_sid_lowfreq.json"):
     try: _d = json.load(open(_src(_f)))
     except Exception: continue
     def _scal(o, acc):                       # 배열은 제외: 프레임별 값을 다 넣으면 검사가 무의미해진다
@@ -116,34 +128,34 @@ if os.path.exists(_src(_fq)):
     for v in json.load(open(_src(_fq))).values():
         derived += [v["psnr"], v["psnr_shown"], v["gain"]]
 
-for _extra in (os.path.join(os.path.dirname(os.path.abspath(__file__)), "fix_v52.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "robust_acting.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "qsweep_rule.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "final_rule.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "shares.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "controls_v58.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "precond_transfer.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "affine_oracle.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "concentration.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "tost_equivalence.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "decomp_anchored.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "anchor_lol_retinexformer.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "protocol_pricing.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "unresolved_cells.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "anchored_sony_sd.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "tab3_anchored_column.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "qsat_train181.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "protocol_sweep.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "multiframe_drop.json"),
-               os.path.join(os.path.dirname(os.path.abspath(__file__)), "bootstrap_config.json")):
+for _extra in ("/home/user/lowlight_paper/method_260909/fix_v52.json",
+               "/home/user/lowlight_paper/method_260909/robust_acting.json",
+               "/home/user/lowlight_paper/method_260909/qsweep_rule.json",
+               "/home/user/lowlight_paper/method_260909/final_rule.json",
+               "/home/user/lowlight_paper/method_260909/shares.json",
+               "/home/user/lowlight_paper/method_260909/controls_v58.json",
+               "/home/user/lowlight_paper/method_260909/precond_transfer.json",
+               "/home/user/lowlight_paper/method_260909/affine_oracle.json",
+               "/home/user/lowlight_paper/method_260909/concentration.json",
+               "/home/user/lowlight_paper/method_260909/tost_equivalence.json",
+               "/home/user/lowlight_paper/method_260909/decomp_anchored.json",
+               "/home/user/lowlight_paper/method_260909/anchor_lol_retinexformer.json",
+               "/home/user/lowlight_paper/method_260909/protocol_pricing.json",
+               "/home/user/lowlight_paper/method_260909/unresolved_cells.json",
+               "/home/user/lowlight_paper/method_260909/anchored_sony_sd.json",
+               "/home/user/lowlight_paper/method_260909/tab3_anchored_column.json",
+               "/home/user/lowlight_paper/method_260909/qsat_train181.json",
+               "/home/user/lowlight_paper/method_260909/protocol_sweep.json",
+               "/home/user/lowlight_paper/method_260909/multiframe_drop.json",
+               "/home/user/lowlight_paper/method_260909/bootstrap_config.json"):
     if os.path.exists(_src(_extra)):
         def _lvx(o, acc):
             if isinstance(o, dict): [_lvx(v, acc) for v in o.values()]
             elif isinstance(o, list): [_lvx(v, acc) for v in o]
             elif isinstance(o, (int, float)): acc.append(float(o))
             return acc
-        for v in _lvx(_strip_printed(json.load(open(_src(_extra)))), []):
-            derived += [v, abs(v), round(v, 1), round(v, 2), round(abs(v), 2), round(v, 3), float(round(v)), float(round(abs(v)))]
+        for v in _lvx(_strip_pool(_strip_printed(json.load(open(_src(_extra))))), []):
+            derived += [v, round(v, 1), round(v, 2), round(v, 3), float(round(v))]
 _fe = os.path.join(P, "final_evidence.json")                  # 최종 규칙 실측값·백분위 라벨
 if os.path.exists(_src(_fe)):
     def _lv4(o, acc):
@@ -154,9 +166,9 @@ if os.path.exists(_src(_fe)):
             try: acc.append(float(o))
             except ValueError: pass
         return acc
-    _fej = _strip_printed(json.load(open(_src(_fe)))); _fej.pop("printed", None)      # 인쇄값이 스스로를 검증하지 않도록 제외
+    _fej = _strip_pool(_strip_printed(json.load(open(_src(_fe))))); _fej.pop("printed", None)      # 인쇄값이 스스로를 검증하지 않도록 제외
     for v in _lv4(_fej, []):
-        derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), round(v, 4)]
+        derived += [v, round(v, 2), round(v, 3), round(v, 4)]
         if abs(v - round(v)) < 1e-9: ints_extra = int(round(v))
 _an = os.path.join(P, "anchor_evidence.json")                 # 앵커판 실측값
 if os.path.exists(_src(_an)):
@@ -165,8 +177,8 @@ if os.path.exists(_src(_an)):
         elif isinstance(o, list): [_lv3(v, acc) for v in o]
         elif isinstance(o, (int, float)): acc.append(float(o))
         return acc
-    for v in _lv3(_strip_printed(json.load(open(_src(_an)))), []):
-        derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), v * 100]
+    for v in _lv3(_strip_pool(_strip_printed(json.load(open(_src(_an))))), []):
+        derived += [v, round(v, 2), round(v, 3), v * 100]
 _f2 = os.path.join(P, "fig_cmp2_numbers.json")
 if os.path.exists(_src(_f2)):
     def _lv2(o, acc):
@@ -184,7 +196,7 @@ if os.path.exists(_src(_me)):
         elif isinstance(o, (int, float)): acc.append(float(o))
         return acc
     for v in _lv(json.load(open(_src(_me))), []):
-        derived += [v, abs(v), round(v, 2), round(abs(v), 2), round(v, 3), v * 100, v / 100]
+        derived += [v, round(v, 2), round(v, 3), v * 100, v / 100]
 _dg = os.path.join(P, "diag_gap.json")
 if os.path.exists(_src(_dg)):
     for v in json.load(open(_src(_dg))).values():
@@ -202,7 +214,9 @@ if os.path.exists(_src(_fc)):
 txt = subprocess.run(["pdftotext", os.path.join(P, "main.pdf"), "-"],
                      capture_output=True, text=True).stdout
 body = txt.split("REFERENCES")[0]
-found = [float(x) for x in re.findall(r"(?<![\w.])\d{1,3}\.\d{1,4}(?![\w])", body)]
+# 부호까지 읽는다. 인쇄된 뺄셈 기호(U+2212)와 하이픈을 모두 음수로 본다.
+_NUMPAT = re.compile("(?<![\\w.])([\u2212\\-])?(\\d{1,3}\\.\\d{1,4})(?![\\w])")
+found = [(-1.0 if m.group(1) else 1.0) * float(m.group(2)) for m in _NUMPAT.finditer(body)]
 
 def known(x):
     for v in derived:
@@ -224,6 +238,9 @@ print(f"독립 검증: 측정 덤프로 대조된 값 {len(_meas)}개, 선언된
       f"생성된 tex 사본으로만 대조된 값 {len(weak)}개 (독립 아님)")
 if weak:
     print("  tex 사본에만 의존하는 값:", weak[:24], "..." if len(weak) > 24 else "")
+    _WEAK_FATAL = True
+else:
+    _WEAK_FATAL = False
 
 # integers (2-4 digits) printed in the prose, outside citations, years and section numbers
 INT_DECLARED = {95: "percentile label", 98: "percentile label", 99: "percentile label", 16: "block side (px)", 32: "ladder block side", 64: "ladder block side", 128: "ladder block side", 256: "ladder block side",
@@ -272,4 +289,66 @@ if unmatched:
     print(f"측정 덤프와 대조 안 되는 값 {len(unmatched)}개:")
     for x in unmatched: print("   ", x)
     sys.exit(1)
+# 1:1 배선: 생성 파일은 영수증의 함수여야 한다. 사본에서 생성기를 다시 돌려 바이트 비교한다.
+# 허용폭이 없으므로 생성 파일 안의 인쇄값 하나를 고치면 반드시 잡힌다.
+_GEN = (("make_evidence.py", ("numbers.tex", "tab_cmp_rows.tex", "tab_cross_rows.tex", "tab_decomp_rows.tex",
+                              "tab_ladder_rows.tex", "tab_repro_rows.tex", "tab_rho_rows.tex")),
+        ("make_final_evidence.py", ("numbers_final.tex", "tab_fin_rows.tex")),
+        ("make_method_evidence.py", ("numbers_method.tex", "tab_cal_rows.tex")),
+        ("make_cmp2_table.py", ("tab_cmp2_rows.tex",)),
+        ("make_declared_evidence.py", ("numbers_declared.tex",)))
+_USED_MACROS = set()
+for _bt in ("main.tex", "sec_intro.tex", "sec_method.tex", "sec_results.tex", "sec_discussion.tex"):
+    _bp = os.path.join(P, _bt)
+    if os.path.exists(_bp):
+        _USED_MACROS |= set(re.findall(r"\\(n[A-Za-z]+)", open(_bp).read()))
+_regen_ran, _regen_bad, _regen_skip = [], [], []
+for _g, _outs in _GEN:
+    if not os.path.exists(os.path.join(P, _g)):
+        _regen_skip.append((_g, "생성기 없음")); continue
+    import shutil as _sh, subprocess as _sp, tempfile as _tf, filecmp as _fc
+    _base = _tf.mkdtemp(prefix="regen_")
+    _tmp = os.path.join(_base, "paper"); os.makedirs(_tmp, exist_ok=True)
+    try:
+        for _n in os.listdir(P):
+            _s0 = os.path.join(P, _n)
+            if os.path.isfile(_s0): _sh.copy2(_s0, os.path.join(_tmp, _n))
+        # 진단 생성기는 원고 폴더의 형제인 evidence/ 를 읽는다
+        for _ed in (os.path.join(P, "evidence"), os.path.join(P, "..", "evidence_diag"),
+                    os.path.join(P, "..", "evidence")):
+            if os.path.isdir(_ed):
+                _sh.copytree(_ed, os.path.join(_base, "evidence")); break
+        _r = _sp.run([sys.executable, _g], cwd=_tmp, capture_output=True, text=True)
+        if _r.returncode != 0:
+            # 영수증이 없어서 생성기가 죽는 것을 "건너뜀" 으로 넘기면, 영수증을 지워도 감사가 통과한다
+            _regen_bad.append((_g, "재실행 실패: " + (_r.stderr.strip().splitlines() or ["실패"])[-1][:90])); continue
+        _diff = []
+        for _n in _outs:
+            _a, _b = os.path.join(P, _n), os.path.join(_tmp, _n)
+            if not (os.path.exists(_a) and os.path.exists(_b)): continue
+            if _n.startswith("numbers"):
+                # 미사용 매크로는 정리 단계가 지우므로, 원고가 실제로 쓰는 매크로만 값으로 비교한다
+                _mv = lambda f: dict(re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}", open(f).read()))
+                _ca, _cb = _mv(_a), _mv(_b)
+                _bad = sorted(k for k in _ca if k in _USED_MACROS and k in _cb and _ca[k] != _cb[k])
+                _lost = sorted(k for k in _ca if k in _USED_MACROS and k not in _cb)
+                if _lost:  # 빈 재생성이 "불일치 없음" 으로 읽히면 검사가 헛돈다
+                    _diff.append(_n + " (재생성이 원고가 쓰는 매크로 " + str(len(_lost)) + "개를 만들지 못했다: " + ", ".join(_lost[:5]) + ")")
+                if _bad: _diff.append(_n + " (" + ", ".join(f"{k}: {_ca[k]} vs {_cb[k]}" for k in _bad[:6]) + ")")
+            elif not _fc.cmp(_a, _b, shallow=False):
+                _diff.append(_n)
+        _regen_ran.append(_g)
+        if _diff: _regen_bad += [(_g, _n) for _n in _diff]
+    finally:
+        _sh.rmtree(_base, ignore_errors=True)
+assert len(_USED_MACROS) > 30, "원고에서 매크로를 못 읽었다 — 비교가 헛돈다"
+print(f"생성 재현: 원고가 쓰는 매크로 {len(_USED_MACROS)}개, 생성기 {len(_regen_ran)}개 재실행, 불일치 {len(_regen_bad)}건" +
+      (f", 건너뜀 {len(_regen_skip)}개 {[g for g, _ in _regen_skip]}" if _regen_skip else ""))
+for _g, _r in _regen_skip: print(f"  건너뜀 {_g}: {_r}")
+if _regen_bad:
+    for _g, _n in _regen_bad: print(f"  {_n} 이 {_g} 의 재생성 결과와 다르다 — 인쇄값이 영수증의 함수가 아니다")
+    sys.exit(1)
+
+if _WEAK_FATAL:
+    print(f"생성된 tex 사본으로만 맞는 값 {len(weak)}개 — 측정 덤프로 독립 대조되지 않는다"); sys.exit(1)
 print("전부 대조됨 (측정 덤프 / 생성된 표 / 선언된 인용값)")

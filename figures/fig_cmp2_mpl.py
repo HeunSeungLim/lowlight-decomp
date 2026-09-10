@@ -40,7 +40,7 @@ for m in ("zerodcepp","snrnet","lightendiff","retinexformer"):
 yr=out("retinexformer"); gcal=float(np.clip(K/max(float(np.percentile(yr,QANC)),1e-6),0.5,2.0)); yc=np.clip(yr*gcal,0,1)
 panels.append((yc, f"+anc. (ours)\n{p8(g8(yc),g8(gt)):.1f} dB", lf(yc,gt)))
 panels.append((gt, "reference", None))
-W_,H_=7.008,1.40; fig=plt.figure(figsize=(W_,H_),dpi=300)
+W_,H_=7.008,1.38; fig=plt.figure(figsize=(W_,H_),dpi=300)
 n=len(panels); RIGHT=0.104; pw=(1.0-RIGHT-0.004*(n-1))/n; ph=0.355
 for k,(im,t,d) in enumerate(panels):
     xx=0.004+k*(pw+0.004)

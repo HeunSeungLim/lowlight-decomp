@@ -1,0 +1,18 @@
+{
+ "note": "본문이 인쇄하는 분석 상수. 측정 결과가 아니라 우리가 정한 값이므로 여기 선언하고 매크로로만 인쇄한다.",
+ "declared_on": "2026-09-10",
+ "np_instability_threshold": {
+  "value": 0.9,
+  "used_for": "잡음 보정에서 N_j/P_j 가 이 값을 넘는 대역 칸을 불안정으로 표시한다",
+  "printed_in": "Sec. 2 와 Limitations"
+ },
+ "confidence_level_pct": {
+  "value": 95,
+  "used_for": "장면 부트스트랩 구간과 표 3 머리글의 신뢰수준",
+  "printed_in": "Table 3 header, Sec. 3"
+ },
+ "block_side_px": {
+  "value": 16,
+  "used_for": "블록 이득·아핀 사다리의 기본 블록 한 변"
+ }
+}

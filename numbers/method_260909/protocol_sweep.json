@@ -141,24 +141,50 @@
   ],
   "source": "agg[pair] psnr_gtmean minus psnr",
   "by_family": {
-   "reference_trained": {
-    "pairs": 10,
+   "paired_supervised": {
+    "pairs": 8,
     "range_db": [
-     0.8931040412387112,
+     1.163764314268942,
      4.898224835443166
+    ],
+    "members": [
+     "cidnet_woperc",
+     "gsad",
+     "llformer",
+     "retinexformer",
+     "snrnet",
+     "uretinex"
     ],
     "largest": "LOL/gsad"
    },
-   "training_free_or_inhouse": {
+   "unpaired_trained": {
+    "pairs": 2,
+    "range_db": [
+     0.8931040412387112,
+     3.604559574466272
+    ],
+    "members": [
+     "lightendiff"
+    ],
+    "largest": "LOL/lightendiff"
+   },
+   "training_free_or_self_supervised": {
     "pairs": 8,
     "range_db": [
      -0.2633624459412669,
      9.809724006025998
     ],
+    "members": [
+     "ar",
+     "clahe",
+     "sci",
+     "zerodcepp"
+    ],
     "largest": "LOL/clahe"
    },
-   "note": "The sweep maximum belongs to a training-free baseline whose brightness is far off; the reference-trained subset tops out lower."
-  }
+   "note": "원고가 인쇄하는 '기준영상으로 학습된' 족은 paired_supervised 다. LightenDiffusion 은 짝지어지지 않은 자료로 학습해 그 족에 넣지 않는다 — 이전 판의 reference_trained 10쌍은 이 모델을 포함했다. 상한 +4.90 은 어느 정의로도 같고 하한만 달라진다."
+  },
+  "family_definition_fixed_on": "2026-09-10"
  },
  "aggregation_convention": {
   "pairs": 18,

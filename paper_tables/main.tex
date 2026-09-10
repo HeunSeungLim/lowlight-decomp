@@ -24,6 +24,7 @@
 \input{numbers}
 \input{numbers_method}
 \input{numbers_final}
+\IfFileExists{numbers_declared.tex}{\input{numbers_declared}}{}
 \let\origthebibliography\thebibliography
 \renewcommand{\thebibliography}[1]{\origthebibliography{#1}%
   \fontsize{8.75}{10.5}\selectfont\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}}
@@ -32,12 +33,11 @@
 \maketitle
 
 \begin{abstract}
-Scores reported for extreme-dark enhancement are not comparable across papers: four protocol choices---rectifying the output's brightness from the reference, the eight-bit rule, how PSNR is aggregated, and which rendition is used---move them by up to ten decibels, five among the reference-trained. We rerun eighteen method--benchmark pairs under one protocol, price each choice on the pairs it applies to, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark,
+Scores reported for extreme-dark enhancement are not comparable across papers: four protocol choices---rectifying the output's brightness from the reference, the eight-bit rule, how PSNR is aggregated, and which rendition is used---move them by up to ten decibels, five among the paired-supervised. We rerun eighteen method--benchmark pairs under one protocol, price each on the pairs it applies to, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark,
 the spatially varying low-frequency term is common to all, and the global term is a generalisation
-gap: its oracle gain is near one on a model's training scenes and dispersed on new ones. The
+gap: its oracle gain is near one on training scenes and dispersed on new ones. The
 diagnosis prescribes one correction with a checkable precondition, rescaling each output so its
-upper percentile reaches the ceiling well-exposed references saturate. It gains where the
-precondition holds and harms where it fails, and we report both.
+upper percentile reaches the ceiling well-exposed references saturate. It gains where the precondition holds and harms where it fails; we report both.
 \end{abstract}
 \begin{keywords}
 Evaluation protocol, low-light image enhancement, error decomposition, band-wise correlation, image restoration
@@ -51,7 +51,7 @@ Evaluation protocol, low-light image enhancement, error decomposition, band-wise
 \caption{Overview, worst $0.033$\,s Sony frame (input $\times20$): the residual after the oracle global gain is split into low-frequency, per-block gain
 and high-frequency parts (real maps from this frame), and radial bands compare input and output reference correlation
 (red: below floor; grey: no advantage; green: input advantage, absent on this frame). Labels describe this correlation test. Bottom: benchmark measurements (LF/HF: low-/high-frequency error energy; the $0.1$\,s input
-curves use the $36$ groups with at least eight frames).}
+curves use the $\nMFlongN{}$ groups with at least eight frames).}
 \label{fig:workflow}
 \end{figure*}}{}
 \input{sec_method}

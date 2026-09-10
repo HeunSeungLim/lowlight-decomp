@@ -1,7 +1,15 @@
 """우리 방법(하이라이트 정합 장면 보정) 수치를 method_260909 의 실측 json 에서 매크로로 굽는다.
 numbers_method.tex 와 tab_cal_rows.tex 를 만들고, 감사가 대조할 method_evidence.json 을 함께 남긴다."""
 import json, os
-P = os.path.dirname(os.path.abspath(__file__)); M=os.environ.get("LLMETHOD", os.path.join(P, "..", "numbers", "method_260909") if os.path.isdir(os.path.join(P, "..", "numbers", "method_260909")) else "/home/user/lowlight_paper/method_260909")
+P = os.path.dirname(os.path.abspath(__file__))
+def _method_dir_common(P):
+    for c in (os.environ.get("LLMETHOD"),
+              os.path.join(P, "..", "method_260909"),
+              os.path.join(P, "..", "numbers", "method_260909"),
+              "/home/user/lowlight_paper/method_260909"):
+        if c and os.path.isdir(c): return c
+    return os.path.join(P, "..", "method_260909")
+M = _method_dir_common(P)
 S = json.load(open(f"{M}/safe_calib.json")); C = json.load(open(f"{M}/control_stats.json"))
 F = json.load(open(f"{M}/final_calib.json")); B = json.load(open(f"{M}/stack_burst.json"))
 Q = json.load(open(f"{M}/qualitative.json")); T = json.load(open(f"{M}/transfer.json"))
@@ -40,7 +48,7 @@ import numpy as np, collections
 MM = M
 tz = np.load(f"{MM}/train_feats.npz", allow_pickle=True); zz = np.load(f"{MM}/calib2_cache.npz", allow_pickle=True)
 A_tr, A_te, QG, SS = tz["A"], zz["A"], zz["QG"], zz["S"]; QL = [50, 75, 90, 95, 98, 99, 99.5, 99.9]
-_rows = json.load(open(os.path.join(os.environ.get("LLROOT", os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))), "numbers", "compare_methods.json")))["per_frame"]["Sony"]["retinexformer"]
+_rows = json.load(open("/home/user/lowlight_paper/repro/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 _g = collections.defaultdict(list)
 for _r, _a in zip(_rows, A_te): _g[(_r["scene"], _r["exp"])].append(_a)
 within = float(np.median([np.std(v, ddof=1) for v in _g.values() if len(v) >= 3])); cvv = QG.std(0) / QG.mean(0)

@@ -1,0 +1,724 @@
+{
+  "controls": {
+    "ALL": {
+      "n_frames": 598,
+      "n_scenes": 50,
+      "raw_d16_mean": 1.1993129468777206,
+      "raw_d16_ci95": [
+        0.9184170467651701,
+        1.5224378711525848
+      ],
+      "legacy_next_d16_mean": 1.1849099509811414,
+      "legacy_same_scene_pairs": 505,
+      "draws": [
+        {
+          "seed": 20260907,
+          "white_d16_mean": 0.005733064579443433,
+          "white_d16_ci95": [
+            0.005600073504689082,
+            0.005846884397589541
+          ],
+          "same_d16_mean": 1.2009983380869957,
+          "same_d16_ci95": [
+            0.9268544878935421,
+            1.5106699848143803
+          ],
+          "cross_d16_mean": 1.036802011522614,
+          "cross_d16_ci95": [
+            0.9611480113633276,
+            1.1105746361888087
+          ],
+          "same_meanmatched_d16_mean": 1.2009905015183615,
+          "same_meanmatched_d16_ci95": [
+            0.926790515031815,
+            1.510071763440252
+          ],
+          "cross_meanmatched_d16_mean": 1.035788956201245,
+          "cross_meanmatched_d16_ci95": [
+            0.9432746133497839,
+            1.1247356177219114
+          ],
+          "cross_retention_white_corrected": 0.8638457821170824,
+          "same_retention_white_corrected": 1.001412047265768
+        },
+        {
+          "seed": 20260908,
+          "white_d16_mean": 0.005719958205577993,
+          "white_d16_ci95": [
+            0.005590929158953596,
+            0.005835555032590258
+          ],
+          "same_d16_mean": 1.2135808297755897,
+          "same_d16_ci95": [
+            0.9363040852633366,
+            1.5250748011447022
+          ],
+          "cross_d16_mean": 1.0419820319003827,
+          "cross_d16_ci95": [
+            0.9700907997940328,
+            1.111378326398623
+          ],
+          "same_meanmatched_d16_mean": 1.2123877462548585,
+          "same_meanmatched_d16_ci95": [
+            0.9354016588624923,
+            1.5228397034279593
+          ],
+          "cross_meanmatched_d16_mean": 1.050317729827413,
+          "cross_meanmatched_d16_ci95": [
+            0.9641666448578696,
+            1.1357735215877596
+          ],
+          "cross_retention_white_corrected": 0.8681871320705672,
+          "same_retention_white_corrected": 1.0119537254602524
+        },
+        {
+          "seed": 20260909,
+          "white_d16_mean": 0.005740856465579383,
+          "white_d16_ci95": [
+            0.005608187638262437,
+            0.005859934490352535
+          ],
+          "same_d16_mean": 1.2138168021332365,
+          "same_d16_ci95": [
+            0.9358040702365376,
+            1.524262899371146
+          ],
+          "cross_d16_mean": 1.0252066421502046,
+          "cross_d16_ci95": [
+            0.9609852519427636,
+            1.0952366144926902
+          ],
+          "same_meanmatched_d16_mean": 1.2126570480888996,
+          "same_meanmatched_d16_ci95": [
+            0.9350294701104546,
+            1.522634092092169
+          ],
+          "cross_meanmatched_d16_mean": 1.0373305559873889,
+          "cross_meanmatched_d16_ci95": [
+            0.9535622128020886,
+            1.1221623714748503
+          ],
+          "cross_retention_white_corrected": 0.8541300470025257,
+          "same_retention_white_corrected": 1.012151637401732
+        }
+      ],
+      "white_d16_mean": 0.005731293083533603,
+      "white_d16_ci95": [
+        0.005602154373582879,
+        0.0058466825001616644
+      ],
+      "white_draw_mean_range": [
+        0.005719958205577993,
+        0.0057408564655793875
+      ],
+      "same_d16_mean": 1.2094653233319406,
+      "same_d16_ci95": [
+        0.9337252680568918,
+        1.5180611730420015
+      ],
+      "same_draw_mean_range": [
+        1.2009983380869955,
+        1.2138168021332356
+      ],
+      "cross_d16_mean": 1.0346635618577338,
+      "cross_d16_ci95": [
+        0.9837321974383451,
+        1.082899002115776
+      ],
+      "cross_draw_mean_range": [
+        1.025206642150203,
+        1.0419820319003827
+      ],
+      "same_meanmatched_d16_mean": 1.2086784319540396,
+      "same_meanmatched_d16_ci95": [
+        0.9330989057829627,
+        1.5176958858358978
+      ],
+      "same_meanmatched_draw_mean_range": [
+        1.200990501518362,
+        1.2126570480888996
+      ],
+      "cross_meanmatched_d16_mean": 1.0411457473386825,
+      "cross_meanmatched_d16_ci95": [
+        0.9675682907077318,
+        1.1156551767111682
+      ],
+      "cross_meanmatched_draw_mean_range": [
+        1.0357889562012461,
+        1.0503177298274127
+      ],
+      "white_corrected_raw_d16_mean": 1.1935816537941872,
+      "white_corrected_raw_d16_ci95": [
+        0.9126696226817016,
+        1.5165869105468197
+      ],
+      "same_retention_white_corrected": 1.0085058080626046,
+      "same_retention_ci95": [
+        0.9893085243517324,
+        1.0266434284803592
+      ],
+      "cross_retention_white_corrected": 0.8620543600878956,
+      "cross_retention_ci95": [
+        0.676540946690645,
+        1.1227742163520806
+      ],
+      "same_meanmatched_retention_white_corrected": 1.007846539067141,
+      "same_meanmatched_retention_ci95": [
+        0.9886705821722425,
+        1.0259212754000675
+      ],
+      "cross_meanmatched_retention_white_corrected": 0.867485228986008,
+      "cross_meanmatched_retention_ci95": [
+        0.6905689596789965,
+        1.1109894496562434
+      ],
+      "same_minus_cross_d16_mean": 0.17480176147420678,
+      "same_minus_cross_d16_ci95": [
+        -0.09644304582485165,
+        0.4911227958810247
+      ]
+    },
+    "0.033s": {
+      "n_frames": 28,
+      "n_scenes": 14,
+      "raw_d16_mean": 1.4934142254461065,
+      "raw_d16_ci95": [
+        0.9864075548224843,
+        2.135770234500732
+      ],
+      "legacy_next_d16_mean": 1.4528950371260798,
+      "legacy_same_scene_pairs": 14,
+      "draws": [
+        {
+          "seed": 20260907,
+          "white_d16_mean": 0.005841849288973096,
+          "white_d16_ci95": [
+            0.005719149072668076,
+            0.005973105391391262
+          ],
+          "same_d16_mean": 1.5101082621062005,
+          "same_d16_ci95": [
+            1.0025542660076325,
+            2.157370871993692
+          ],
+          "cross_d16_mean": 1.4921130181511397,
+          "cross_d16_ci95": [
+            1.1250745462832794,
+            1.9348544696039267
+          ],
+          "same_meanmatched_d16_mean": 1.5094406657981614,
+          "same_meanmatched_d16_ci95": [
+            1.0017072380214107,
+            2.1565105878524147
+          ],
+          "cross_meanmatched_d16_mean": 1.4394058732152941,
+          "cross_meanmatched_d16_ci95": [
+            1.082365648557437,
+            1.8322448350850118
+          ],
+          "cross_retention_white_corrected": 0.99912528135382,
+          "same_retention_white_corrected": 1.0112223357516357
+        },
+        {
+          "seed": 20260908,
+          "white_d16_mean": 0.005761327745436544,
+          "white_d16_ci95": [
+            0.005650881907186392,
+            0.00588816116430841
+          ],
+          "same_d16_mean": 1.5101082621062005,
+          "same_d16_ci95": [
+            1.0025542660076325,
+            2.157370871993692
+          ],
+          "cross_d16_mean": 1.3955382020961764,
+          "cross_d16_ci95": [
+            1.0334471437930033,
+            1.801459244648791
+          ],
+          "same_meanmatched_d16_mean": 1.5094406657981614,
+          "same_meanmatched_d16_ci95": [
+            1.0017072380214107,
+            2.1565105878524147
+          ],
+          "cross_meanmatched_d16_mean": 1.4263883662853476,
+          "cross_meanmatched_d16_ci95": [
+            1.1136200635383826,
+            1.7626131499929893
+          ],
+          "cross_retention_white_corrected": 0.9342077553835246,
+          "same_retention_white_corrected": 1.011221728325133
+        },
+        {
+          "seed": 20260909,
+          "white_d16_mean": 0.005826022106686421,
+          "white_d16_ci95": [
+            0.005688599915679277,
+            0.005968950910097566
+          ],
+          "same_d16_mean": 1.5101082621062005,
+          "same_d16_ci95": [
+            1.0025542660076325,
+            2.157370871993692
+          ],
+          "cross_d16_mean": 1.1536954536960633,
+          "cross_d16_ci95": [
+            0.8611842517686651,
+            1.5052873570400682
+          ],
+          "same_meanmatched_d16_mean": 1.5094406657981614,
+          "same_meanmatched_d16_ci95": [
+            1.0017072380214107,
+            2.1565105878524147
+          ],
+          "cross_meanmatched_d16_mean": 1.2291335188548824,
+          "cross_meanmatched_d16_ci95": [
+            0.8920047190048692,
+            1.5988193587444461
+          ],
+          "cross_retention_white_corrected": 0.7716311738776742,
+          "same_retention_white_corrected": 1.011222216351688
+        }
+      ],
+      "white_d16_mean": 0.005809733047032021,
+      "white_d16_ci95": [
+        0.005696759803997431,
+        0.005935281264802638
+      ],
+      "white_draw_mean_range": [
+        0.005761327745436544,
+        0.005841849288973096
+      ],
+      "same_d16_mean": 1.5101082621062005,
+      "same_d16_ci95": [
+        1.0025542660076325,
+        2.157370871993692
+      ],
+      "same_draw_mean_range": [
+        1.5101082621062005,
+        1.5101082621062005
+      ],
+      "cross_d16_mean": 1.3471155579811263,
+      "cross_d16_ci95": [
+        1.1361209032100783,
+        1.576357690580155
+      ],
+      "cross_draw_mean_range": [
+        1.1536954536960633,
+        1.4921130181511397
+      ],
+      "same_meanmatched_d16_mean": 1.5094406657981614,
+      "same_meanmatched_d16_ci95": [
+        1.0017072380214107,
+        2.1565105878524147
+      ],
+      "same_meanmatched_draw_mean_range": [
+        1.5094406657981614,
+        1.5094406657981614
+      ],
+      "cross_meanmatched_d16_mean": 1.3649759194518414,
+      "cross_meanmatched_d16_ci95": [
+        1.1604846195636591,
+        1.5822155592773266
+      ],
+      "cross_meanmatched_draw_mean_range": [
+        1.2291335188548824,
+        1.4394058732152943
+      ],
+      "white_corrected_raw_d16_mean": 1.487604492399075,
+      "white_corrected_raw_d16_ci95": [
+        0.9806698922253329,
+        2.1299934411792365
+      ],
+      "same_retention_white_corrected": 1.0112220934699994,
+      "same_retention_ci95": [
+        0.9854966503544034,
+        1.0326193442347433
+      ],
+      "cross_retention_white_corrected": 0.9016548630953357,
+      "cross_retention_ci95": [
+        0.5955435518973659,
+        1.4202013462162002
+      ],
+      "same_meanmatched_retention_white_corrected": 1.0107733207542335,
+      "same_meanmatched_retention_ci95": [
+        0.9849567155516382,
+        1.0319722378127125
+      ],
+      "cross_meanmatched_retention_white_corrected": 0.9136609853959692,
+      "cross_meanmatched_retention_ci95": [
+        0.6114274066497738,
+        1.4372566038223649
+      ],
+      "same_minus_cross_d16_mean": 0.16299270412507413,
+      "same_minus_cross_d16_ci95": [
+        -0.4046241644686503,
+        0.8806357630818873
+      ]
+    },
+    "0.04s": {
+      "n_frames": 180,
+      "n_scenes": 29,
+      "raw_d16_mean": 1.208570662651415,
+      "raw_d16_ci95": [
+        0.8268150680604708,
+        1.6915308872151271
+      ],
+      "legacy_next_d16_mean": 1.2163101495514834,
+      "legacy_same_scene_pairs": 151,
+      "draws": [
+        {
+          "seed": 20260907,
+          "white_d16_mean": 0.0057908962599879385,
+          "white_d16_ci95": [
+            0.005672374395296682,
+            0.005914213906993768
+          ],
+          "same_d16_mean": 1.2335902441501205,
+          "same_d16_ci95": [
+            0.8452738006354108,
+            1.724634022070184
+          ],
+          "cross_d16_mean": 1.1868277520962576,
+          "cross_d16_ci95": [
+            1.0701810261496518,
+            1.292635609464721
+          ],
+          "same_meanmatched_d16_mean": 1.2335561287163561,
+          "same_meanmatched_d16_ci95": [
+            0.8449163188610297,
+            1.7225728792007504
+          ],
+          "cross_meanmatched_d16_mean": 1.1976608402656441,
+          "cross_meanmatched_d16_ci95": [
+            1.0488856178489827,
+            1.3444455437505884
+          ],
+          "cross_retention_white_corrected": 0.9819227832370422,
+          "same_retention_white_corrected": 1.0208014652372885
+        },
+        {
+          "seed": 20260908,
+          "white_d16_mean": 0.005764968483784749,
+          "white_d16_ci95": [
+            0.005654927828592028,
+            0.005869131316193426
+          ],
+          "same_d16_mean": 1.2403675432366672,
+          "same_d16_ci95": [
+            0.8514611822099891,
+            1.7282256923631378
+          ],
+          "cross_d16_mean": 1.1654449278575065,
+          "cross_d16_ci95": [
+            1.0222091985218615,
+            1.307622407329826
+          ],
+          "same_meanmatched_d16_mean": 1.239106735793135,
+          "same_meanmatched_d16_ci95": [
+            0.8519964064200573,
+            1.726967634817836
+          ],
+          "cross_meanmatched_d16_mean": 1.157410703339305,
+          "cross_meanmatched_d16_ci95": [
+            1.012954861233703,
+            1.3170820431323
+          ],
+          "cross_retention_white_corrected": 0.9641457177971269,
+          "same_retention_white_corrected": 1.0264355919991348
+        },
+        {
+          "seed": 20260909,
+          "white_d16_mean": 0.005793492783694743,
+          "white_d16_ci95": [
+            0.0056810930058585705,
+            0.005901556050170347
+          ],
+          "same_d16_mean": 1.239183190076834,
+          "same_d16_ci95": [
+            0.8470126353998195,
+            1.7423765121088226
+          ],
+          "cross_d16_mean": 1.0725169581628737,
+          "cross_d16_ci95": [
+            0.9552478627415335,
+            1.1967169304051197
+          ],
+          "same_meanmatched_d16_mean": 1.2377331784715333,
+          "same_meanmatched_d16_ci95": [
+            0.8454150771483963,
+            1.7374683801853643
+          ],
+          "cross_meanmatched_d16_mean": 1.0817425626567148,
+          "cross_meanmatched_d16_ci95": [
+            0.9366330513381668,
+            1.225660888286578
+          ],
+          "cross_retention_white_corrected": 0.8868836989119901,
+          "same_retention_white_corrected": 1.0254515368202288
+        }
+      ],
+      "white_d16_mean": 0.005783119175822477,
+      "white_d16_ci95": [
+        0.005671591865989117,
+        0.005893343791896658
+      ],
+      "white_draw_mean_range": [
+        0.0057649684837847515,
+        0.00579349278369474
+      ],
+      "same_d16_mean": 1.2377136591545408,
+      "same_d16_ci95": [
+        0.848914031186751,
+        1.7292790932184519
+      ],
+      "same_draw_mean_range": [
+        1.2335902441501205,
+        1.240367543236667
+      ],
+      "cross_d16_mean": 1.1415965460388793,
+      "cross_d16_ci95": [
+        1.065797225719951,
+        1.2129796007707374
+      ],
+      "cross_draw_mean_range": [
+        1.0725169581628733,
+        1.186827752096258
+      ],
+      "same_meanmatched_d16_mean": 1.2367986809936748,
+      "same_meanmatched_d16_ci95": [
+        0.848237286414382,
+        1.727876531227659
+      ],
+      "same_meanmatched_draw_mean_range": [
+        1.2335561287163563,
+        1.2391067357931351
+      ],
+      "cross_meanmatched_d16_mean": 1.145604702087221,
+      "cross_meanmatched_d16_ci95": [
+        1.0288714611592362,
+        1.2534700381841342
+      ],
+      "cross_meanmatched_draw_mean_range": [
+        1.0817425626567148,
+        1.197660840265644
+      ],
+      "white_corrected_raw_d16_mean": 1.2027875434755928,
+      "white_corrected_raw_d16_ci95": [
+        0.8210207735453713,
+        1.6857865730966037
+      ],
+      "same_retention_white_corrected": 1.02422954632446,
+      "same_retention_ci95": [
+        1.0068918153763742,
+        1.0382871293614488
+      ],
+      "cross_retention_white_corrected": 0.9443175837862383,
+      "cross_retention_ci95": [
+        0.6588908585429352,
+        1.406762603501346
+      ],
+      "same_meanmatched_retention_white_corrected": 1.0234688316281457,
+      "same_meanmatched_retention_ci95": [
+        1.0064990068535724,
+        1.0381118592851606
+      ],
+      "cross_meanmatched_retention_white_corrected": 0.9476499728437104,
+      "cross_meanmatched_retention_ci95": [
+        0.6599922539505183,
+        1.4148388203604836
+      ],
+      "same_minus_cross_d16_mean": 0.09611711311566132,
+      "same_minus_cross_d16_ci95": [
+        -0.3273916199231157,
+        0.6175317396073494
+      ]
+    },
+    "0.1s": {
+      "n_frames": 390,
+      "n_scenes": 50,
+      "raw_d16_mean": 1.1739251913926445,
+      "raw_d16_ci95": [
+        0.8447794161885649,
+        1.592263488415242
+      ],
+      "legacy_next_d16_mean": 1.1511775967382696,
+      "legacy_same_scene_pairs": 340,
+      "draws": [
+        {
+          "seed": 20260907,
+          "white_d16_mean": 0.005698562850302813,
+          "white_d16_ci95": [
+            0.005550821748701389,
+            0.005835013359448024
+          ],
+          "same_d16_mean": 1.1637634125385337,
+          "same_d16_ci95": [
+            0.8519586724012018,
+            1.5674279134933953
+          ],
+          "cross_d16_mean": 0.9348703666793972,
+          "cross_d16_ci95": [
+            0.8518012612662238,
+            1.0177111800926375
+          ],
+          "same_meanmatched_d16_mean": 1.1638150720427882,
+          "same_meanmatched_d16_ci95": [
+            0.8523462917536587,
+            1.5670191820559483
+          ],
+          "cross_meanmatched_d16_mean": 0.932101231052565,
+          "cross_meanmatched_d16_ci95": [
+            0.8343527903364812,
+            1.031766959884522
+          ],
+          "cross_retention_white_corrected": 0.7953694780853193,
+          "same_retention_white_corrected": 0.9913015346459016
+        },
+        {
+          "seed": 20260908,
+          "white_d16_mean": 0.005696214110210672,
+          "white_d16_ci95": [
+            0.005548963406691651,
+            0.005836580505842786
+          ],
+          "same_d16_mean": 1.1799285822672538,
+          "same_d16_ci95": [
+            0.8616894037737922,
+            1.5810514119806385
+          ],
+          "cross_d16_mean": 0.9596156369317558,
+          "cross_d16_ci95": [
+            0.8886035512511928,
+            1.0344374503271607
+          ],
+          "same_meanmatched_d16_mean": 1.1787290286545962,
+          "same_meanmatched_d16_ci95": [
+            0.860665115896764,
+            1.5794243257756841
+          ],
+          "cross_meanmatched_d16_mean": 0.9738902604608417,
+          "cross_meanmatched_d16_ci95": [
+            0.8722044135515806,
+            1.0882497305916996
+          ],
+          "cross_retention_white_corrected": 0.8165517560098349,
+          "same_retention_white_corrected": 1.005138882009736
+        },
+        {
+          "seed": 20260909,
+          "white_d16_mean": 0.005710448324010763,
+          "white_d16_ci95": [
+            0.005558206155552594,
+            0.00585411248757529
+          ],
+          "same_d16_mean": 1.1808370310842862,
+          "same_d16_ci95": [
+            0.8641491277435528,
+            1.57774287474021
+          ],
+          "cross_d16_mean": 0.9941462739308086,
+          "cross_d16_ci95": [
+            0.9211755837153925,
+            1.070343871682087
+          ],
+          "same_meanmatched_d16_mean": 1.1797759076665064,
+          "same_meanmatched_d16_ci95": [
+            0.8637836818309743,
+            1.5777331497309364
+          ],
+          "cross_meanmatched_d16_mean": 1.0030622376264442,
+          "cross_meanmatched_d16_ci95": [
+            0.9030530494237916,
+            1.102635571720642
+          ],
+          "cross_retention_white_corrected": 0.8461079878262814,
+          "same_retention_white_corrected": 1.0059165831733008
+        }
+      ],
+      "white_d16_mean": 0.005701741761508082,
+      "white_d16_ci95": [
+        0.005554479129244282,
+        0.005841120670405862
+      ],
+      "white_draw_mean_range": [
+        0.005696214110210673,
+        0.005710448324010767
+      ],
+      "same_d16_mean": 1.1748430086300246,
+      "same_d16_ci95": [
+        0.8601899903880026,
+        1.5750610490516297
+      ],
+      "same_draw_mean_range": [
+        1.163763412538534,
+        1.1808370310842857
+      ],
+      "cross_d16_mean": 0.9628774258473205,
+      "cross_d16_ci95": [
+        0.9107463142496647,
+        1.0137773201897637
+      ],
+      "cross_draw_mean_range": [
+        0.9348703666793969,
+        0.9941462739308088
+      ],
+      "same_meanmatched_d16_mean": 1.1741066694546303,
+      "same_meanmatched_d16_ci95": [
+        0.8594657981678581,
+        1.574183906801311
+      ],
+      "same_meanmatched_draw_mean_range": [
+        1.1638150720427887,
+        1.1797759076665066
+      ],
+      "cross_meanmatched_d16_mean": 0.9696845763799503,
+      "cross_meanmatched_d16_ci95": [
+        0.8856184479946522,
+        1.0592074062340875
+      ],
+      "cross_meanmatched_draw_mean_range": [
+        0.9321012310525643,
+        1.003062237626445
+      ],
+      "white_corrected_raw_d16_mean": 1.1682234496311361,
+      "white_corrected_raw_d16_ci95": [
+        0.8391226093279699,
+        1.5864320019335518
+      ],
+      "same_retention_white_corrected": 1.0007856521264573,
+      "same_retention_ci95": [
+        0.9783784910402112,
+        1.0273767722304066
+      ],
+      "cross_retention_white_corrected": 0.8193429813346399,
+      "cross_retention_ci95": [
+        0.6098133462670212,
+        1.1298605549232148
+      ],
+      "same_meanmatched_retention_white_corrected": 1.000155345334014,
+      "same_meanmatched_retention_ci95": [
+        0.977885025043231,
+        1.0267059018315035
+      ],
+      "cross_meanmatched_retention_white_corrected": 0.8251699064274199,
+      "cross_meanmatched_retention_ci95": [
+        0.6436416985045208,
+        1.099922414422907
+      ],
+      "same_minus_cross_d16_mean": 0.211965582782704,
+      "same_minus_cross_d16_ci95": [
+        -0.09350364772731562,
+        0.5947404148697067
+      ]
+    }
+  },
+  "bootstrap": {
+    "unit": "scene",
+    "replicates": 2000,
+    "seed": 20260907,
+    "estimator": "all frames within sampled scenes; original equal-frame weighting",
+    "limitations": "scene bootstrap conditions on three fixed donor draws; donor-population uncertainty is represented by draw range, not fully modeled by this CI"
+  },
+  "source": "summary.json controls section; spectral values excluded"
+}

@@ -2,7 +2,7 @@
 import re, sys, os, glob
 P=os.path.dirname(os.path.abspath(__file__))
 defined=set()
-for f in ("numbers.tex","numbers_method.tex","numbers_final.tex"):
+for f in ("numbers.tex","numbers_method.tex","numbers_final.tex", "numbers_declared.tex"):
     p=os.path.join(P,f)
     if os.path.exists(p): defined |= set(re.findall(r"\\newcommand\{\\(n[A-Za-z]+)\}", open(p).read()))
 used=set()

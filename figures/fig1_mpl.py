@@ -32,7 +32,7 @@ exec(plot_src)                                                     # defines p1,
 img = lambda n: np.asarray(Image.open(os.path.join(HERE, n)).convert("RGB"))
 P1, P2, P3, PR = img("P1_input.png"), img("P2_output.png"), img("P3_gt.png"), img("P_res_raw.png")
 PL, PB, PH = img("P_lf_raw.png"), img("P_blk_raw.png"), img("P_hf_raw.png")
-W, H = 7.008, 1.94
+W, H = 7.008, 1.92
 fig = plt.figure(figsize=(W, H), dpi=300)
 # ---- row 1: panels
 top, bot, gap = 0.91, 0.715, 0.012

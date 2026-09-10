@@ -1,6 +1,14 @@
 """최종 규칙(q=99.9, K=1)의 모든 인쇄값을 한 파일에서 굽는다. 중복 정의 없이 numbers_final.tex 만 만든다."""
 import re, json, os, numpy as np
-P=os.path.dirname(os.path.abspath(__file__)); M=os.environ.get("LLMETHOD", os.path.join(P, "..", "numbers", "method_260909") if os.path.isdir(os.path.join(P, "..", "numbers", "method_260909")) else "/home/user/lowlight_paper/method_260909")
+P=os.path.dirname(os.path.abspath(__file__))
+def _method_dir_common(P):
+    for c in (os.environ.get("LLMETHOD"),
+              os.path.join(P, "..", "method_260909"),
+              os.path.join(P, "..", "numbers", "method_260909"),
+              "/home/user/lowlight_paper/method_260909"):
+        if c and os.path.isdir(c): return c
+    return os.path.join(P, "..", "method_260909")
+M=_method_dir_common(P)
 F=json.load(open(f"{M}/final_rule.json")); QS=json.load(open(f"{M}/qsweep.json"))
 A=json.load(open(f"{M}/anchor.json")); S49=json.load(open(f"{M}/safe_calib.json"))
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.5,99.9]
@@ -106,10 +114,11 @@ mac["nSWhi"]=f"{SW['rectification_sweep']['range_db'][1]:+.2f}"
 mac["nAGlo"]=f"{SW['aggregation_convention']['range_db'][0]:.2f}"
 mac["nAGhi"]=f"{SW['aggregation_convention']['range_db'][1]:.2f}"
 _bf=SW["rectification_sweep"]["by_family"]
-mac["nSWtrHi"]=f"{_bf['reference_trained']['range_db'][1]:+.2f}"
-mac["nSWtrN"]=f"{_bf['reference_trained']['pairs']}"
+mac["nSWtrHi"]=f"{_bf['paired_supervised']['range_db'][1]:+.2f}"
+mac["nSWtrLo"]=f"{_bf['paired_supervised']['range_db'][0]:+.2f}"
+mac["nSWtrN"]=f"{_bf['paired_supervised']['pairs']}"
 LOLRF=json.load(open(f"{M}/anchor_lol_retinexformer.json"))
-mac["nLOLRFloss"]=f"{LOLRF['raw']['psnr']-LOLRF['anchored']['psnr']:.3f}"
+mac["nLOLRFloss"]=f"{LOLRF['raw']['psnr']-LOLRF['anchored']['psnr']:.1f}"   # 영수증 권고: 표의 반올림 두 행 차가 2.68 이라 한 자리로 인쇄한다
 QS181=json.load(open(f"{M}/qsat_train181.json"))
 for _q,_t in ((95,"a"),(98,"b"),(99,"c"),(99.5,"d")):
     mac[f"nFq{_t}sat"]=f"{QS181['saturated_pct'][str(_q)]:.0f}"
