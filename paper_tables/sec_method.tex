@@ -36,7 +36,7 @@ The corrected input statistic is
 $\rho_j^{\mathrm{in}}/\sqrt{1-N_j/P_j}$.
 It assumes additive noise uncorrelated with the reference; $N_j/P_j>\nNPthresh{}$ cells are
 unstable. Nonpositive signal power or a corrected magnitude above one invalidates the correction; such cells are not clipped into a label. Scene bootstrap draws \nBootB{} resamples (seed \nBootSeed{}) of scenes with equal probability and retains
-all frames of each, so scenes weigh equally and frames within a scene do not; the frame-weighted and scene-weighted gains are \nFfrW{} and \nFscW{}\,dB.
+all frames of each, so scenes count equally and frames within a scene do not; the frame-weighted and scene-weighted gains are \nFfrW{} and \nFscW{}\,dB.
 The correction is a sensitivity analysis under this noise model.
 
 \noindent\textbf{Predictability of the local term.} Log input block mean, input variance and the
@@ -49,4 +49,4 @@ ceiling, whose value needs no data. We therefore rescale each output by $1/Q_q(y
 percentile, clamped to $[0.5,2]$, a guard that never binds here; the rule needs no reference, calibration set or per-scene fitting. This is the one-sided,
 single-parameter case of percentile-based colour balance~\cite{scb2011}, the anchor that~\cite{irlle2026} applies to the input and that estimates atmospheric light~\cite{dcp2011}; we divide a trained output instead. The precondition is measurable on any benchmark by
 the fraction of training references saturated at $q$, and we report the correction where that fraction is high and where it
-is not. It is measured on training references and transfers: all \nNSCENE{} Sony test references saturate at \nFQ{} as well. We report its sensitivity to $q$ rather than tuning it: $q=\nFqaK{}$, \nFqbK{}, \nFqcK{}, \nFqdK{}, \nFQ{}, \nFqeK{} and \nFqfK{} give \nFqa{}, \nFqb{}, \nFqc{}, \nFqd{}, \nFRetgain{}, \nFqe{} and \nFqf{}\,dB. Percentiles are non-decreasing in $q$ and every training reference saturates at \nFQ{}, so the precondition holds for every $q\ge\nFQ{}$--against \nFqasat{} to \nFqdsat{} percent saturated at \nFqaK{} to \nFqdK{}--and we take \nFQ{}, the smallest on our grid at which every training reference saturates.
+is not. It is measured on training references and transfers: all \nNSCENE{} Sony test references saturate at \nFQ{} as well. We report its sensitivity to $q$ rather than tuning it: $q=\nFqaK{}$, \nFqbK{}, \nFqcK{}, \nFqdK{}, \nFQ{}, \nFqeK{} and \nFqfK{} give \nFqa{}, \nFqb{}, \nFqc{}, \nFqd{}, \nFRetgain{}, \nFqe{} and \nFqf{}\,dB. Percentiles are non-decreasing in $q$ and every training reference saturates at \nFQ{}, so the precondition holds for every $q\ge\nFQ{}$---against \nFqasat{} to \nFqdsat{} percent saturated at \nFqaK{} to \nFqdK{}---and we take \nFQ{}, the smallest on our grid at which every training reference saturates.
