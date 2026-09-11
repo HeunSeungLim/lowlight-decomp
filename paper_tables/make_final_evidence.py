@@ -100,7 +100,7 @@ CN=json.load(open(f"{M}/concentration.json"))
 mac["nCONone"]=f"{CN['drop_top1']['scene_mean']:+.3f}"; mac["nCONfive"]=f"{CN['drop_top5']['scene_mean']:+.3f}"
 mac["nCONtopfive"]=f"{CN['top5_share_of_scene_pooled_pct']:.0f}"
 # 헤드라인(프레임가중)의 집중도도 같이 인쇄한다
-mac["nCONtopfiveFr"]=f"{CN['drop_top5']['share_of_frame_pooled_pct']:.0f}"
+mac["nCONtopfiveFr"]=f"{CN['top5_share_of_frame_pooled_pct']:.0f}"   # 장면 쪽과 같은 양(직접 몫)이어야 한다
 mac["nCONoneFr"]=f"{CN['drop_top1']['frame_mean']:+.3f}"; mac["nCONfiveFr"]=f"{CN['drop_top5']['frame_mean']:+.3f}"
 TO=json.load(open(f"{M}/tost_equivalence.json"))
 mac["nCTOST"]=f"{TO['tost_margin']:.2f}"

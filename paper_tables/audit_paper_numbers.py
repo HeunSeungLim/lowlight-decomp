@@ -20,7 +20,7 @@ def _strip_printed(o):
     if isinstance(o, list): return [_strip_printed(v) for v in o]
     return o
 
-_POOL_BLOCK = ("sat_superseded_161scenes", "rad_edges", "ident_edges", "band_edges", "edges", "bins",
+_POOL_BLOCK = ("sat_superseded_161scenes", "sat_train_superseded_161scenes", "satK_superseded_161scenes", "rad_edges", "ident_edges", "band_edges", "edges", "bins",
                "cnn_train_scenes", "printed_bounds")
 
 def _strip_pool(o):
@@ -289,10 +289,10 @@ if unmatched:
     sys.exit(1)
 # 1:1 배선: 생성 파일은 영수증의 함수여야 한다. 사본에서 생성기를 다시 돌려 바이트 비교한다.
 # 허용폭이 없으므로 생성 파일 안의 인쇄값 하나를 고치면 반드시 잡힌다.
-_GEN = (("make_evidence.py", ("numbers.tex", "tab_cmp_rows.tex",
-                              "tab_rho_rows.tex")),
+_GEN = (("make_evidence.py", ("numbers.tex", "evidence.json", "tab_cmp_rows.tex", "tab_cross_rows.tex",
+                              "tab_decomp_rows.tex", "tab_ladder_rows.tex", "tab_repro_rows.tex", "tab_rho_rows.tex")),
         ("make_final_evidence.py", ("numbers_final.tex", "tab_fin_rows.tex")),
-        ("make_method_evidence.py", ("numbers_method.tex",)),
+        ("make_method_evidence.py", ("numbers_method.tex", "tab_cal_rows.tex")),
         ("make_cmp2_table.py", ("tab_cmp2_rows.tex",)),
         ("make_declared_evidence.py", ("numbers_declared.tex",)),
         ("make_diagnostic_evidence.py", ("evidence.json", "tab_rho_rows.tex")))
@@ -304,10 +304,8 @@ for _bt in ("main.tex", "sec_intro.tex", "sec_method.tex", "sec_results.tex", "s
 _regen_ran, _regen_bad, _regen_skip = [], [], []
 for _g, _outs in _GEN:
     if not os.path.exists(os.path.join(P, _g)):
-        # 생성기를 지우면 검사가 사라지는 구멍을 막는다: 산출물이 있는데 생성기가 없으면 실패다
-        if any(os.path.exists(os.path.join(P, _o)) for _o in _outs):
-            _regen_bad.append((_g, "생성기가 없는데 산출물은 있다")); continue
-        _regen_skip.append((_g, "생성기와 산출물 모두 없음")); continue
+        # 생성기와 산출물을 같이 지우고 표를 본문에 붙여넣는 우회를 막는다
+        _regen_bad.append((_g, "생성기가 없다")); continue
     import shutil as _sh, subprocess as _sp, tempfile as _tf, filecmp as _fc
     _base = _tf.mkdtemp(prefix="regen_")
     _tmp = os.path.join(_base, "paper"); os.makedirs(_tmp, exist_ok=True)
@@ -360,6 +358,8 @@ for _g, _outs in _GEN:
         _diff = []
         for _n in _outs:
             _a, _b = os.path.join(P, _n), os.path.join(_tmp, _n)
+            if not os.path.exists(_a) and os.path.exists(os.path.join(P, "superseded", _n)):
+                _a = os.path.join(P, "superseded", _n)   # 조판하지 않지만 생성기의 함수인지는 계속 본다
             if not os.path.exists(_a):
                 _diff.append(_n + " (생성기가 만드는 파일이 원고 폴더에 없다)"); continue
             if not os.path.exists(_b):
@@ -380,6 +380,26 @@ for _g, _outs in _GEN:
     finally:
         _sh.rmtree(_base, ignore_errors=True)
 assert len(_USED_MACROS) > 30, "원고에서 매크로를 못 읽었다 — 비교가 헛돈다"
+# 본문이 쓰는 매크로가 정의돼 있는지, 그리고 사용 수가 기준선 대비 줄지 않았는지.
+# v84 에서 산문이 통째로 훼손됐는데 숫자 감사만으로는 아무 신호가 없었다.
+_USED_ALL = set()
+for _bt in ("main.tex", "sec_intro.tex", "sec_method.tex", "sec_results.tex", "sec_discussion.tex"):
+    _bp = os.path.join(P, _bt)
+    if os.path.exists(_bp): _USED_ALL |= set(re.findall(r"\\(n[A-Z][A-Za-z]*)", open(_bp).read()))
+_DEFINED = set()
+for _gf in ("numbers.tex", "numbers_method.tex", "numbers_final.tex", "numbers_declared.tex"):
+    _gp = os.path.join(P, _gf)
+    if os.path.exists(_gp): _DEFINED |= set(re.findall(r"\\newcommand\{\\(n[A-Za-z]+)\}", open(_gp).read()))
+_undef = sorted(_USED_ALL - _DEFINED)
+_bl = os.path.join(P, "macro_usage_baseline.json")
+_prev = json.load(open(_bl))["used"] if os.path.exists(_bl) else None
+print(f"매크로 장부: 본문 사용 {len(_USED_ALL)}개, 정의 {len(_DEFINED)}개, 미정의 {len(_undef)}개" +
+      (f", 기준선 {_prev}" if _prev is not None else " (기준선 없음)"))
+if _undef:
+    print(f"  정의되지 않은 매크로: {_undef[:8]}"); sys.exit(1)
+if _prev is not None and len(_USED_ALL) < _prev:
+    print(f"  본문이 쓰는 매크로가 {_prev} 에서 {len(_USED_ALL)} 로 줄었다 — 산문이 실측값을 잃었는지 확인해라"); sys.exit(1)
+
 # 생성된 매크로를 본문이 다시 정의하면 생성 파일은 멀쩡한 채 인쇄값만 바뀐다.
 # 재생성 대조가 보증하는 범위 밖이라 여기서 따로 막는다.
 _GENMAC = set()
@@ -387,12 +407,15 @@ for _gf in ("numbers.tex", "numbers_method.tex", "numbers_final.tex", "numbers_d
     _gp = os.path.join(P, _gf)
     if os.path.exists(_gp):
         _GENMAC |= set(re.findall(r"\\newcommand\{\\(n[A-Za-z]+)\}", open(_gp).read()))
+_GENFILES = {"numbers.tex", "numbers_method.tex", "numbers_final.tex", "numbers_declared.tex"}
 _redef = []
-for _bt in ("main.tex", "sec_intro.tex", "sec_method.tex", "sec_results.tex", "sec_discussion.tex"):
+# \def, \let, 중괄호 없는 \renewcommand 까지 본다. 생성 파일이 아닌 모든 tex 이 대상이다.
+_REDEF_PAT = re.compile(r"\\(?:re)?newcommand\s*\{?\s*\\(n[A-Za-z]+)|\\def\s*\\(n[A-Za-z]+)|\\let\s*\\(n[A-Za-z]+)")
+for _bt in sorted(f for f in os.listdir(P) if f.endswith(".tex") and f not in _GENFILES):
     _bp = os.path.join(P, _bt)
-    if not os.path.exists(_bp): continue
-    for _m in re.finditer(r"\\(?:re)?newcommand\{\\(n[A-Za-z]+)\}", open(_bp).read()):
-        if _m.group(1) in _GENMAC: _redef.append((_bt, _m.group(1)))
+    for _m in _REDEF_PAT.finditer(open(_bp).read()):
+        _nm = _m.group(1) or _m.group(2) or _m.group(3)
+        if _nm in _GENMAC: _redef.append((_bt, _nm))
 print(f"매크로 재정의: 생성 매크로 {len(_GENMAC)}개 중 본문이 다시 정의한 것 {len(_redef)}개")
 if _redef:
     for _f0, _m0 in _redef: print(f"  {_f0} 가 {_m0} 를 다시 정의한다 — 생성값이 인쇄되지 않는다")

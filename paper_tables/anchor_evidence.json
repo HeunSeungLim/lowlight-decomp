@@ -486,10 +486,9 @@
    "n": 15
   },
   "K": 0.8650980591773987,
-  "K_source": "/data/HSL/lowlight_model/data/LOLv1/our485/high (120\uc7a5)"
+  "K_source": "/data/HSL/lowlight_model/data/LOLv1/our485/high (120장)"
  },
  "K": 0.9934965294340382,
- "satK": 59.006211180124225,
  "old_calib": 0.37728862578568423,
  "printed": {
   "sat_pct": 59,
@@ -500,5 +499,6 @@
   "snrnet": 22.94,
   "lightendiff": 17.44,
   "zerodcepp": 12.67
- }
+ },
+ "satK_superseded_161scenes": 59.006211180124225
 }

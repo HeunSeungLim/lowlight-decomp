@@ -33,7 +33,7 @@
 \maketitle
 
 \begin{abstract}
-Scores for extreme-dark enhancement are not comparable across papers: four protocol choices---rectifying output brightness from the reference, the eight-bit rule, how PSNR is aggregated, and the rendition---move them, three by up to ten decibels, by five among the paired-supervised. We rerun eighteen method--benchmark pairs under one protocol, price each where it applies, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies by method and benchmark; the spatially varying low-frequency term is common to all, and the global term is a generalisation gap: its oracle gain is near one on a model's training scenes, dispersed on new ones. The diagnosis prescribes one correction with a checkable precondition: rescale each output so its upper percentile reaches the ceiling where well-exposed references saturate. It gains where the precondition holds and harms where it fails; we report both.
+Scores for extreme-dark enhancement are not comparable across papers: four protocol choices---reference-mean rectification, the eight-bit rule, how PSNR is aggregated, and the rendition---move them, the largest of the three by ten decibels, by five among the paired-supervised. We rerun eighteen method--benchmark pairs under one protocol, price each choice where it applies, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark; the spatially varying low-frequency term is common to all, and the global term is a generalisation gap: its oracle gain is near one on a model's training scenes, dispersed on new ones. The diagnosis prescribes one correction with a checkable precondition: rescale each output so its upper percentile reaches the ceiling where well-exposed references saturate. It gains where the precondition holds and harms where it fails; we report both.
 \end{abstract}
 \begin{keywords}
 Evaluation protocol, low-light image enhancement, error decomposition, band-wise correlation, image restoration
@@ -45,8 +45,8 @@ Evaluation protocol, low-light image enhancement, error decomposition, band-wise
 \centering
 \includegraphics[width=0.98\textwidth]{fig_workflow.pdf}
 \caption{Overview, worst $0.033$\,s Sony frame (input $\times20$): the residual after the oracle global gain is split into low-frequency, per-block gain
-and high-frequency parts (real maps from this frame), and radial bands compare input and output reference correlation
-(red: below floor; grey: no advantage; green: input advantage, absent on this frame). Labels describe this correlation test. Bottom: benchmark measurements (LF/HF: low-/high-frequency error energy; the $0.1$\,s input
+and high-frequency parts (real maps from this frame), and radial bands compare the input's and output's reference correlation
+(red: below floor; grey: no advantage; green: input advantage, absent on this frame). Labels describe the correlation test above. Bottom: benchmark measurements (LF/HF: low-/high-frequency error energy; the $0.1$\,s input
 curves use the $\nMFlongN{}$ groups with at least eight frames).}
 \label{fig:workflow}
 \end{figure*}}{}

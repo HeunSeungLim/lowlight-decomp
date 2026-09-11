@@ -55,14 +55,21 @@ build it, so the audit runs with no further inputs:
 
 It extracts every number printed in the PDF and matches it against the receipts, and reports how wide
 its own acceptance windows are, so a reader can judge how much a match is worth. Beyond that pool check it
-re-runs the five generators in a copy and compares, with no tolerance, every macro the manuscript uses and
-every generated table row, so a printed number that is not a function of a receipt fails; it verifies the
-dump hash a receipt records, so editing a dump and its printed value together fails; and a missing receipt
+re-runs the six generators in a copy and compares, with no tolerance, every macro the manuscript uses and
+every generated table row, so a printed number that the generators do not produce from the receipts fails; it verifies the
+dump hash a receipt records, so editing that dump and its printed value together fails unless the
+recorded hash is updated with them; and a missing receipt
 or a generator that cannot run is a failure rather than a skip. It does not check that a generator computes
 the right thing — only that what is printed is what the generators produce from the receipts. `paper_tables/_isolation_test.py` is the stricter check the frozen review
 bundle ships with, where every receipt sits beside the audit in one directory; run in this release it
 reports the receipts it reaches through `numbers/`, which is the layout documented above, so it is the
-bundle's test and not this release's. Rebuilding the PDF needs `pdflatex` and `bibtex` and nothing else:
+bundle's test and not this release's. What the audit does not establish. It compares what is printed with what the generators produce
+from the receipts. It does not check that a generator computes the right quantity, and a change
+applied consistently to a receipt, its generator and every value derived from it passes. Four
+channels are outside the isolation test as well: os.open, os.stat, os.listdir and non-Python child
+processes, which is recorded in the test file itself.
+
+Rebuilding the PDF needs `pdflatex` and `bibtex` and nothing else:
 
     cd paper_tables && pdflatex main && bibtex main && pdflatex main && pdflatex main
 

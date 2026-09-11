@@ -20,5 +20,7 @@
   "share_of_scene_pooled_pct": 86.38451032005301,
   "share_of_frame_pooled_pct": 84.5451275719655
  },
- "top5_share_of_scene_pooled_pct": 87.7460592880477
+ "top5_share_of_scene_pooled_pct": 87.7460592880477,
+ "top5_share_of_frame_pooled_pct": 86.17331647324671,
+ "share_definition_note": "top5_share_of_*_pooled_pct 는 상위 5장면의 직접 몫이고, drop_top*/share_of_*_pooled_pct 는 그것을 제거했을 때의 감소분이다. 서로 다른 양이다."
 }
