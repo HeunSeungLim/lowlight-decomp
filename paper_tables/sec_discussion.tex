@@ -1,7 +1,7 @@
 \section{Discussion}
 \label{sec:discussion}
 
-\noindent\textbf{Reproduction.} Baselines were rerun with independent PSNR/SSIM implementations agreeing with the reference ones to machine precision. CIDNet and Retinexformer match published scores within \(0.021\)\,dB except two cells, \(\nUnresHi{}\) and \(\nUnresLo{}\)\,dB, both rectified cells of one CIDNet variant; SNR-Net, LLFormer and URetinex-Net at its reference-derived ratio match LOL within \(0.003\)\,dB; the diffusion gaps are \(0.13\) and \(0.34\)\,dB, the latter inside a \nLDspread{}\,dB seed spread that exceeds its anchored gain; Zero-DCE++ has no published LOL score.
+\noindent\textbf{Reproduction.} Baselines were rerun with independent PSNR/SSIM implementations agreeing with the reference ones to machine precision. CIDNet and Retinexformer match published scores within \(0.021\)\,dB except two cells, \(\nUnresHi{}\) and \(\nUnresLo{}\)\,dB, both rectified cells of one CIDNet variant. SNR-Net, LLFormer and URetinex-Net at its reference-derived ratio match LOL within \(0.003\)\,dB. The diffusion gaps are \(0.13\) and \(0.34\)\,dB, the latter inside a \nLDspread{}\,dB seed spread that exceeds its anchored gain; Zero-DCE++ has no published LOL score.
 
 \noindent\textbf{What the decomposition implies for method design.} The headroom on Sony is \nHRglob{}\,dB for a global gain, \nHRchan{} more per channel, the block and affine values of Fig.~\ref{fig:workflow}, \nHRbandls{} for per-band amplitude and about \nHRnoise{} for the noise share. Spend effort on the largest headroom after testing its predictors: the anchored correction does this for the global term, while the amplitude boost lowers PSNR and our low-frequency predictors leave most of the block oracle unused.
 

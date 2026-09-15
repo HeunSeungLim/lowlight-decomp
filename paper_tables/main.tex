@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{spconf,amsmath,amssymb,graphicx,booktabs,microtype,url,balance}
 \usepackage{mathptmx}
+\frenchspacing
 \makeatletter\newcommand{\inputrows}[1]{\@@input #1 }\makeatother
 
 \title{PRICING THE PROTOCOL AND DECOMPOSING THE RESIDUAL\\ IN EXTREME-DARK IMAGE ENHANCEMENT}
@@ -33,7 +34,7 @@
 \maketitle
 
 \begin{abstract}
-Scores for extreme-dark enhancement are not comparable across papers: four protocol choices---reference-mean rectification, the eight-bit rule, how PSNR is aggregated, and the rendition---move them, the largest of the three by ten decibels, by five among the paired-supervised. We rerun eighteen method--benchmark pairs under one protocol, price each choice where it applies, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark; the spatially varying low-frequency term is common to all, and the global term is a generalisation gap: its oracle gain is near one on a model's training scenes, dispersed on new ones. The diagnosis prescribes one correction with a checkable precondition: rescale each output so its upper percentile reaches the ceiling where well-exposed references saturate. It gains where the precondition holds and harms where it fails; we report both.
+Scores for extreme-dark enhancement are not comparable across papers: four protocol choices---reference-mean rectification, the eight-bit rule, how PSNR is aggregated, and the rendition---move them, the largest of the three by ten decibels, by five among the paired-supervised. We rerun eighteen method--benchmark pairs under one protocol, price each choice where it applies, and decompose the residual with component-wise least-squares oracles, structured controls and band-wise reference correlation. Which component dominates varies with method and benchmark. The spatially varying low-frequency term is common to all, and the global term is a generalisation gap: its oracle gain is near one on a model's training scenes, dispersed on new ones. The diagnosis prescribes one correction with a checkable precondition: rescale each output so its upper percentile reaches the ceiling where well-exposed references saturate. It gains where the precondition holds and harms where it fails. We report both.
 \end{abstract}
 \begin{keywords}
 Evaluation protocol, low-light image enhancement, error decomposition, band-wise correlation, image restoration
