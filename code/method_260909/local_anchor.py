@@ -6,7 +6,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 import json, os, numpy as np
 from scipy.ndimage import zoom
 OUT=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
-CODEX=os.environ.get("LLCACHE", "cache")
+CACHE=os.environ.get("LLCACHE", "cache")
 GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 z=np.load(f"{OUT}/calib2_cache.npz",allow_pickle=True); QY,QG,A,S,BASE=z["QY"],z["QG"],z["A"],z["S"],z["BASE"]
@@ -25,7 +25,7 @@ if os.path.exists(F):
 else:
     GY,GG,GB=[],[],[]
     for i,r in enumerate(rows):
-        y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"])
+        y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"])
         yb=y.reshape(hb,B,wb,B,3); gb=g.reshape(hb,B,wb,B,3)
         GY.append(np.percentile(yb,[90,99],axis=(1,3,4)))          # 블록별 상위 백분위 (2,hb,wb)
         GG.append(np.percentile(gb,[90,99],axis=(1,3,4)))
@@ -56,7 +56,7 @@ for qi,qn in ((0,"블록 p90"),(1,"블록 p99")):
         tgt=np.log(np.maximum(GB/np.maximum(A[:,None,None],1e-6),1e-6))
         bb,aa=linfit(ul[tr].ravel(),tgt[tr].ravel())
         for i in np.where(~tr)[0]:
-            y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); G=g8(gt_of(S[i]))
+            y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); G=g8(gt_of(S[i]))
             loc=np.clip(np.exp(aa+bb*ul[i]),0.7,1.4); Lf=zoom(loc,(B,B),order=1)[:,:,None]
             gm[i]=p8(g8(y*pg[i]*Lf),G)-BASE[i]; gglob[i]=p8(g8(y*pg[i]),G)-BASE[i]
     sm=np.array([gm[S==s].mean() for s in us]); sg=np.array([gglob[S==s].mean() for s in us]); d=sm-sg

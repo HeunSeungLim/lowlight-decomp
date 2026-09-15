@@ -6,7 +6,7 @@ import json, os, sys, collections, numpy as np
 M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", ".."))); sys.path.insert(0,f"{R}/code")
 from repro_measure import ssim_indep
 import diag_lolv1 as DL
-CODEX=os.environ.get("LLCACHE", "cache")
+CACHE=os.environ.get("LLCACHE", "cache")
 GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 Q=99.9; rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QLt=[50,75,90,95,98,99,99.5,99.9]
@@ -19,7 +19,7 @@ def gt_of(s,_c={}):
         _c.clear(); _c[s]=np.load(f"{GTD}/{s}/{f}")[:,:,::-1].astype(np.float32)/255.0
     return _c[s]
 def load(m,i,r):
-    if m=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 rng=np.random.RandomState(20260909); RES={"K":1.0,"q":Q,"sat_train_sony":satS,"sony":{},"lol":{}}
 grp=collections.defaultdict(list)

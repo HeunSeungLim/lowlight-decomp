@@ -8,7 +8,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 """
 import json, os, numpy as np
 M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
-CODEX = os.environ.get("LLCACHE", "cache")
+CACHE = os.environ.get("LLCACHE", "cache")
 GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8 = lambda a, b: 10 * np.log10(255.0 ** 2 / np.mean((a.astype(np.float64) - b.astype(np.float64)) ** 2))
@@ -23,7 +23,7 @@ def gt_of(s, _c={}):
 base, gl, ch, af, S = [], [], [], [], []
 sq_res, sq_gl, sq_ch, sq_af = 0.0, 0.0, 0.0, 0.0
 for i, r in enumerate(rows):
-    y = np.load(f"{CODEX}/{i:04d}.npy").transpose(1, 2, 0).astype(np.float64)
+    y = np.load(f"{CACHE}/{i:04d}.npy").transpose(1, 2, 0).astype(np.float64)
     g = gt_of(r["scene"]).astype(np.float64); Gu = g8(g)
     b0 = p8(g8(y), Gu); base.append(b0); S.append(r["scene"])
     Y = y.reshape(-1, 3); G = g.reshape(-1, 3)

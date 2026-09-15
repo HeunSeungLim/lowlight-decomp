@@ -4,7 +4,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 """규칙이 실제로 작동하는 프레임 비율과 그 안에서의 이득."""
 import json, os, numpy as np
 M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
-CODEX=os.environ.get("LLCACHE", "cache")
+CACHE=os.environ.get("LLCACHE", "cache")
 GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; Q=99.9
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
@@ -14,7 +14,7 @@ def gt_of(s,_c={}):
         _c.clear(); _c[s]=np.load(f"{GTD}/{s}/{f}")[:,:,::-1].astype(np.float32)/255.0
     return _c[s]
 def load(m,i,r):
-    if m=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 OUT={}
 for m in ("retinexformer","snrnet","lightendiff","zerodcepp"):

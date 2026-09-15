@@ -7,7 +7,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 """
 import json, os, sys, collections, numpy as np
 M = os.path.dirname(os.path.abspath(__file__)); R = os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
-CODEX = os.environ.get("LLCACHE", "cache")
+CACHE = os.environ.get("LLCACHE", "cache")
 GTD = (os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 Q = 99.9
 rows = json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
@@ -22,7 +22,7 @@ def gt_of(s, _c={}):
 
 Y, G8, S, base, mult, num, den = [], [], [], [], [], [], []
 for i, r in enumerate(rows):
-    y = np.load(f"{CODEX}/{i:04d}.npy").transpose(1, 2, 0).astype(np.float32)
+    y = np.load(f"{CACHE}/{i:04d}.npy").transpose(1, 2, 0).astype(np.float32)
     g = gt_of(r["scene"]); Gu = g8(g)
     base.append(p8(g8(y), Gu)); S.append(r["scene"])
     mult.append(float(np.clip(1.0 / max(float(np.percentile(y, Q)), 1e-6), 0.5, 2.0)))

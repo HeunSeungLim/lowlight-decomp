@@ -5,7 +5,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 (2) 포화 퇴화 진단, (3) 버스트 합성, (4) LOL 재측정, (5) Holm 족을 실제 적용 쌍 10개로."""
 import json, os, collections, numpy as np
 M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
-CODEX=os.environ.get("LLCACHE", "cache")
+CACHE=os.environ.get("LLCACHE", "cache")
 GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 tz=np.load(f"{M}/train_feats.npz",allow_pickle=True); QL=[50,75,90,95,98,99,99.5,99.9]
@@ -18,7 +18,7 @@ def gt_of(s,_c={}):
     return _c[s]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(m,i,r):
-    if m=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if m=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{m}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 rng=np.random.RandomState(20260909); OUT={}
 grp=collections.defaultdict(list)

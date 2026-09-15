@@ -4,7 +4,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 """대조군과 검정: (1) 보정셋에서 맞춘 전역 상수 이득(장면별 예측 없음)과 비교, (2) 장면 단위 짝지은 검정 + Holm 보정."""
 import json, os, sys, numpy as np
 OUT=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
-CODEX=os.environ.get("LLCACHE", "cache")
+CACHE=os.environ.get("LLCACHE", "cache")
 GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; QL=[50,75,90,95,98,99,99.5,99.9]; LAMS=[0.0,0.25,0.5,0.75,1.0]
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 def linfit(x,y):
@@ -17,7 +17,7 @@ def gt_of(s,_c={}):
     return _c[s]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
 def load(model,i,r):
-    if model=="retinexformer": return np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if model=="retinexformer": return np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{model}/Sony/{r['id']}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 def feats(model):
     f=f"{OUT}/tr_{model}.npz"; z=np.load(f if os.path.exists(f) else f"{OUT}/calib2_cache.npz",allow_pickle=True)

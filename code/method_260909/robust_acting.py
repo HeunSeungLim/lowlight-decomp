@@ -6,7 +6,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 import json, os, numpy as np
 from scipy import stats
 M=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
-CODEX=os.environ.get("LLCACHE", "cache")
+CACHE=os.environ.get("LLCACHE", "cache")
 GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; Q=99.9
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda x:np.rint(np.clip(x,0,1)*255).astype(np.uint8)
@@ -17,7 +17,7 @@ def gt_of(s,_c={}):
     return _c[s]
 gain=[];S=[];EX=[];act=[]
 for i,r in enumerate(rows):
-    y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"]); Gu=g8(g)
+    y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(r["scene"]); Gu=g8(g)
     q=float(np.percentile(y,Q)); p=float(np.clip(1.0/max(q,1e-6),0.5,2.0))
     gain.append(p8(g8(y*p),Gu)-p8(g8(y),Gu)); S.append(r["scene"]); EX.append(r["exp"]); act.append(abs(p-1.0)>1e-4)
     if i%200==0: print(f"  {i}/{len(rows)}",flush=True)
@@ -51,7 +51,7 @@ for e in sorted(set(EX.tolist())):
 sat=[]
 for i,r in enumerate(rows):
     if not act[i]: continue
-    y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); sat.append(float((y>=0.999).mean()))
+    y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); sat.append(float((y>=0.999).mean()))
 sat=np.array(sat); gA=gain[act]
 sp=stats.spearmanr(sat,gA); OUT["noncircular_spearman"]=dict(rho=float(sp.correlation), p=float(sp.pvalue), n=int(act.sum()))
 print(f"순환 제거(작동 프레임 내) Spearman rho {sp.correlation:+.3f} p {sp.pvalue:.3f} (n={act.sum()})")

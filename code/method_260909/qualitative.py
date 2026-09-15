@@ -5,7 +5,7 @@ _M = _os.environ.get("LLMETHOD", _os.path.abspath(_os.path.join(_os.path.dirname
 import json, os, numpy as np, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 OUT=os.path.dirname(os.path.abspath(__file__)); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(_M, "..", "..")))
-CODEX=os.environ.get("LLCACHE", "cache")
+CACHE=os.environ.get("LLCACHE", "cache")
 GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; SHD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/short_sid2"
 QL=[50,75,90,95,98,99,99.5,99.9]
 rows=json.load(open(f"{R}/numbers/compare_methods.json"))["per_frame"]["Sony"]["retinexformer"]
@@ -33,7 +33,7 @@ for te in folds:
     b,a0=linfit(uu[tr],np.log(np.maximum(A[tr],1e-6))); p=np.clip(np.exp(a0+b*uu),0.5,2.0)
     for s in te:
         m=S==s; pred[m]=np.exp(np.log(p[m]).mean())
-gains=np.array([p8(g8(np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0)*pred[i]),g8(gt_of(S[i])))-BASE[i] for i in range(len(A))])
+gains=np.array([p8(g8(np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0)*pred[i]),g8(gt_of(S[i])))-BASE[i] for i in range(len(A))])
 sc=np.array([gains[S==s].mean() for s in us])
 pick=[us[int(np.argmax(sc))], us[int(np.argsort(sc)[len(sc)//2])], us[int(np.argmin(sc))]]
 print("선택 장면(최고/중앙/최악):", pick, [round(float(sc[us.index(s)]),3) for s in pick])
@@ -41,7 +41,7 @@ fig,axes=plt.subplots(len(pick),4,figsize=(11,2.4*len(pick)))
 for r_,s in enumerate(pick):
     i=int(np.where(S==s)[0][0]); rr=rows[i]
     x=np.load(f"{SHD}/{s}/{rr['id']}")[:,:,::-1].astype(np.float32)/255.0
-    y=np.load(f"{CODEX}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(s); yc=np.clip(y*pred[i],0,1)
+    y=np.load(f"{CACHE}/{i:04d}.npy").transpose(1,2,0).astype(np.float32); g=gt_of(s); yc=np.clip(y*pred[i],0,1)
     for c_,(im,t) in enumerate(((np.clip(x*4,0,1),f"input $\\times$4"),(y,f"model {BASE[i]:.2f} dB"),(yc,f"calibrated {p8(g8(yc),g8(g)):.2f} dB ($\\times${pred[i]:.3f})"),(g,"reference"))):
         ax=axes[r_,c_]; ax.imshow(im); ax.set_xticks([]); ax.set_yticks([]); ax.set_title(t,fontsize=9)
     axes[r_,0].set_ylabel(f"scene {s}\n{sc[us.index(s)]:+.2f} dB",fontsize=9)

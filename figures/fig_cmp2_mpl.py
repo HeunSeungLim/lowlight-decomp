@@ -4,7 +4,7 @@ import json, os, numpy as np, matplotlib
 matplotlib.use("Agg"); matplotlib.rcParams["pdf.fonttype"]=42
 import matplotlib.pyplot as plt
 HERE=os.path.dirname(os.path.abspath(__file__)); P=os.path.dirname(HERE); R=os.environ.get("LLROOT", os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
-M=f"{R}/method_260909"; CODEX=os.environ.get("LLCACHE", "cache")
+M=f"{R}/method_260909"; CACHE=os.environ.get("LLCACHE", "cache")
 GTD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/long_sid2"; SHD=(os.environ.get("LLDATA", "data") + "/lowlight_model") + "/data/SID_raw/SID/short_sid2"
 plt.rcParams.update({"font.family":"serif","font.serif":["Nimbus Roman","TeX Gyre Termes","Liberation Serif"],"font.size":9.2,"mathtext.fontset":"stix"})
 def _find(name):
@@ -21,7 +21,7 @@ K=1.0; QANC=99.9                                     # 8비트 상한 앵커: �
 gt=np.load(f"{GTD}/{SC}/"+[x for x in sorted(os.listdir(f'{GTD}/{SC}')) if x.endswith('.npy')][0])[:,:,::-1].astype(np.float32)/255.
 x=np.load(f"{SHD}/{SC}/{FR}")[:,:,::-1].astype(np.float32)/255.
 def out(m):
-    if m=="retinexformer": return np.load(f"{CODEX}/{IDX[FR]:04d}.npy").transpose(1,2,0).astype(np.float32)
+    if m=="retinexformer": return np.load(f"{CACHE}/{IDX[FR]:04d}.npy").transpose(1,2,0).astype(np.float32)
     a=np.load(f"{R}/numbers/cache_{m}/Sony/{FR}.npy"); return (a.transpose(1,2,0) if a.shape[0]==3 else a).astype(np.float32)
 p8=lambda a,b:10*np.log10(255.0**2/np.mean((a.astype(np.float64)-b.astype(np.float64))**2)); g8=lambda v:np.rint(np.clip(v,0,1)*255).astype(np.uint8)
 def lf(y, g):                                          # 오라클 전역이득 후 잔차의 저주파 성분 (luma, f<0.10)
