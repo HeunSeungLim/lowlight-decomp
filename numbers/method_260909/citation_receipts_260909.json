@@ -330,5 +330,14 @@
   "bib_key": "llflow2022",
   "checked": "bibliography matched in an earlier round: AAAI 36:2604-2612 (round v55)",
   "checked_on": "earlier round"
+ },
+ "twoshots2026": {
+  "bib_key": "twoshots2026",
+  "title": "2-Shots in the Dark: Low-Light Denoising with Minimal Data Acquisition",
+  "authors": "Lu, Liying and Achddou, Raphael and Susstrunk, Sabine",
+  "year": 2026,
+  "venue": "CVPR",
+  "checked": "CVF open-access PDF downloaded and read (10 pages); title, authors, affiliations and venue taken from the paper itself",
+  "checked_on": "2026-09-15"
  }
 }
